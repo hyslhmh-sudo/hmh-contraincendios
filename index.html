@@ -590,6 +590,13 @@
   <section class="view" id="view-recursos">
     <div class="section-head"><h2>Recursos</h2><p>Videos y presentaciones de capacitación en incendios.</p></div>
     <div class="card">
+      <h3 class="blk">🎥 Videos generales</h3>
+      <div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:10px; overflow:hidden">
+        <iframe id="videoEvacuacionGeneral" src="https://www.youtube.com/embed/Gs2KgXM5cZo" title="Evacuación hospitalaria de pacientes" allow="autoplay" frameborder="0" allowfullscreen style="position:absolute; top:0; left:0; width:100%; height:100%;"></iframe>
+      </div>
+      <p style="font-size:12.5px; color:var(--ink-soft); margin:10px 0 0">Evacuación hospitalaria de pacientes</p>
+    </div>
+    <div class="card" style="margin-top:16px">
       <h3 class="blk">🎥 Videos de evacuación por servicio</h3>
       <p style="font-size:12.5px; color:var(--ink-soft); margin:0 0 12px">Se van a ir sumando los videos de los demás servicios.</p>
       <details class="plan-item" open="">
@@ -795,7 +802,8 @@ function renderHome(){
 /* ============ Navegación ============ */
 const VIDEO_IFRAMES = [
   {id:'videoExtintor', view:'extintores'},
-  {id:'videoPediatria', view:'recursos'}
+  {id:'videoPediatria', view:'recursos'},
+  {id:'videoEvacuacionGeneral', view:'recursos'}
 ];
 function manageVideoIframes(activeView){
   VIDEO_IFRAMES.forEach(v=>{
