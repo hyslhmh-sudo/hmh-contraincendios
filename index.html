@@ -597,6 +597,14 @@
   <section class="view" id="view-recursos">
     <div class="section-head"><h2>Recursos</h2><p>Videos y presentaciones de capacitación en incendios.</p></div>
     <div class="card">
+      <h3 class="blk">🎯 Trivia de seguridad</h3>
+      <div id="triviaIntro">
+        <p style="font-size:12.5px; color:var(--ink-soft); margin:0 0 12px">10 preguntas para repasar lo aprendido. Al final vas a ver tu puntaje y la explicación de cada respuesta.</p>
+        <button class="save-btn" onclick="iniciarTrivia()">Comenzar</button>
+      </div>
+      <div id="triviaBody" style="display:none"></div>
+    </div>
+    <div class="card" style="margin-top:16px">
       <h3 class="blk">🎥 Videos generales</h3>
       <div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:10px; overflow:hidden">
         <iframe id="videoEvacuacionGeneral" src="https://www.youtube.com/embed/Gs2KgXM5cZo" title="Evacuación hospitalaria de pacientes" allow="autoplay" referrerpolicy="strict-origin-when-cross-origin" frameborder="0" allowfullscreen style="position:absolute; top:0; left:0; width:100%; height:100%;"></iframe>
@@ -838,6 +846,86 @@ function manageVideoIframes(activeView){
       if(el.getAttribute('src')) el.src = '';
     }
   });
+}
+
+const TRIVIA = [
+  {q:"¿Cuál es el primer paso del Método PASS?", opts:["Presionar la palanca de accionamiento","Preparar el extintor y quitar el precinto de seguridad","Apuntar a la base del fuego","Barrer de lado a lado"], correct:1, exp:"La P es \"Prepará\": retirás el extintor del soporte, lo colocás en posición vertical y quitás el precinto tirando de la anilla."},
+  {q:"Según el Método PASS, ¿a qué distancia hay que apuntar el extintor de la base del fuego?", opts:["2 a 3 metros","Pegado al fuego","5 a 6 metros","10 metros"], correct:0, exp:"Se apunta la manguera a la base del fuego manteniendo una distancia de 2 a 3 metros."},
+  {q:"¿Qué extintor corresponde usar en la cocina (aceites y grasas)?", opts:["ABC (PQS)","CO₂","Clase K","Clase D"], correct:2, exp:"El extintor Clase K está pensado específicamente para aceites y grasas de cocina."},
+  {q:"¿Qué extintor corresponde en el Laboratorio de Citogenética (metales combustibles)?", opts:["Clase K","Clase D","HCFC-123","ABC (PQS)"], correct:1, exp:"El extintor Clase D es para metales combustibles, como en Citogenética."},
+  {q:"Si el humo es denso o el fuego se extendió más allá de su punto de origen, ¿qué corresponde hacer?", opts:["Intentar apagarlo igual","Evacuar inmediatamente","Esperar y observar un rato","Buscar el extintor sin apuro"], correct:1, exp:"Cuando el fuego ya no es incipiente (humo denso o se extendió), hay que evacuar inmediatamente."},
+  {q:"Según \"Nunca hagas esto\", ¿qué NO deberías hacer al evacuar?", opts:["Caminar hacia la salida más cercana","Usar el ascensor para bajar más rápido","Avisar si un compañero no fue alertado","Cerrar puertas detrás tuyo"], correct:1, exp:"Nunca hay que usar ascensores durante una evacuación: hay que usar las escaleras."},
+  {q:"Si hay humo en el ambiente, ¿cómo tenés que desplazarte?", opts:["Corriendo y erguido","Agachado o gateando, cerca del piso","Con los ojos cerrados","En ascensor"], correct:1, exp:"Cerca del piso suele haber más aire respirable y mejor visibilidad."},
+  {q:"¿Cuál es el teléfono interno de Seguridad del hospital?", opts:["100","101","262","279"], correct:2, exp:"Seguridad interna es el 262. Conmutador y Bomberos son el 100, Policía el 101, Mantenimiento el 279."},
+  {q:"Si tu ropa se prende fuego, ¿qué tenés que hacer?", opts:["Correr para que el viento apague las llamas","Tirarte al suelo y rodar","Sacarte la ropa de inmediato sin importar dónde","Buscar agua antes que nada"], correct:1, exp:"Hay que tirarse al suelo y rodar, cubriéndose el rostro con las manos."},
+  {q:"Cuando suena la alarma de incendio, ¿qué es lo primero que hay que hacer?", opts:["Terminar la tarea y después salir","Mantener la calma e interrumpir la actividad","Ir a buscar tus pertenencias primero","Esperar a que se apague sola"], correct:1, exp:"Lo primero es mantener la calma e interrumpir inmediatamente la actividad que se está haciendo."},
+];
+let triviaIdx = 0;
+let triviaRespuestas = [];
+
+function iniciarTrivia(){
+  triviaIdx = 0;
+  triviaRespuestas = [];
+  document.getElementById('triviaIntro').style.display = 'none';
+  document.getElementById('triviaBody').style.display = 'block';
+  renderTriviaPregunta();
+}
+
+function renderTriviaPregunta(){
+  const body = document.getElementById('triviaBody');
+  if(triviaIdx >= TRIVIA.length){ renderTriviaResultado(); return; }
+  const item = TRIVIA[triviaIdx];
+  body.innerHTML = '<div style="font-size:11.5px; color:var(--ink-soft); margin-bottom:6px">Pregunta ' + (triviaIdx+1) + ' de ' + TRIVIA.length + '</div>' +
+    '<div style="font-size:14.5px; font-weight:800; color:var(--navy); margin-bottom:12px">' + item.q + '</div>' +
+    '<div id="triviaOpts" style="display:flex; flex-direction:column; gap:8px"></div>';
+  const cont = document.getElementById('triviaOpts');
+  item.opts.forEach((opt, i)=>{
+    const btn = document.createElement('button');
+    btn.textContent = opt;
+    btn.style.cssText = 'text-align:left; padding:12px 14px; border-radius:10px; border:1.5px solid var(--line); background:#fff; font-size:13.5px; cursor:pointer;';
+    btn.onclick = function(){ responderTrivia(i); };
+    cont.appendChild(btn);
+  });
+}
+
+function responderTrivia(i){
+  const item = TRIVIA[triviaIdx];
+  const correcta = (i === item.correct);
+  triviaRespuestas.push({elegida:i, correcta:correcta});
+  const cont = document.getElementById('triviaOpts');
+  Array.from(cont.children).forEach((btn, idx)=>{
+    btn.disabled = true;
+    if(idx === item.correct){ btn.style.borderColor='var(--green)'; btn.style.background='#EAF6EF'; btn.style.fontWeight='700'; }
+    else if(idx === i){ btn.style.borderColor='var(--red)'; btn.style.background='#FDEDED'; }
+  });
+  const body = document.getElementById('triviaBody');
+  const exp = document.createElement('div');
+  exp.style.cssText = 'margin-top:12px; padding:12px; border-radius:10px; background:var(--celeste-tint); font-size:12.5px; color:var(--navy);';
+  exp.innerHTML = '<b>' + (correcta ? '✅ Correcto.' : '❌ No es correcto.') + '</b> ' + item.exp;
+  body.appendChild(exp);
+  const nextBtn = document.createElement('button');
+  nextBtn.className = 'save-btn';
+  nextBtn.style.marginTop = '14px';
+  nextBtn.textContent = (triviaIdx+1 < TRIVIA.length) ? 'Siguiente pregunta' : 'Ver resultado';
+  nextBtn.onclick = function(){ triviaIdx++; renderTriviaPregunta(); };
+  body.appendChild(nextBtn);
+}
+
+function renderTriviaResultado(){
+  const body = document.getElementById('triviaBody');
+  const correctas = triviaRespuestas.filter(function(r){return r.correcta;}).length;
+  let html = '<div style="text-align:center; padding:10px 0 18px">' +
+    '<div style="font-size:34px; font-weight:800; color:var(--navy)">' + correctas + '/' + TRIVIA.length + '</div>' +
+    '<div style="font-size:13px; color:var(--ink-soft); margin-top:4px">respuestas correctas</div></div>';
+  html += '<div style="display:flex; flex-direction:column; gap:10px">';
+  TRIVIA.forEach(function(item, idx){
+    const r = triviaRespuestas[idx];
+    html += '<div style="padding:12px; border-radius:10px; border:1px solid var(--line); background:' + (r.correcta ? '#EAF6EF' : '#FDEDED') + '">' +
+      '<div style="font-size:12.5px; font-weight:700; color:var(--navy)">' + (idx+1) + '. ' + item.q + '</div>' +
+      '<div style="font-size:12px; color:var(--ink-soft); margin-top:4px">' + (r.correcta ? '✅ Respondiste correctamente.' : '❌ Tu respuesta: ' + item.opts[r.elegida] + '. Correcta: ' + item.opts[item.correct] + '.') + ' ' + item.exp + '</div></div>';
+  });
+  html += '</div><button class="save-btn" style="margin-top:16px" onclick="iniciarTrivia()">Repetir trivia</button>';
+  body.innerHTML = html;
 }
 
 function goTo(name){
