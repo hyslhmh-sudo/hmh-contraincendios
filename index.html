@@ -200,9 +200,9 @@
     <button class="em-entry-btn" onclick="openEmergency()">🚨 Tengo una emergencia ahora</button>
     <div class="login-divider"><span>o ingresá para ver el resto</span></div>
 
-    <div class="role-grid" id="roleGrid">
-      <button class="role-btn" data-role="publico" onclick="selectRole(this)"><span class="ic">👥</span>Público</button>
-      <button class="role-btn" data-role="admin" onclick="selectRole(this)"><span class="ic">🗂️</span>Administrador</button>
+    <div class="role-grid" id="roleGrid" style="grid-template-columns:1fr">
+      <button class="role-btn selected" data-role="publico" onclick="selectRole(this)"><span class="ic">👥</span>Público</button>
+      <button class="role-btn" data-role="admin" onclick="selectRole(this)" style="display:none">🗂️Administrador</button>
     </div>
 
     <input type="password" id="loginPass" placeholder="Clave de acceso">
@@ -611,8 +611,7 @@
       <div class="field"><label>Mensaje</label><textarea id="bz_mensaje" placeholder="Escribí tu mensaje…"></textarea></div>
       <div class="save-bar" style="position:static; justify-content:flex-start; margin-top:8px"><button class="save-btn" onclick="enviarBuzon()">📨 Enviar a HyS</button></div>
     </div>
-    <div class="section-head"><h2 style="font-size:16px" id="buzonListTitle">Tus mensajes enviados</h2></div>
-    <div id="buzonList"></div>
+    <p style="font-size:12px; color:var(--ink-soft); margin-top:10px">Tu mensaje se envía directo por mail a Higiene y Seguridad. No queda visible para otras personas dentro de la app.</p>
   </section>
 
   <!-- ===================== RECURSOS ===================== -->
@@ -684,7 +683,7 @@ function nowAR(){
   return new Date().toLocaleString('sv-SE', {timeZone:'America/Argentina/Buenos_Aires'}).replace(',', '');
 }
 
-let selectedRole = null;
+let selectedRole = 'publico';
 let currentRole = sessionStorage.getItem('hmh_role') || null;
 
 function selectRole(btn){
@@ -804,20 +803,9 @@ function enviarBuzon(){
     }
   });
   showToast(sincronizacionActiva() ? 'Mensaje enviado a HyS 📨' : 'Guardado local — falta conectar la planilla para enviar el mail');
-  renderBuzon();
 }
-function renderBuzon(){
-  const all = JSON.parse(localStorage.getItem('hmh_buzon')||'[]');
-  const title = document.getElementById('buzonListTitle');
-  const cont = document.getElementById('buzonList');
-  const lista = (currentRole==='admin') ? all : all.filter(m=>m.remitente_rol===currentRole);
-  title.textContent = (currentRole==='admin') ? 'Bandeja de entrada (todos los perfiles)' : 'Tus mensajes enviados';
-  if(lista.length===0){ cont.innerHTML='<div class="empty">No hay mensajes todavía.</div>'; return; }
-  cont.innerHTML = lista.map(m=>`<div class="hist-item">
-    <div class="top-row"><b>${m.asunto||'(sin asunto)'}</b><span class="pill">${m.remitente_label}</span></div>
-    <div class="meta">🕓 ${m.fecha} hs (AR)</div>
-    <div class="msg">${m.mensaje}</div></div>`).join('');
-}
+/* La bandeja visible en la app fue deshabilitada: los mensajes solo llegan por mail a hysl.hmh@gmail.com. */
+function renderBuzon(){}
 
 /* ============ Reintentos de sincronización (Buzón) ============ */
 function reintentarPendientes(){
