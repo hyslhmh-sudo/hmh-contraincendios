@@ -586,6 +586,14 @@
   <section class="view" id="view-buzon">
     <div class="section-head"><h2>Buzón — Mensajes a Higiene y Seguridad</h2><p>Escribí una observación, sugerencia o consulta.</p></div>
     <div class="card">
+      <div class="field"><label>Nombre y apellido *</label><input type="text" id="bz_nombre" placeholder="Tu nombre"></div>
+      <div class="field"><label>Servicio / Sector *</label><input type="text" id="bz_servicio" placeholder="Ej: Pediatría, Guardia, Mantenimiento…" list="bz_servicios_list">
+        <datalist id="bz_servicios_list">
+          <option value="Esterilización"><option value="Guardia Obstétrica"><option value="Laboratorio">
+          <option value="Neonatología"><option value="Pediatría"><option value="Quirófano"><option value="UTPR">
+        </datalist>
+      </div>
+      <div class="field"><label>Contacto (teléfono interno o mail) *</label><input type="text" id="bz_contacto" placeholder="Ej: interno 123 o tu mail"></div>
       <div class="field"><label>Asunto</label><input type="text" id="bz_asunto"></div>
       <div class="field"><label>Mensaje</label><textarea id="bz_mensaje" placeholder="Escribí tu mensaje…"></textarea></div>
       <div class="save-bar" style="position:static; justify-content:flex-start; margin-top:8px"><button class="save-btn" onclick="enviarBuzon()">📨 Enviar a HyS</button></div>
@@ -980,13 +988,18 @@ function boolVal(field){ const g=document.querySelector(`[data-field="${field}"]
 
 /* ============ Buzón ============ */
 function enviarBuzon(){
+  const nombre = val('bz_nombre'); const servicio = val('bz_servicio'); const contacto = val('bz_contacto');
   const asunto = val('bz_asunto'); const mensaje = val('bz_mensaje');
+  if(!nombre.trim()){ showToast('Escribí tu nombre antes de enviar'); return; }
+  if(!servicio.trim()){ showToast('Indicá tu servicio o sector'); return; }
+  if(!contacto.trim()){ showToast('Dejá un teléfono o mail de contacto'); return; }
   if(!mensaje.trim()){ showToast('Escribí un mensaje antes de enviar'); return; }
   const key='hmh_buzon';
   const actuales = JSON.parse(localStorage.getItem(key)||'[]');
-  const nuevo = {id:'msg_'+Date.now(), fecha:nowAR(), remitente_rol:currentRole, remitente_label:ROLES[currentRole].label, asunto, mensaje, leido:false, sincronizado:false};
+  const nuevo = {id:'msg_'+Date.now(), fecha:nowAR(), remitente_rol:currentRole, remitente_label:ROLES[currentRole].label, remitente_nombre:nombre, remitente_servicio:servicio, remitente_contacto:contacto, asunto, mensaje, leido:false, sincronizado:false};
   actuales.unshift(nuevo);
   localStorage.setItem(key, JSON.stringify(actuales));
+  document.getElementById('bz_nombre').value=''; document.getElementById('bz_servicio').value=''; document.getElementById('bz_contacto').value='';
   document.getElementById('bz_asunto').value=''; document.getElementById('bz_mensaje').value='';
   syncToSheets('buzon', nuevo).then(ok=>{
     if(ok){
