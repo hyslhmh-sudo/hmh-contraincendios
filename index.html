@@ -74,6 +74,8 @@
   .em-call-btn{background:var(--green); color:#fff; text-align:center; padding:14px; border-radius:999px; font-size:14.5px; font-weight:700; text-decoration:none; display:block;}
 
   /* ---------- MAPA INTERACTIVO PA ---------- */
+  .horizontal-route{fill:none; stroke:#0E7C7B; stroke-width:1; display:none; stroke-dasharray:2.6,1.4; animation:flowRoute 1s linear infinite;}
+  .horizontal-route.show{display:inline;}
   .zona-estanca{display:none; stroke-width:0.4; fill-opacity:0.28;}
   .zona-label-bg{fill:#0D313F; fill-opacity:0.92; stroke:#fff; stroke-width:0.3;}
   .zona-label{font-size:2.8px; font-weight:800; fill:#fff; pointer-events:none;}
@@ -813,12 +815,21 @@
         <input type="checkbox" id="toggleZonas" onchange="toggleZonasEstancas(this.checked)" style="width:18px; height:18px">
         Ver zonas protegidas contra humo
       </label>
+      <label style="font-size:12.5px; font-weight:700; color:var(--navy); display:block; margin-top:14px; margin-bottom:8px">Evacuación horizontal (entre sectores)</label>
+      <select id="horizontalSelect" onchange="mostrarRutaHorizontal(this.value)" style="width:100%; padding:12px; border-radius:10px; border:1.5px solid var(--line); font-size:14px; background:#fff; color:var(--navy)">
+        <option value="">— Elegí un recorrido —</option>
+        <option value="quirofano-a-ucip">Quirófano → UCIP</option>
+        <option value="quirofano-a-neonatologia">Quirófano → Neonatología</option>
+        <option value="ucip-a-neonatologia">UCIP → Neonatología</option>
+        <option value="neonatologia-a-ucip">Neonatología → UCIP</option>
+      </select>
       <div style="display:flex; gap:14px; margin-top:10px; font-size:11.5px; color:var(--ink-soft); flex-wrap:wrap">
         <span><span style="display:inline-block; width:16px; height:3px; background:#0E8F4F; vertical-align:middle; margin-right:4px"></span>Ruta más rápida</span>
         <span><span style="display:inline-block; width:16px; height:3px; background:#1B5FA8; vertical-align:middle; margin-right:4px"></span>Alternativa cercana</span>
         <span><span style="display:inline-block; width:16px; height:3px; background:#C97200; vertical-align:middle; margin-right:4px"></span>Alternativa distante</span>
         <span><span style="display:inline-block; width:16px; height:3px; background:#9B2226; vertical-align:middle; margin-right:4px"></span>Ruta más larga</span>
         <span><span style="display:inline-block; width:16px; height:3px; background:#9a9a9a; vertical-align:middle; margin-right:4px"></span>Salida bloqueada</span>
+        <span><span style="display:inline-block; width:16px; height:3px; background:#0E7C7B; vertical-align:middle; margin-right:4px"></span>Evacuación horizontal</span>
       </div>
     </div>
     <div id="mapaPaWrap" style="position:relative; width:100%; border-radius:var(--radius); overflow:hidden; border:1px solid var(--line)">
@@ -839,6 +850,9 @@
         </marker>
         <marker id="arrow-blocked" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
           <path d="M0,0 L10,5 L0,10 z" fill="#9a9a9a"/>
+        </marker>
+              <marker id="arrow-horizontal" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#0E7C7B"/>
         </marker>
       </defs>
       <g id="zonasGroup">
@@ -907,7 +921,14 @@
       <path class="service-route tier-long" data-service="administracion" data-exit="8" data-tier="3" d="M18.60,71.60 L18.60,22.75 L18.60,38.75 L7.40,38.75 L7.40,48.73" marker-end="url(#arrow-long)"/>
       <path class="service-route tier-fast" data-service="confiteria" data-exit="9" data-tier="0" d="M7.40,97.10 L18.60,97.10 L18.60,82.90 L28.68,82.90 L28.68,97.10" marker-end="url(#arrow-fast)"/>
       <path class="service-route tier-fast" data-service="laboratorio-central" data-exit="9" data-tier="0" d="M34.90,92.70 L51.60,92.70 L51.60,82.90 L28.68,82.90 L28.68,97.10" marker-end="url(#arrow-fast)"/>
-      <path class="service-route tier-fast" data-service="administracion" data-exit="9" data-tier="0" d="M18.60,51.80 L18.60,82.90 L28.68,82.90 L28.68,97.10" marker-end="url(#arrow-fast)"/>      </svg>
+      <path class="service-route tier-fast" data-service="administracion" data-exit="9" data-tier="0" d="M18.60,51.80 L18.60,82.90 L28.68,82.90 L28.68,97.10" marker-end="url(#arrow-fast)"/>      
+<g id="horizontalGroup">
+      <path class="horizontal-route" data-hroute="quirofano-a-ucip" d="M40.70,12.60 L40.70,17.90 L63.92,17.90 L63.92,44.10" marker-end="url(#arrow-horizontal)"/>
+      <path class="horizontal-route" data-hroute="quirofano-a-neonatologia" d="M40.70,12.60 L40.70,17.90 L80.10,17.90 L80.10,34.45 L85.90,34.45" marker-end="url(#arrow-horizontal)"/>
+      <path class="horizontal-route" data-hroute="ucip-a-neonatologia" d="M63.92,44.10 L63.92,17.90 L80.10,17.90 L80.10,34.45 L85.90,34.45" marker-end="url(#arrow-horizontal)"/>
+      <path class="horizontal-route" data-hroute="neonatologia-a-ucip" d="M85.90,34.45 L80.10,34.45 L80.10,17.90 L63.92,17.90 L63.92,44.10" marker-end="url(#arrow-horizontal)"/>
+      </g>
+      </svg>
 
         <div class="map-mk caja-estanca" data-num="1" style="left:11.1%; top:22.2%"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h6v-6h6v-6h6"/></svg></div>
         <div class="map-mk caja-estanca" data-num="2" style="left:41.9%; top:21.5%"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h6v-6h6v-6h6"/></svg></div>
@@ -1175,6 +1196,17 @@ function renderTriviaResultado(){
 }
 
 let servicioActual = '';
+
+function mostrarRutaHorizontal(routeId){
+  document.querySelectorAll('.horizontal-route').forEach(function(r){ r.classList.remove('show'); });
+  if(!routeId) return;
+  const ruta = document.querySelector('.horizontal-route[data-hroute="' + routeId + '"]');
+  if(ruta){
+    ruta.classList.add('show');
+    const svg = document.getElementById('routeSvg');
+    svg.appendChild(ruta);
+  }
+}
 
 function toggleZonasEstancas(mostrar){
   document.querySelectorAll('.zona-estanca').forEach(function(z){
