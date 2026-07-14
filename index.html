@@ -1018,8 +1018,8 @@ function selectRole(btn){
 function togglePass(){
   const input = document.getElementById('loginPass');
   const btn = document.getElementById('togglePassBtn');
-  if(input.type==='password'){ input.type='text'; btn.textContent='<span class="gicon">&#xe8f5;</span>'; }
-  else{ input.type='password'; btn.textContent='<span class="gicon">&#xe8f4;</span>'; }
+  if(input.type==='password'){ input.type='text'; btn.innerHTML='<span class="gicon">&#xe8f5;</span>'; }
+  else{ input.type='password'; btn.innerHTML='<span class="gicon">&#xe8f4;</span>'; }
 }
 
 function doLogin(){
