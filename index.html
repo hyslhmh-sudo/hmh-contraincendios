@@ -81,9 +81,9 @@
   .zona-label{font-size:2.8px; font-weight:800; fill:#fff; pointer-events:none;}
   .service-route{fill:none; stroke-width:0.9; stroke-linecap:round; stroke-linejoin:round; display:none;}
   .service-route.tier-fast{stroke:#0E8F4F;}
-  .service-route.tier-near{stroke:#1B5FA8;}
-  .service-route.tier-far{stroke:#C97200;}
-  .service-route.tier-long{stroke:#9B2226;}
+  .service-route.tier-near{stroke:#0E8F4F;}
+  .service-route.tier-far{stroke:#0E8F4F;}
+  .service-route.tier-long{stroke:#0E8F4F;}
   .service-route.exit9{stroke:#7C3AED;}
   .service-route.show{display:inline;}
   .service-route.show:not(.exit-blocked){stroke-dasharray:2.4,1.6; animation:flowRoute 1s linear infinite;}
@@ -824,10 +824,7 @@
         <option value="neonatologia-a-ucip">Neonatología → UCIP</option>
       </select>
       <div style="display:flex; gap:14px; margin-top:10px; font-size:11.5px; color:var(--ink-soft); flex-wrap:wrap">
-        <span><span style="display:inline-block; width:16px; height:3px; background:#0E8F4F; vertical-align:middle; margin-right:4px"></span>Ruta más rápida</span>
-        <span><span style="display:inline-block; width:16px; height:3px; background:#1B5FA8; vertical-align:middle; margin-right:4px"></span>Alternativa cercana</span>
-        <span><span style="display:inline-block; width:16px; height:3px; background:#C97200; vertical-align:middle; margin-right:4px"></span>Alternativa distante</span>
-        <span><span style="display:inline-block; width:16px; height:3px; background:#9B2226; vertical-align:middle; margin-right:4px"></span>Ruta más larga</span>
+        <span><span style="display:inline-block; width:16px; height:3px; background:#0E8F4F; vertical-align:middle; margin-right:4px"></span>Ruta disponible</span>
         <span><span style="display:inline-block; width:16px; height:3px; background:#9a9a9a; vertical-align:middle; margin-right:4px"></span>Salida bloqueada</span>
         <span><span style="display:inline-block; width:16px; height:3px; background:#0E7C7B; vertical-align:middle; margin-right:4px"></span>Evacuación horizontal</span>
       </div>
@@ -840,13 +837,13 @@
           <path d="M0,0 L10,5 L0,10 z" fill="#0E8F4F"/>
         </marker>
         <marker id="arrow-near" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
-          <path d="M0,0 L10,5 L0,10 z" fill="#1B5FA8"/>
+          <path d="M0,0 L10,5 L0,10 z" fill="#0E8F4F"/>
         </marker>
         <marker id="arrow-far" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
-          <path d="M0,0 L10,5 L0,10 z" fill="#C97200"/>
+          <path d="M0,0 L10,5 L0,10 z" fill="#0E8F4F"/>
         </marker>
         <marker id="arrow-long" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
-          <path d="M0,0 L10,5 L0,10 z" fill="#9B2226"/>
+          <path d="M0,0 L10,5 L0,10 z" fill="#0E8F4F"/>
         </marker>
         <marker id="arrow-blocked" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
           <path d="M0,0 L10,5 L0,10 z" fill="#9a9a9a"/>
@@ -1226,7 +1223,7 @@ function mostrarRutasServicio(servicioKey){
     r.classList.add('show');
     const exitNum = r.dataset.exit;
     const tier = r.dataset.tier;
-    const tierArrow = ['arrow-fast','arrow-near','arrow-far','arrow-long'][tier];
+    const tierArrow = 'arrow-fast';
     if(bloqueadas.includes(exitNum)){
       r.classList.add('exit-blocked');
       r.setAttribute('marker-end', 'url(#arrow-blocked)');
