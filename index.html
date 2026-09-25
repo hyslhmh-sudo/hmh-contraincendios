@@ -197,6 +197,7 @@
   .pass-row{display:flex; gap:12px; align-items:center; padding:8px 0; border-top:1px dashed var(--line); font-size:13.5px;}
   .pass-row:first-child{border-top:none;}
   .pass-row .l{flex:none; width:34px; height:34px; border-radius:9px; color:#fff; font-weight:800; font-size:16px; display:flex; align-items:center; justify-content:center;}
+  .em-cel{display:inline-flex; align-items:center; gap:6px; margin-top:10px; background:#fff; color:var(--red); font-weight:800; font-size:14px; padding:9px 14px; border-radius:999px; text-decoration:none;}
   .em-strip{margin-top:16px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); border-radius:14px; padding:12px 14px; color:#fff; font-size:13.5px; display:flex; align-items:center; gap:10px;}
   .em-strip b{font-size:17px;}
   .em-steps{margin:0 0 16px;}
@@ -320,7 +321,7 @@
       <button class="em-tile" style="background:#6B4E16" onclick="emGoTo('gas')"><span class="em-ic"><span class="gicon">&#xe51e;</span></span><span>Olor a gas</span></button>
       <button class="em-tile" style="background:var(--steel)" onclick="emGoTo('alarma')"><span class="em-ic"><span class="gicon">&#xe7f7;</span></span><span>Suena la alarma</span></button>
     </div>
-    <div class="em-strip"><span class="gicon" style="font-size:22px">&#xf0d4;</span><div>Ante fuego o humo, llamá al Conmutador: <b>interno 1000</b></div></div>
+    <div class="em-strip"><span class="gicon" style="font-size:22px">&#xf0d4;</span><div>Ante fuego o humo, llamá al Conmutador: <b>interno 1000</b><br><a href="tel:+542804468400" style="color:#fff; font-weight:700">Desde celular: 280 4468-400</a></div></div>
   </div>
 
   <div class="em-view" id="em-fuego">
@@ -329,6 +330,7 @@
       <div class="lbl">LLAMÁ AL CONMUTADOR · 24 HS</div>
       <div class="num">Interno 1000</div>
       <div class="sub">Desde un teléfono fijo del hospital. Activa el <b>Código Rojo</b> y avisa a todos.</div>
+      <a class="em-cel" href="tel:+542804468400"><span class="gicon">&#xf0d4;</span> Sin fijo cerca: 280 4468-400</a>
     </div>
     <div class="em-block"><b>1 · Rescatá, solo si es seguro</b>
       <ul class="em-list">
@@ -739,7 +741,7 @@
     <div class="section-head"><h2>Teléfonos útiles</h2><p>Los internos se marcan desde un teléfono fijo del hospital.</p></div>
     <div class="card" style="padding:6px 14px">
       <div class="phone-row"><div class="pi" style="background:var(--red); color:#fff"><span class="gicon">&#xf0d4;</span></div><div class="meta"><b>Conmutador (Interno)</b><span>Ante fuego o humo: único número a llamar</span></div><a class="call-btn" href="tel:1000"><span class="gicon">&#xf0d4;</span> 1000</a></div>
-      <div class="phone-row"><div class="pi"><span class="gicon">&#xe9b2;</span></div><div class="meta"><b>Hospital</b><span>Línea externa, desde celular</span></div><a class="call-btn" href="tel:+542804468400"><span class="gicon">&#xf0d4;</span> 280 4468-400</a></div>
+      <div class="phone-row"><div class="pi"><span class="gicon">&#xe9b2;</span></div><div class="meta"><b>Conmutador desde celular</b><span>Línea externa del hospital, 24 hs</span></div><a class="call-btn" href="tel:+542804468400"><span class="gicon">&#xf0d4;</span> 280 4468-400</a></div>
       <div class="phone-row"><div class="pi"><span class="gicon">&#xe32a;</span></div><div class="meta"><b>Seguridad (Interno)</b><span>Seguridad del hospital</span></div><a class="call-btn" href="tel:1028"><span class="gicon">&#xf0d4;</span> 1028</a></div>
       <div class="phone-row"><div class="pi"><span class="gicon">&#xf8cd;</span></div><div class="meta"><b>Mantenimiento (Interno)</b><span>Fallas técnicas</span></div><a class="call-btn" href="tel:1051"><span class="gicon">&#xf0d4;</span> 1051</a></div>
       <div class="phone-row"><div class="pi"><span class="gicon">&#xf8f2;</span></div><div class="meta"><b>Bomberos</b><span>Emergencia externa</span></div><a class="call-btn" href="tel:100"><span class="gicon">&#xf0d4;</span> 100</a></div>
