@@ -108,6 +108,7 @@
   @keyframes flowRoute{ to{ stroke-dashoffset:-4.1; } }
   .map-mk{position:absolute; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:16px; transform:translate(-50%,-50%); cursor:pointer; border:3px solid #fff; box-shadow:0 1px 4px rgba(0,0,0,.25);}
   .map-mk.salida{background:var(--red);}
+  .map-mk.salida::after, .map-mk-pb.salida-pb::after{content:attr(data-num); position:absolute; top:-11px; left:50%; transform:translateX(-50%); min-width:17px; height:17px; padding:0 3px; border-radius:999px; background:var(--navy); color:#fff; font-size:10px; font-weight:800; line-height:17px; text-align:center; font-family:inherit; box-sizing:border-box;}
   .map-mk.salida.escalera-pb{background:#7C3AED;}
   .map-mk.salida.blocked{background:#7a7a7a;}
   .map-mk.salida.available-highlight{box-shadow:0 0 0 4px var(--green), 0 1px 4px rgba(0,0,0,.25); animation:pulseGreen 1.2s ease-in-out infinite;}
@@ -122,8 +123,10 @@
   .top-inner{max-width:1000px; margin:0 auto; display:flex; align-items:center; gap:12px; padding:14px 18px;}
   .brand-mark{flex:none; border-radius:9px; background:#fff; padding:6px 10px; display:flex; align-items:center; justify-content:center; box-shadow:0 1px 3px rgba(0,0,0,.15);}
   .brand-mark img{height:24px; display:block;}
-  .top-inner > div:not(.brand-mark){min-width:0; flex:1;}
-  .top-inner h1{font-size:16px; line-height:1.15; overflow-wrap:break-word;}
+  .top-inner > div:not(.brand-mark):not(.top-actions){min-width:0; flex:1;}
+  .top-actions{flex:none;}
+  @media(max-width:520px){ .top-inner{gap:8px; padding:12px 14px;} .brand-mark img{height:20px;} .top-inner > div:not(.brand-mark):not(.top-actions){display:none;} }
+  .top-inner h1{font-size:16px; line-height:1.15;}
   .top-inner .sub{font-size:11.5px; color:#B8C3D9; margin-top:2px; display:flex; align-items:center; gap:6px;}
   .role-pill{background:var(--steel); color:#fff; font-size:10px; font-weight:800; padding:2px 8px; border-radius:999px; text-transform:uppercase; letter-spacing:.4px;}
   .top-actions{margin-left:auto; display:flex; gap:8px;}
@@ -131,7 +134,7 @@
   .icon-btn.show{display:inline-flex; align-items:center; gap:6px;}
   .icon-btn.hide{display:none;}
 
-  main{max-width:900px; margin:0 auto; padding:20px 16px 40px;}
+  main{max-width:900px; margin:0 auto; padding:20px 16px calc(90px + env(safe-area-inset-bottom));}
   .view{display:none;} .view.active{display:block; animation:fade .18s ease;}
   @keyframes fade{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;}}
 
@@ -231,6 +234,8 @@
   nav.bottom button{flex:1; background:none; border:none; padding:10px 4px 8px; display:flex; flex-direction:column; align-items:center; gap:4px; color:var(--ink-soft); font-size:11px;}
   nav.bottom button.active{color:var(--steel);}
 
+  .offline-pill{display:none !important;}
+  .offline-pill.off{display:flex !important;}
   .offline-pill{position:fixed; top:10px; right:10px; z-index:60; background:var(--green); color:#fff; font-size:11px; font-weight:700; padding:5px 10px; border-radius:999px; display:flex; align-items:center; gap:5px; box-shadow:0 4px 10px rgba(0,0,0,.15);}
   .offline-pill.off{background:var(--ink-soft);}
   .offline-pill .dot{width:7px;height:7px;border-radius:999px;background:#fff;}
@@ -333,7 +338,7 @@
     </div>
     <div class="em-block"><b>5 · Un solo intento, nunca más de uno</b>
       <ul class="em-list">
-        <li>Método PASS: <b>P</b>repará, <b>A</b>puntá a la base, <b>P</b>resioná, <b>B</b>arré.</li>
+        <li>Método PASS: prepará (quitá el precinto), apuntá a la base, presioná y barré.</li>
         <li>Si no cede en ese intento: dejá, cerrá la puerta, <b>evacuá</b> y avisá el resultado al Conmutador.</li>
         <li>Aunque lo apagues, <b>Bomberos viene igual</b> a verificar rescoldo oculto. El llamado no se cancela.</li>
       </ul>
@@ -400,7 +405,7 @@
 
 <!-- ===================== APP ===================== -->
 <div id="app-shell">
-<div class="offline-pill" id="netPill"><span class="dot"></span><span id="netText">Guardado local activo</span></div>
+<div class="offline-pill" id="netPill"><span class="dot"></span><span id="netText">Conectado</span></div>
 
 <header class="top">
   <div class="stripe"></div>
@@ -451,7 +456,7 @@
     <div class="tile" style="--tile-accent:var(--green)" onclick="goTo(&#39;buzon&#39;)">
       <div class="icon-wrap"><span class="gicon">&#xe159;</span></div>
       <h3>Buzón a HyS</h3>
-      <p>Enviar y ver mensajes.</p>
+      <p>Observaciones, sugerencias y consultas.</p>
     </div>
     <div class="tile" style="--tile-accent:var(--steel)" onclick="goTo(&#39;recursos&#39;)">
       <div class="icon-wrap"><span class="gicon">&#xe04b;</span></div>
@@ -509,19 +514,11 @@
       <ul class="checklist">
         <li><span class="dot"></span><div><span class="gicon">&#xe77c;</span> Tené siempre una vía de escape libre a tu espalda.</div></li>
         <li><span class="dot"></span><div><span class="gicon">&#xe8f4;</span> Observá el fuego, el humo y el entorno antes de actuar.</div></li>
-        <li><span class="dot"></span><div><span class="gicon">&#xe566;</span> Si no podés controlarlo, evacuá y llamá a emergencias.</div></li>
-        <li><span class="dot"></span><div><span class="gicon">&#xe85d;</span> Informá del uso del extintor al personal de la institución.</div></li>
+        <li><span class="dot"></span><div><span class="gicon">&#xe566;</span> Si no lo controlás en el primer intento, cerrá la puerta y evacuá.</div></li>
+        <li><span class="dot"></span><div><span class="gicon">&#xe85d;</span> Informá al Conmutador el resultado del intento y que se usó el extintor.</div></li>
       </ul>
     </div>
-    <div class="card" style="margin-top:16px">
-      <h3 class="blk"><span class="gicon">&#xe9de;</span> Usá el extintor únicamente si</h3>
-      <ul class="checklist">
-        <li><span class="dot"></span><div>El incendio es incipiente.</div></li>
-        <li><span class="dot"></span><div>Conocés su utilización.</div></li>
-        <li><span class="dot"></span><div>Tenés una salida libre detrás suyo.</div></li>
-        <li><span class="dot"></span><div>No hay humo intenso.</div></li>
-      </ul>
-    </div>
+    
     
     <div class="card" style="padding:0; overflow:hidden; margin-top:16px">
       <h3 class="blk" style="margin:0; border-radius:var(--radius) var(--radius) 0 0">Video: uso del extintor</h3>
@@ -532,7 +529,7 @@
     <div class="card" style="margin-top:16px">
       <h3 class="blk">Extintor según el tipo de fuego</h3>
       <ul class="checklist">
-        <li><span class="dot"></span><div><b>ABC (PQS)</b> — sólidos comunes y líquidos inflamables (papel, cartón, madera, textiles).</div></li>
+        <li><span class="dot"></span><div><b>ABC (PQS)</b> — sólidos comunes (papel, cartón, madera, textiles), líquidos inflamables y equipos eléctricos.</div></li>
         <li><span class="dot"></span><div><b>HCFC-123</b> — equipos electrónicos y áreas con instrumental sensible (no deja residuo).</div></li>
         <li><span class="dot"></span><div><b>CO₂</b> — equipos y tableros eléctricos.</div></li>
         <li><span class="dot"></span><div><b>Clase D</b> — Laboratorio de Citogenética (metales combustibles).</div></li>
@@ -553,7 +550,7 @@
   </section>
 
   <!-- ===================== EVACUACIÓN ===================== -->
-  <section class="view active" id="view-evacuacion">
+  <section class="view" id="view-evacuacion">
     <div class="section-head"><h2>Evacuación</h2><p>Pasos a seguir y planos de rutas por planta.</p></div>
     <div style="height:14px"></div>
     <div class="card" style="padding:0; overflow:hidden; margin-top:16px">
@@ -665,9 +662,6 @@
   <!-- ===================== TELÉFONOS ===================== -->
   <section class="view" id="view-telefonos">
     <div class="section-head"><h2>Teléfonos útiles</h2><p>Tocá "Llamar" para marcar directo.</p></div>
-    <div class="card" style="padding:0; overflow:hidden">
-      
-    </div>
     <div class="card" style="padding:6px 14px">
       <div class="phone-row"><div class="pi" style="background:var(--red); color:#fff"><span class="gicon">&#xf0d4;</span></div><div class="meta"><b>Conmutador (Interno)</b><span>Ante incendio: único número a llamar. Activa el Código Rojo</span></div><a class="call-btn" href="tel:100"><span class="gicon">&#xf0d4;</span> 100</a></div>
       <div class="phone-row"><div class="pi"><span class="gicon">&#xe32a;</span></div><div class="meta"><b>Seguridad (Interno)</b><span>Seguridad del hospital</span></div><a class="call-btn" href="tel:262"><span class="gicon">&#xf0d4;</span> 262</a></div>
@@ -685,13 +679,12 @@
       <div class="field"><label>Nombre y apellido *</label><input type="text" id="bz_nombre" placeholder="Tu nombre"></div>
       <div class="field"><label>Servicio / Sector *</label><input type="text" id="bz_servicio" placeholder="Ej: Pediatría, Guardia, Mantenimiento…" list="bz_servicios_list">
         <datalist id="bz_servicios_list">
-          <option value="Esterilización"><option value="Guardia Obstétrica"><option value="Laboratorio">
-          <option value="Neonatología"><option value="Pediatría"><option value="Quirófano"><option value="UTPR">
+          <option value="Administración"><option value="Admisión"><option value="Anatomía Patológica y Morgue"><option value="Cocina"><option value="Confitería"><option value="Consultorios"><option value="Consultorios UMU"><option value="Cuidados Progresivos"><option value="Diagnóstico por Imágenes"><option value="Esterilización"><option value="Guardia"><option value="Guardia Obstétrica"><option value="Guardia Pediátrica"><option value="Laboratorio Central"><option value="Mamógrafo"><option value="Mantenimiento"><option value="Neonatología"><option value="Observación UMU"><option value="Oncología"><option value="Pediatría"><option value="Quirófano"><option value="Residencia Madres"><option value="Residencia Médica"><option value="Residencias"><option value="Servicios Generales"><option value="Supervisión de Enfermería"><option value="UCIP"><option value="UMU"><option value="UTI"><option value="UTPR">
         </datalist>
       </div>
       <div class="field"><label>Contacto (teléfono interno o mail) *</label><input type="text" id="bz_contacto" placeholder="Ej: interno 123 o tu mail"></div>
       <div class="field"><label>Asunto</label><input type="text" id="bz_asunto"></div>
-      <div class="field"><label>Mensaje</label><textarea id="bz_mensaje" placeholder="Escribí tu mensaje…"></textarea></div>
+      <div class="field"><label>Mensaje *</label><textarea id="bz_mensaje" placeholder="Escribí tu mensaje…"></textarea></div>
       <div class="save-bar" style="position:static; justify-content:flex-start; margin-top:8px"><button class="save-btn" onclick="enviarBuzon()"><span class="gicon">&#xe159;</span> Enviar a HyS</button></div>
     </div>
     <p style="font-size:12px; color:var(--ink-soft); margin-top:10px">Tu mensaje se envía directo por mail a Higiene y Seguridad. No queda visible para otras personas dentro de la app.</p>
@@ -924,7 +917,7 @@
         <rect class="zona-estanca zona-label-bg" data-zona="zona-7" x="65.40" y="25.20" width="17.60" height="7.40" rx="0.9"/>
         <text class="zona-estanca zona-label" data-zona="zona-7" x="74.20" text-anchor="middle"><tspan x="74.20" y="27.75">ESCALERA</tspan><tspan x="74.20" y="31.15">5</tspan></text>
       </g>
-                              <path class="service-route tier-near" data-service="neonatologia" data-exit="4" data-tier="1" d="M86.03,38.75 L86.03,34.45 L86.03,31.00 L86.03,34.45 L83.35,34.45 L80.10,34.45 L80.10,17.90 L93.97,17.90" marker-end="url(#arrow-fast)"/>
+                              <path class="service-route tier-near" data-service="neonatologia" data-exit="4" data-tier="1" d="M86.03,38.75 L86.03,34.45 L83.35,34.45 L80.10,34.45 L80.10,17.90 L93.97,17.90" marker-end="url(#arrow-fast)"/>
       <path class="service-route tier-far" data-service="neonatologia" data-exit="7" data-tier="2" d="M86.03,34.45 L80.10,34.45 L80.10,82.90 L93.97,82.90" marker-end="url(#arrow-fast)"/>
       <path class="service-route tier-fast" data-service="neonatologia" data-exit="4" data-tier="0" d="M91.00,28.90 L91.00,17.90 L93.97,17.90" marker-end="url(#arrow-fast)"/>
       <path class="service-route tier-long" data-service="neonatologia" data-exit="8" data-tier="3" d="M86.03,34.45 L80.10,34.45 L80.10,17.90 L7.40,17.90 L7.40,48.73" marker-end="url(#arrow-fast)"/>
@@ -964,7 +957,7 @@
       <path class="service-route tier-far" data-service="oncologia" data-exit="8" data-tier="2" d="M60.10,97.10 L57.30,97.10 L57.30,82.90 L7.40,82.90 L7.40,48.73" marker-end="url(#arrow-fast)"/>
       <path class="service-route tier-far" data-service="confiteria" data-exit="8" data-tier="2" d="M18.60,97.10 L7.40,97.10 L7.40,48.73" marker-end="url(#arrow-fast)"/>
       <path class="service-route tier-long" data-service="confiteria" data-exit="7" data-tier="3" d="M18.60,97.10 L18.60,82.90 L93.97,82.90" marker-end="url(#arrow-fast)"/>
-      <path class="service-route tier-long" data-service="administracion" data-exit="8" data-tier="3" d="M18.60,71.60 L18.60,22.75 L18.60,38.75 L7.40,38.75 L7.40,48.73" marker-end="url(#arrow-fast)"/>
+      <path class="service-route tier-long" data-service="administracion" data-exit="8" data-tier="3" d="M18.60,71.60 L18.60,38.75 L7.40,38.75 L7.40,48.73" marker-end="url(#arrow-fast)"/>
       <path class="service-route tier-fast" data-service="confiteria" data-exit="9" data-tier="0" d="M7.40,97.10 L18.60,97.10 L18.60,82.90 L28.68,82.90 L28.68,97.10" marker-end="url(#arrow-fast)"/>
       <path class="service-route tier-fast" data-service="laboratorio-central" data-exit="9" data-tier="0" d="M34.90,92.70 L51.60,92.70 L51.60,82.90 L28.68,82.90 L28.68,97.10" marker-end="url(#arrow-fast)"/>
       <path class="service-route tier-fast" data-service="administracion" data-exit="9" data-tier="0" d="M18.60,51.80 L18.60,82.90 L28.68,82.90 L28.68,97.10" marker-end="url(#arrow-fast)"/>
@@ -997,7 +990,7 @@
   <!-- ===================== MAPA INTERACTIVO PB ===================== -->
   <section class="view" id="view-mapa-pb">
     <div style="margin-bottom:12px"><span style="font-size:12.5px; color:var(--steel-dark); font-weight:700; cursor:pointer" onclick="goTo('planos-menu')">← Planos por servicio</span></div>
-    <div class="section-head"><h2>Mapa interactivo — Planta Baja</h2><p>Tocá una salida (🚪) para simular que está bloqueada.</p></div>
+    <div class="section-head"><h2>Mapa interactivo — Planta Baja</h2><p>Tocá una salida (<span class="gicon">&#xe77c;</span>) para simular que está bloqueada.</p></div>
     <div class="card" style="margin-bottom:12px; padding:12px">
       <div style="display:flex; flex-direction:column; gap:8px; font-size:12px; color:var(--ink-soft)">
         <div><span style="display:inline-block; width:14px; height:14px; border-radius:50%; background:var(--red); vertical-align:middle; margin-right:6px"></span>Salida real al exterior — tocar para bloquear/desbloquear</div>
@@ -1082,7 +1075,7 @@
       <path class="service-route-pb" data-service="umu" data-exit="9" d="M27.30,34.13 L27.30,41.60 L68.70,41.60" marker-end="url(#arrow-pb)"/>
       <path class="service-route-pb" data-service="consultorios-umu" data-exit="9" d="M37.00,34.13 L37.00,39.07 L37.00,41.60 L68.70,41.60" marker-end="url(#arrow-pb)"/>
       <path class="service-route-pb" data-service="consultorios-umu" data-exit="2" d="M41.20,39.07 L41.20,34.13 L46.02,34.13 L46.02,29.80 L50.00,29.80" marker-end="url(#arrow-pb)"/>
-      <path class="service-route-pb" data-service="admision" data-exit="12" d="M5.40,64.50 L8.34,64.50 L8.34,62.80 L8.34,74.65 L8.34,68.50 L2.70,68.50 L2.70,77.30 L2.70,85.53" marker-end="url(#arrow-pb)"/>
+      <path class="service-route-pb" data-service="admision" data-exit="12" d="M5.40,64.50 L8.34,64.50 L8.34,68.50 L2.70,68.50 L2.70,85.53" marker-end="url(#arrow-pb)"/>
       <path class="service-route-pb" data-service="admision" data-exit="10" d="M8.34,68.50 L2.70,68.50 L2.70,41.60" marker-end="url(#arrow-pb)"/>
       <path class="service-route-pb" data-service="sala-de-espera-admision" data-exit="12" d="M11.40,57.75 L11.40,85.53 L8.34,85.53" marker-end="url(#arrow-pb)"/>
       <path class="service-route-pb" data-service="sala-de-espera-admision" data-exit="10" d="M11.40,70.70 L11.40,57.75 L2.70,57.75 L2.70,41.60" marker-end="url(#arrow-pb)"/>
@@ -1096,7 +1089,7 @@
       <path class="service-route-pb" data-service="pasillo-lavadero" data-exit="6" d="M88.80,25.80 L88.80,14.80" marker-end="url(#arrow-pb)"/>
       <path class="service-route-pb" data-service="servicios-generales" data-exit="2" d="M88.80,24.05 L46.02,24.05 L46.02,29.80 L50.00,29.80" marker-end="url(#arrow-pb)"/>
       <path class="service-route-pb" data-service="servicios-generales" data-exit="6" d="M46.02,24.05 L88.80,24.05 L88.80,25.80" marker-end="url(#arrow-pb)"/>
-      <path class="service-route-pb" data-service="servicios-generales" data-exit="3" d="M46.02,24.05 L68.70,24.05 L62.64,24.05 L62.64,25.80" marker-end="url(#arrow-pb)"/>
+      <path class="service-route-pb" data-service="servicios-generales" data-exit="3" d="M46.02,24.05 L62.64,24.05 L62.64,25.80" marker-end="url(#arrow-pb)"/>
       <path class="service-route-pb" data-service="servicios-generales" data-exit="4" d="M68.70,24.05 L80.60,24.05 L73.10,24.05" marker-end="url(#arrow-pb)"/>
       </svg>
 
@@ -1158,7 +1151,7 @@ const TILES = [
   {id:'evacuacion', title:'Evacuación',        desc:'Planos y rutas de evacuación por planta.', icon:'<span class="gicon">&#xe566;</span>', accent:'var(--amber)',  roles:['publico','admin']},
   {id:'roles',      title:'Roles en emergencia', desc:'Quién hace qué en una activación.', icon:'<span class="gicon">&#xf233;</span>', accent:'var(--navy-2)', roles:['publico','admin']},
   {id:'telefonos',  title:'Teléfonos útiles',   desc:'Llamada directa a los contactos clave.', icon:'<span class="gicon">&#xf0d4;</span>', accent:'var(--green)',  roles:['publico','admin']},
-  {id:'buzon',      title:'Buzón a HyS',        desc:'Enviar y ver mensajes.', icon:'<span class="gicon">&#xe159;</span>', accent:'var(--green)',  roles:['publico','admin']},
+  {id:'buzon',      title:'Buzón a HyS',        desc:'Observaciones, sugerencias y consultas.', icon:'<span class="gicon">&#xe159;</span>', accent:'var(--green)',  roles:['publico','admin']},
   {id:'recursos',   title:'Recursos',           desc:'Videos y presentaciones de capacitación.', icon:'<span class="gicon">&#xe04b;</span>', accent:'var(--steel)', roles:['publico','admin']},
 ];
 
@@ -1402,6 +1395,7 @@ let servicioActualPB = '';
 
 function mostrarRutasServicioPB(servicioKey){
   servicioActualPB = servicioKey;
+  notaSalidas('.service-route-pb', '.map-mk-pb.salida-pb', 'blocked-pb', servicioKey, document.getElementById('mapaPbNota'), document.getElementById('mapaPbNotaTexto'));
   const rutas = document.querySelectorAll('.service-route-pb');
   rutas.forEach(function(r){ r.classList.remove('show', 'exit-blocked'); });
   if(!servicioKey) return;
@@ -1422,28 +1416,29 @@ function mostrarRutasServicioPB(servicioKey){
   });
 }
 
+function listaNum(arr){ return arr.length<=1 ? arr.join('') : arr.slice(0,-1).join(', ') + ' y ' + arr[arr.length-1]; }
+function notaSalidas(rutaSel, mkSel, blockedCls, servicio, notaEl, textoEl){
+  const bloqueadas = Array.from(document.querySelectorAll(mkSel+'.'+blockedCls)).map(s=>s.dataset.num);
+  if(bloqueadas.length === 0){ notaEl.style.display='none'; return; }
+  notaEl.style.display='block';
+  if(!servicio){ textoEl.innerHTML = 'Salida(s) ' + listaNum(bloqueadas) + ' bloqueada(s). Elegí tu servicio para ver qué rutas te quedan.'; return; }
+  const propias = Array.from(new Set(Array.from(document.querySelectorAll(rutaSel+'[data-service="'+servicio+'"]')).map(r=>r.dataset.exit)));
+  const libres = propias.filter(n=>!bloqueadas.includes(n)).sort((a,b)=>a-b);
+  if(libres.length === 0){
+    textoEl.innerHTML = '<span class="gicon">&#xf083;</span> Todas las salidas de tu servicio están bloqueadas. Dirigite a la caja de escalera estanca más cercana (círculo celeste con escalera) y esperá indicaciones.';
+  } else {
+    textoEl.innerHTML = 'Salida(s) disponible(s) para tu servicio: <b>' + listaNum(libres) + '</b>. Dirigite a la más cercana a tu posición.';
+  }
+}
 function toggleSalidaPB(el){
   el.classList.toggle('blocked-pb');
-  const nota = document.getElementById('mapaPbNota');
-  const notaTexto = document.getElementById('mapaPbNotaTexto');
-  const salidas = document.querySelectorAll('.map-mk-pb.salida-pb');
-  const bloqueadas = document.querySelectorAll('.map-mk-pb.salida-pb.blocked-pb');
   if(servicioActualPB) mostrarRutasServicioPB(servicioActualPB);
-  if(bloqueadas.length === 0){
-    nota.style.display = 'none';
-    return;
-  }
-  nota.style.display = 'block';
-  const disponibles = salidas.length - bloqueadas.length;
-  if(disponibles <= 0){
-    notaTexto.innerHTML = '⚠️ Todas las salidas marcadas quedaron bloqueadas. Dirigite a la caja de escalera estanca más cercana y esperá indicaciones.';
-  } else {
-    notaTexto.innerHTML = '🟢 Hay ' + disponibles + ' salida(s) más disponibles — elegí el servicio del desplegable para ver sus rutas restantes.';
-  }
+  notaSalidas('.service-route-pb', '.map-mk-pb.salida-pb', 'blocked-pb', servicioActualPB, document.getElementById('mapaPbNota'), document.getElementById('mapaPbNotaTexto'));
 }
 
 function mostrarRutasServicio(servicioKey){
   servicioActual = servicioKey;
+  notaSalidas('.service-route', '.map-mk.salida', 'blocked', servicioKey, document.getElementById('mapaPaNota'), document.getElementById('mapaPaNotaTexto'));
   const svg = document.getElementById('routeSvg');
   const rutas = document.querySelectorAll('.service-route');
   rutas.forEach(function(r){ r.classList.remove('show', 'exit-blocked'); });
@@ -1466,25 +1461,10 @@ function mostrarRutasServicio(servicioKey){
 
 function toggleSalida(el){
   el.classList.toggle('blocked');
-  const nota = document.getElementById('mapaPaNota');
-  const notaTexto = document.getElementById('mapaPaNotaTexto');
   const salidas = document.querySelectorAll('.map-mk.salida');
-  const bloqueadas = document.querySelectorAll('.map-mk.salida.blocked');
-  salidas.forEach(function(s){ s.classList.remove('available-highlight'); });
+  salidas.forEach(function(s){ s.classList.toggle('available-highlight', document.querySelector('.map-mk.salida.blocked') && !s.classList.contains('blocked')); });
   if(servicioActual) mostrarRutasServicio(servicioActual);
-  if(bloqueadas.length === 0){
-    nota.style.display = 'none';
-    return;
-  }
-  const disponibles = Array.from(salidas).filter(function(s){ return !s.classList.contains('blocked'); });
-  disponibles.forEach(function(s){ s.classList.add('available-highlight'); });
-  nota.style.display = 'block';
-  if(disponibles.length === 0){
-    notaTexto.innerHTML = '<span class="gicon">&#xf083;</span> Todas las salidas marcadas como bloqueadas. Dirigite a la caja de escalera estanca más cercana (<span class="gicon">&#xe899;</span>) y esperá indicaciones.';
-  } else {
-    const nums = disponibles.map(function(s){ return s.dataset.num; }).join(' y ');
-    notaTexto.innerHTML = '🟢 Salida(s) ' + nums + ' disponible(s) — dirigite a la más cercana a tu posición.';
-  }
+  notaSalidas('.service-route', '.map-mk.salida', 'blocked', servicioActual, document.getElementById('mapaPaNota'), document.getElementById('mapaPaNotaTexto'));
 }
 
 function goTo(name){
@@ -1523,14 +1503,18 @@ function enviarBuzon(){
   localStorage.setItem(key, JSON.stringify(actuales));
   document.getElementById('bz_nombre').value=''; document.getElementById('bz_servicio').value=''; document.getElementById('bz_contacto').value='';
   document.getElementById('bz_asunto').value=''; document.getElementById('bz_mensaje').value='';
+  if(!navigator.onLine){ showToast('Sin conexión: tu mensaje quedó guardado y se envía al reconectar'); return; }
+  showToast('Enviando…');
   syncToSheets('buzon', nuevo).then(ok=>{
     if(ok){
       const arr = JSON.parse(localStorage.getItem(key)||'[]');
       const idx = arr.findIndex(m=>m.id===nuevo.id);
       if(idx>-1){ arr[idx].sincronizado = true; localStorage.setItem(key, JSON.stringify(arr)); }
+      showToast('Mensaje enviado a HyS');
+    } else {
+      showToast('No se pudo enviar ahora. Se reintenta al recuperar la conexión');
     }
   });
-  showToast(sincronizacionActiva() ? 'Mensaje enviado a HyS <span class="gicon">&#xe159;</span>' : 'Guardado local — falta conectar la planilla para enviar el mail');
 }
 /* La bandeja visible en la app fue deshabilitada: los mensajes solo llegan por mail a hysl.hmh@gmail.com. */
 function renderBuzon(){}
@@ -1549,8 +1533,8 @@ window.addEventListener('online', reintentarPendientes);
 /* ============ Conexión ============ */
 function updateNet(){
   const pill=document.getElementById('netPill'); const txt=document.getElementById('netText');
-  if(navigator.onLine){ pill.classList.remove('off'); txt.textContent='Guardado local activo'; }
-  else { pill.classList.add('off'); txt.textContent='Sin conexión — guardando en el equipo'; }
+  if(navigator.onLine){ pill.classList.remove('off'); txt.textContent='Conectado'; }
+  else { pill.classList.add('off'); txt.textContent='Sin conexión — los mensajes se envían al reconectar'; }
 }
 window.addEventListener('online', updateNet);
 window.addEventListener('offline', updateNet);
