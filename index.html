@@ -1644,7 +1644,7 @@ document.addEventListener('toggle', function(e){
 // El avance queda guardado en el celular: si se sale y se vuelve, continúa.
 const CAP_KEY = 'hmh_cap_5cbm6aCkpzc';
 const CAP_UMBRAL = 0.9;
-let capPlayer = null, capTimer = null, capApiPedida = false;
+let capPlayer = null, capTimer = null, capApiPedida = false, capListo = false, capVigia = null;
 function capEstado(){ try{ return JSON.parse(localStorage.getItem(CAP_KEY)) || {visto:0, dur:0, ok:false}; }catch(e){ return {visto:0, dur:0, ok:false}; } }
 function capGuardar(st){ try{ localStorage.setItem(CAP_KEY, JSON.stringify(st)); }catch(e){} }
 function capPintar(){
@@ -1677,7 +1677,7 @@ function capIniciarPlayer(){
   const f = document.getElementById('capVideo');
   if(!f || !f.getAttribute('src') || !(window.YT && YT.Player)) return;
   capPlayer = new YT.Player(f, {events:{
-    onReady: function(){ const st=capEstado(); if(!st.dur){ st.dur = capPlayer.getDuration(); capGuardar(st); } capPintar(); },
+    onReady: function(){ capListo = true; const st=capEstado(); if(!st.dur){ st.dur = capPlayer.getDuration(); capGuardar(st); } capPintar(); },
     onStateChange: function(e){ if(e.data === 0){ const st=capEstado(); if(st.dur && st.visto >= st.dur*0.5){ st.ok = true; capGuardar(st); capPintar(); } } }
   }});
   clearInterval(capTimer); capTimer = setInterval(capTick, 1000);
@@ -1688,12 +1688,15 @@ document.addEventListener('toggle', function(e){
   if(!(d instanceof HTMLDetailsElement) || !d.querySelector('#capVideo')) return;
   if(d.open){
     capPintar();
+    capListo = false;
     if(window.YT && YT.Player){ setTimeout(capIniciarPlayer, 50); }
     else if(!capApiPedida){
       capApiPedida = true;
       const sc = document.createElement('script'); sc.src = 'https://www.youtube.com/iframe_api'; document.head.appendChild(sc);
-      setTimeout(function(){ if(!(window.YT && YT.Player) && !capEstado().ok){ document.getElementById('capManual').style.display='flex'; } }, 8000);
     }
+    // Plan B: si en 8 segundos no se pudo conectar con el video, se ofrece la confirmación manual.
+    clearTimeout(capVigia);
+    capVigia = setTimeout(function(){ if(!capListo && !capEstado().ok){ document.getElementById('capManual').style.display='flex'; } }, 8000);
   } else { clearInterval(capTimer); capPlayer = null; }
 }, true);
 
