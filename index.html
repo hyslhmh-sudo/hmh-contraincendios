@@ -303,22 +303,25 @@
     <h2 class="em-title">¿Qué está pasando?</h2>
     <div class="em-grid">
       <button class="em-tile" style="background:var(--red)" onclick="emGoTo('fuego')">
-        <span class="em-ic"><span class="gicon">&#xef55;</span></span><span>¿Hay fuego o humo?</span>
+        <span class="em-ic"><span class="gicon">&#xef55;</span></span><span>¿Ves fuego?</span>
       </button>
-      <button class="em-tile" style="background:var(--red-dark)" onclick="emGoTo('olor')">
-        <span class="em-ic"><span class="gicon">&#xe51e;</span></span><span>¿Olor a quemado o gas?</span>
+      <button class="em-tile" style="background:var(--red-dark)" onclick="emGoTo('humo')">
+        <span class="em-ic"><span class="gicon">&#xf083;</span></span><span>¿Humo u olor a quemado, sin llama?</span>
+      </button>
+      <button class="em-tile" style="background:#6B4E16" onclick="emGoTo('gas')">
+        <span class="em-ic"><span class="gicon">&#xe51e;</span></span><span>¿Olor a gas?</span>
       </button>
       <button class="em-tile" style="background:var(--amber)" onclick="emGoTo('electrico')">
         <span class="em-ic"><span class="gicon">&#xea0b;</span></span><span>¿Chispazos o corto?</span>
       </button>
-      <button class="em-tile" style="background:var(--steel)" onclick="emGoTo('alarma')">
+      <button class="em-tile" style="background:var(--steel); grid-column:1/-1" onclick="emGoTo('alarma')">
         <span class="em-ic"><span class="gicon">&#xe7f7;</span></span><span>¿Suena la alarma?</span>
       </button>
     </div>
   </div>
 
   <div class="em-view" id="em-fuego">
-    <h2 class="em-sub-title"><span class="gicon">&#xef55;</span> ¿Hay fuego o humo?</h2>
+    <h2 class="em-sub-title"><span class="gicon">&#xef55;</span> ¿Ves fuego?</h2>
     <div class="em-conmutador">
       <div class="lbl">LLAMÁ AL CONMUTADOR · 24 HS</div>
       <div class="num">Interno 100</div>
@@ -359,47 +362,78 @@
     </div>
   </div>
 
-  <div class="em-view" id="em-olor">
-    <h2 class="em-sub-title"><span class="gicon">&#xe51e;</span> ¿Olor a quemado o gas?</h2>
-    <div class="em-block"><b>Si es olor a quemado/humo</b>
+  <div class="em-view" id="em-humo">
+    <h2 class="em-sub-title"><span class="gicon">&#xf083;</span> Humo u olor a quemado, sin llama</h2>
+    <p style="color:#B8C3D9; font-size:13px; line-height:1.5; margin:0 0 14px">Misma urgencia que un incendio: puede ser un foco oculto en una pared, un equipo o un tablero.</p>
+    <div class="em-block"><b>1 · ¿Hay chispas o arco eléctrico?</b>
       <ul class="em-list">
-        <li>No lo ignores aunque no veas humo: <b>avisá al Conmutador (interno 100)</b>.</li>
-        <li>Si podés identificar el origen sin riesgo, hacelo.</li>
-        <li>Si el olor aumenta o aparece humo, seguí el protocolo de incendio.</li>
+        <li><b>No toques el equipo ni intentes desconectarlo</b>: riesgo de electrocución. Alejate.</li>
       </ul>
     </div>
-    <div class="em-block"><b>Si es olor a gas</b>
+    <div class="em-block"><b>2 · Alertá — igual que ante incendio</b>
       <ul class="em-list">
-        <li>No enciendas ni apagues luces ni equipos — pueden generar chispa.</li>
-        <li>No uses el celular en la zona.</li>
-        <li>Ventilá si es seguro y alejate.</li>
+        <li>Gritá al compañero más cercano y llamá al <b>Conmutador (interno 100) desde el lugar</b>. Acá sí se usa el teléfono: no hay indicio de gas.</li>
+        <li>No esperes "a ver si se disipa solo".</li>
       </ul>
     </div>
-    <div class="em-block"><b>Monóxido de carbono (CO)</b>
+    <div class="em-block"><b>3 · Qué pasa después</b>
       <ul class="em-list">
-        <li>Es inodoro e incoloro — no lo vas a oler ni ver.</li>
-        <li>Prestá atención a mareo, dolor de cabeza, náuseas o confusión.</li>
-        <li>Ante esos síntomas: salí al aire libre y avisá, aunque no sientas olor.</li>
+        <li>El Conmutador avisa a Seguridad, a Mantenimiento y al/la Director/a de la Emergencia, que evalúa activar el Código Rojo de forma preventiva.</li>
+        <li>Mantenimiento corta la alimentación del circuito o equipo puntual en el tablero y ventila mientras busca el origen.</li>
+        <li><b>Si aparece una llama:</b> protocolo de incendio de inmediato.</li>
+        <li><b>Si no hay fuego:</b> se ventila y nadie reingresa hasta que Mantenimiento confirme que el origen está controlado.</li>
       </ul>
     </div>
     <div class="em-calls">
-      <button class="em-call-btn" style="background:var(--red)" onclick="emGoTo('fuego')"><span class="gicon">&#xef55;</span> Ver protocolo de incendio</button>
-      <a class="em-call-btn" href="tel:262"><span class="gicon">&#xf0d4;</span> Seguridad · 262</a>
-      <a class="em-call-btn" href="tel:279"><span class="gicon">&#xf0d4;</span> Mantenimiento · 279</a>
+      <button class="em-call-btn" style="background:var(--red)" onclick="emGoTo('fuego')"><span class="gicon">&#xef55;</span> Aparece fuego</button>
+    </div>
+  </div>
+
+  <div class="em-view" id="em-gas">
+    <h2 class="em-sub-title"><span class="gicon">&#xe51e;</span> ¿Olor a gas?</h2>
+    <div class="em-conmutador" style="background:#6B4E16">
+      <div class="lbl">AL REVÉS QUE ANTE UN INCENDIO</div>
+      <div class="num" style="font-size:22px">Ventilá · Alejate · Recién ahí avisá</div>
+      <div class="sub">No cierres la puerta y no uses ningún teléfono, radio ni interruptor dentro de la zona.</div>
+    </div>
+    <div class="em-block"><b>1 · Nada eléctrico ni con llama en la zona</b>
+      <ul class="em-list">
+        <li>No accionar interruptores, ni para apagar.</li>
+        <li>No usar teléfono, celular ni radio dentro del sector. No usar el ascensor.</li>
+        <li>No encender fósforos ni encendedores para buscar el origen.</li>
+      </ul>
+    </div>
+    <div class="em-block"><b>2 · Ventilá (no confines)</b>
+      <ul class="em-list">
+        <li>Abrí puertas y ventanas del sector.</li>
+      </ul>
+    </div>
+    <div class="em-block"><b>3 · Alejate y recién ahí avisá</b>
+      <ul class="em-list">
+        <li>Ya fuera del sector, a distancia segura: avisá de palabra a quien esté cerca y llamá al <b>Conmutador (interno 100)</b> desde un teléfono que esté <b>fuera de la zona</b>.</li>
+      </ul>
+    </div>
+    <div class="em-block"><b>4 · Qué pasa después</b>
+      <ul class="em-list">
+        <li>Mantenimiento cierra la llave general de gas en la Planta Reguladora (exterior) y mide con detector de gas.</li>
+        <li>Con esa medición, el/la Director/a de la Emergencia decide si se llama a Bomberos (100) y/o a Camuzzi Gas del Sur.</li>
+        <li><b>Nadie reingresa</b> aunque el olor baje, hasta que la medición confirme que no hay riesgo.</li>
+      </ul>
     </div>
   </div>
 
   <div class="em-view" id="em-electrico">
     <h2 class="em-sub-title"><span class="gicon">&#xea0b;</span> ¿Chispazos o corto?</h2>
     <ul class="em-list">
-      <li>No toques el equipo ni el tomacorriente afectado.</li>
-      <li>Si es seguro, cortá la alimentación del sector.</li>
+      <li><b>No toques el equipo ni el tomacorriente, ni intentes desconectarlo</b>: riesgo de electrocución. Alejate.</li>
       <li>Nunca uses agua sobre equipos eléctricos.</li>
-      <li>Si aparece llama o humo, tratalo como incendio: <b>avisá al Conmutador (interno 100)</b>.</li>
+      <li>Si hay humo u olor a quemado: gritá al compañero más cercano y llamá al <b>Conmutador (interno 100)</b> desde el lugar.</li>
+      <li>El corte de alimentación del circuito lo hace <b>Mantenimiento</b>, en el tablero.</li>
+      <li>Si aparece una llama: protocolo de incendio.</li>
     </ul>
     <div class="em-calls">
-      <a class="em-call-btn" href="tel:279"><span class="gicon">&#xf0d4;</span> Mantenimiento · 279</a>
-      <a class="em-call-btn" href="tel:262"><span class="gicon">&#xf0d4;</span> Seguridad · 262</a>
+      <button class="em-call-btn" style="background:var(--red-dark)" onclick="emGoTo('humo')"><span class="gicon">&#xf083;</span> Hay humo, sin llama</button>
+      <button class="em-call-btn" style="background:var(--red)" onclick="emGoTo('fuego')"><span class="gicon">&#xef55;</span> Aparece fuego</button>
     </div>
   </div>
 
@@ -617,7 +651,7 @@
 
     <div class="acc-group">Qué hacer</div>
     <details class="acc" name="evac" style="--acc:var(--red)">
-      <summary><span class="acc-ic"><span class="gicon">&#xef55;</span></span><span class="acc-t"><b>¿Viste humo o fuego?</b><span>Rol de llamada: los primeros minutos</span></span><span class="acc-chev">▾</span></summary>
+      <summary><span class="acc-ic"><span class="gicon">&#xef55;</span></span><span class="acc-t"><b>¿Ves fuego?</b><span>Rol de llamada: los primeros minutos</span></span><span class="acc-chev">▾</span></summary>
       <div class="acc-body">
         <ul class="checklist">
           <li><span class="dot"></span><div>Si alguien está en peligro inmediato, retiralo <b>solo si no te pone en riesgo grave</b>.</div></li>
@@ -627,6 +661,29 @@
           <li><span class="dot"></span><div><b>No evacúes el hospital por tu cuenta:</b> la estrategia la decide el/la Director/a de la Emergencia y el/la Líder de Sector da la orden.</div></li>
         </ul>
         <span class="acc-link" onclick="goTo('extintores')">Ver uso del extintor ›</span>
+      </div>
+    </details>
+    <details class="acc" name="evac" style="--acc:var(--red-dark)">
+      <summary><span class="acc-ic"><span class="gicon">&#xf083;</span></span><span class="acc-t"><b>Humo u olor a quemado, sin llama</b><span>Misma urgencia que un incendio</span></span><span class="acc-chev">▾</span></summary>
+      <div class="acc-body">
+        <ul class="checklist">
+          <li><span class="dot"></span><div>Si hay chispas o arco eléctrico, <b>no toques el equipo ni intentes desconectarlo</b>. Alejate.</div></li>
+          <li><span class="dot"></span><div>Gritá al compañero más cercano y llamá al <b>Conmutador (interno 100) desde el lugar</b>.</div></li>
+          <li><span class="dot"></span><div>Mantenimiento corta el circuito puntual y busca el origen. El/la Director/a de la Emergencia evalúa un Código Rojo preventivo.</div></li>
+          <li><span class="dot"></span><div>Si aparece una llama: protocolo de incendio. Si no: se ventila y nadie reingresa hasta que Mantenimiento lo confirme.</div></li>
+        </ul>
+      </div>
+    </details>
+    <details class="acc" name="evac" style="--acc:#6B4E16">
+      <summary><span class="acc-ic"><span class="gicon">&#xe51e;</span></span><span class="acc-t"><b>Olor a gas</b><span>Al revés que ante un incendio: ventilar, no confinar</span></span><span class="acc-chev">▾</span></summary>
+      <div class="acc-body">
+        <ul class="checklist">
+          <li><span class="dot"></span><div><b>Nada eléctrico ni con llama en la zona:</b> no accionar interruptores (ni para apagar), no usar teléfono, celular, radio ni ascensor, no encender fósforos.</div></li>
+          <li><span class="dot"></span><div><b>Abrí puertas y ventanas.</b> No cierres la puerta del sector.</div></li>
+          <li><span class="dot"></span><div><b>Alejate y recién ahí avisá:</b> de palabra a quien esté cerca y al Conmutador (interno 100) desde un teléfono fuera de la zona.</div></li>
+          <li><span class="dot"></span><div>Mantenimiento cierra la llave general en la Planta Reguladora y mide. El/la Director/a de la Emergencia decide si se llama a Bomberos y/o a Camuzzi Gas del Sur.</div></li>
+          <li><span class="dot"></span><div>Nadie reingresa, aunque el olor baje, hasta que la medición confirme que no hay riesgo.</div></li>
+        </ul>
       </div>
     </details>
     <details class="acc" name="evac" style="--acc:var(--red-dark)">
@@ -746,7 +803,8 @@
     <div class="card rol-card"><div class="rol-tag">DE</div><div><h3 style="font-size:15px">Director/a de la Emergencia <span style="font-size:11px; font-weight:600; color:var(--ink-soft)">· Tarjeta N.° 1</span></h3><ul>
       <li>Recibe el aviso del Conmutador, confirma la alarma y decide: Confinamiento / Evacuación Horizontal / Evacuación Total.</li>
       <li>Ordena cortes de energía al/la Jefe/a de Intervención Técnica.</li>
-      <li>Ante todo Código Rojo confirmado se llama siempre a Bomberos y Policía (lo marca el Conmutador), aunque el fuego ya esté apagado. Conduce el cierre del evento.</li>
+      <li>Ante humo sin fuego, evalúa activar el Código Rojo de forma preventiva. Ante olor a gas, decide con la medición técnica si se llama a Bomberos y/o a Camuzzi Gas del Sur.</li>
+      <li>Ante todo Código Rojo por incendio confirmado se llama siempre a Bomberos y Policía (lo marca el Conmutador), aunque el fuego ya esté apagado. Conduce el cierre del evento.</li>
     </ul></div></div>
 
     <div class="card rol-card"><div class="rol-tag">LS</div><div><h3 style="font-size:15px">Líder de Sector (Enfermería) <span style="font-size:11px; font-weight:600; color:var(--ink-soft)">· Tarjeta N.° 3</span></h3><ul>
@@ -781,12 +839,14 @@
     <div class="card rol-card"><div class="rol-tag">JIT</div><div><h3 style="font-size:15px">Jefe/a de Intervención Técnica (Mantenimiento) <span style="font-size:11px; font-weight:600; color:var(--ink-soft)">· Tarjeta N.° 2</span></h3><ul>
       <li>Recibe la notificación del Conmutador ante el Código Rojo.</li>
       <li>Restablece el sistema de alarma tras una verificación negativa.</li>
+      <li>Ante humo sin fuego: corta la alimentación del circuito o equipo puntual en el tablero y ventila mientras busca el origen.</li>
+      <li>Ante olor a gas: cierra la llave general en la Planta Reguladora y mide la concentración con detector/explosímetro.</li>
       <li>Mantiene operatividad y registros de los sistemas PCI.</li>
       <li>Ejecuta cortes de electricidad, gas y HVAC según indicación del/la Director/a de la Emergencia.</li>
     </ul></div></div>
 
     <div class="card rol-card"><div class="rol-tag">PE</div><div><h3 style="font-size:15px">Personal general / contratistas</h3><ul>
-      <li>Ante fuego, humo u olor a quemado aplica el Rol de Llamada: cualquiera que detecta, actúa (grito + Conmutador interno 100).</li>
+      <li>Cualquiera que detecta, actúa. Ante fuego o humo: grito + Conmutador (interno 100) desde el lugar. Ante olor a gas: ventilar, alejarse y recién ahí avisar desde un teléfono fuera de la zona.</li>
       <li>Ante una alarma de su zona no interrumpe la atención de pacientes: espera el resultado de la verificación del/la Líder de Sector. Ante alarma de otro sector, sigue trabajando con normalidad.</li>
       <li>Mantiene rutas libres y respeta la señalización.</li>
       <li>No evacúa por su cuenta: espera la orden y sale por la ruta indicada, sin usar ascensores, sin correr ni gritar.</li>
@@ -831,7 +891,7 @@
     <div class="card">
       <h3 class="blk"><span class="gicon">&#xf04c;</span> Trivia de seguridad</h3>
       <div id="triviaIntro">
-        <p style="font-size:12.5px; color:var(--ink-soft); margin:0 0 12px">10 preguntas para repasar lo aprendido. Al final vas a ver tu puntaje y la explicación de cada respuesta.</p>
+        <p style="font-size:12.5px; color:var(--ink-soft); margin:0 0 12px">12 preguntas para repasar lo aprendido. Al final vas a ver tu puntaje y la explicación de cada respuesta.</p>
         <button class="save-btn" onclick="iniciarTrivia()">Comenzar</button>
       </div>
       <div id="triviaBody" style="display:none"></div>
@@ -1434,6 +1494,8 @@ const TRIVIA = [
   {q:"Según \"Nunca hagas esto\", ¿qué NO deberías hacer al evacuar?", opts:["Caminar por la ruta indicada","Usar el ascensor para bajar más rápido","Avisar si un compañero no fue alertado","Cerrar puertas detrás tuyo"], correct:1, exp:"Nunca hay que usar ascensores durante una evacuación: hay que usar las escaleras."},
   {q:"Si hay humo en el ambiente, ¿cómo tenés que desplazarte?", opts:["Corriendo y erguido","Agachado o gateando, cerca del piso","Con los ojos cerrados","En ascensor"], correct:1, exp:"Cerca del piso suele haber más aire respirable y mejor visibilidad."},
   {q:"Detectás un principio de incendio. ¿A quién llamás?", opts:["A Seguridad (262)","Al Conmutador (interno 100)","A Mantenimiento (279)","A nadie: primero intento apagarlo"], correct:1, exp:"El Conmutador es el único que activa el Código Rojo y avisa a la vez a Seguridad, Mantenimiento, Dirección, Bomberos y Policía. Un solo número, un solo llamado, y en simultáneo gritás al compañero más cercano."},
+  {q:"Sentís olor a gas en tu sector. ¿Qué hacés?", opts:["Cierro la puerta y llamo al Conmutador desde el teléfono del sector","Abro puertas y ventanas, me alejo y aviso al Conmutador desde un teléfono fuera de la zona","Apago las luces y los equipos para evitar riesgos","Busco el origen del olor con un encendedor"], correct:1, exp:"Ante gas se hace lo contrario que ante incendio: se ventila (no se confina) y no se usa ningún teléfono, radio ni interruptor dentro de la zona, porque cualquier chispa puede provocar una explosión. Se avisa recién al estar fuera del sector."},
+  {q:"Un equipo tira chispas y sale humo, pero no hay llama. ¿Qué hacés?", opts:["Lo desenchufo rápido","Le tiro agua","No lo toco, me alejo y aviso: grito + Conmutador desde el lugar","Espero a ver si el humo se disipa"], correct:2, exp:"Con chispas o arco eléctrico no se toca el equipo ni se intenta desconectarlo: riesgo de electrocución. Se avisa como ante un incendio y Mantenimiento corta el circuito en el tablero."},
   {q:"Si tu ropa se prende fuego, ¿qué tenés que hacer?", opts:["Correr para que el viento apague las llamas","Tirarte al suelo y rodar","Sacarte la ropa de inmediato sin importar dónde","Buscar agua antes que nada"], correct:1, exp:"Hay que tirarse al suelo y rodar, cubriéndose el rostro con las manos."},
   {q:"Suena la alarma de tu sector, pero nadie ve humo ni fuego. ¿Qué corresponde?", opts:["Evacuar el sector de inmediato","El/la Líder de Sector verifica en máximo 2 minutos y el resto sigue atendiendo pacientes","Esperar a ver si la alarma se apaga sola","Restablecer la alarma sin avisar a nadie"], correct:1, exp:"Sin evidencia inequívoca se verifica primero, en un plazo máximo de 2 minutos, sin interrumpir la atención. Si no hay nada anormal, se informa al Conmutador y Mantenimiento restablece el sistema. Si hay llamas, humo denso o Código Rojo en tu sector, no se verifica: protocolo de incendio directo."},
 ];
