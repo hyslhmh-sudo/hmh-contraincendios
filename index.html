@@ -68,9 +68,15 @@
   .em-list li{padding:13px 16px; border-top:1px solid rgba(255,255,255,.12); color:#fff; font-size:14px; line-height:1.5;}
   .em-list li:first-child{border-top:none;}
   .em-block{margin-bottom:16px;}
-  .em-block b{display:block; color:#fff; font-size:13.5px; margin-bottom:6px;}
+  .em-block > b{display:block; color:#fff; font-size:13.5px; margin-bottom:6px;}
   .em-block .em-list{margin-bottom:0;}
   .em-calls{display:flex; flex-direction:column; gap:10px;}
+  .em-conmutador{background:var(--red); color:#fff; border-radius:14px; padding:16px; margin:0 0 16px; text-align:center;}
+  .em-conmutador .lbl{font-size:12px; font-weight:700; letter-spacing:.5px; opacity:.9;}
+  .em-conmutador .num{font-size:30px; font-weight:800; line-height:1.2; margin:2px 0 4px;}
+  .em-conmutador .sub{font-size:12.5px; line-height:1.45; opacity:.95;}
+  button.em-call-btn{border:none; width:100%; font-family:inherit; cursor:pointer;}
+  .em-call-btn.alt{background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.3);}
   .em-call-btn{background:var(--green); color:#fff; text-align:center; padding:14px; border-radius:999px; font-size:14.5px; font-weight:700; text-decoration:none; display:block;}
 
   /* ---------- MAPA INTERACTIVO PA ---------- */
@@ -294,15 +300,43 @@
 
   <div class="em-view" id="em-fuego">
     <h2 class="em-sub-title"><span class="gicon">&#xef55;</span> ¿Hay fuego o humo?</h2>
-    <ul class="em-list">
-      <li>¿Es un fuego chico, con humo liviano, que no se extendió? Si no, <b>evacuá ya</b> y llamá a Bomberos.</li>
-      <li>¿Tenés salida libre detrás tuyo? Si no, <b>evacuá ya</b>.</li>
-      <li>¿Sabés usar el extintor y no dudás? Si no, <b>evacuá ya</b>.</li>
-      <li>Si podés seguir: Método PASS — <b>P</b>repará, <b>A</b>puntá a la base, <b>P</b>resioná, <b>B</b>arré.</li>
-    </ul>
-    <div class="em-calls">
-      <a class="em-call-btn" href="tel:262"><span class="gicon">&#xf0d4;</span> Seguridad · 262</a>
-      <a class="em-call-btn" href="tel:100"><span class="gicon">&#xf0d4;</span> Bomberos · 100</a>
+    <div class="em-conmutador">
+      <div class="lbl">LLAMÁ AL CONMUTADOR · 24 HS</div>
+      <div class="num">Interno 100</div>
+      <div class="sub">Desde el teléfono fijo del hospital. Es el único que activa el <b>Código Rojo</b> y avisa a Seguridad, Mantenimiento, Dirección, Bomberos y Policía con un solo llamado.</div>
+    </div>
+    <div class="em-block"><b>1 · Rescatá (solo si es seguro)</b>
+      <ul class="em-list">
+        <li>Si alguien está en peligro inmediato en ese espacio, sacalo primero, <b>solo si no te pone en riesgo grave</b>. Si te pone en riesgo, pasá directo a alertar.</li>
+      </ul>
+    </div>
+    <div class="em-block"><b>2 · Alertá — las dos cosas a la vez</b>
+      <ul class="em-list">
+        <li>Gritá al compañero más cercano: <b>"¡Fuego en [lugar]!"</b></li>
+        <li>Llamá al <b>Conmutador (interno 100)</b>. No llames a Seguridad ni a Mantenimiento por separado.</li>
+        <li><b>Si estás solo/a:</b> primero el Conmutador. No salgas a buscar a un compañero lejano.</li>
+      </ul>
+    </div>
+    <div class="em-block"><b>3 · Cerrá la puerta del sector</b>
+      <ul class="em-list">
+        <li>Contiene el humo y el fuego. No esperes autorización de nadie.</li>
+      </ul>
+    </div>
+    <div class="em-block"><b>4 · ¿Extintor? Solo si se cumplen las 4</b>
+      <ul class="em-list">
+        <li><b>Fuego incipiente:</b> en un cesto, un equipo o un foco puntual, sin haber prendido la estructura ni el mobiliario mayor.</li>
+        <li><b>Humo ausente o mínimo.</b> Con humo denso, no se intenta: se evacúa.</li>
+        <li><b>Salida despejada a tu espalda.</b> Nunca quedes entre el fuego y la salida.</li>
+        <li><b>Extintor adecuado a mano</b> (ABC, CO2 o Clase K según el sector) y sabés usarlo.</li>
+        <li>Si falta <b>una sola</b>: no lo intentes. Cerrá la puerta y <b>evacuá</b>.</li>
+      </ul>
+    </div>
+    <div class="em-block"><b>5 · Un solo intento, nunca más de uno</b>
+      <ul class="em-list">
+        <li>Método PASS: <b>P</b>repará, <b>A</b>puntá a la base, <b>P</b>resioná, <b>B</b>arré.</li>
+        <li>Si no cede en ese intento: dejá, cerrá la puerta, <b>evacuá</b> y avisá el resultado al Conmutador.</li>
+        <li>Aunque lo apagues, <b>Bomberos viene igual</b> a verificar rescoldo oculto. El llamado no se cancela.</li>
+      </ul>
     </div>
   </div>
 
@@ -310,9 +344,9 @@
     <h2 class="em-sub-title"><span class="gicon">&#xe51e;</span> ¿Olor a quemado o gas?</h2>
     <div class="em-block"><b>Si es olor a quemado/humo</b>
       <ul class="em-list">
-        <li>No lo ignores aunque no veas humo.</li>
+        <li>No lo ignores aunque no veas humo: <b>avisá al Conmutador (interno 100)</b>.</li>
         <li>Si podés identificar el origen sin riesgo, hacelo.</li>
-        <li>Si el olor aumenta o aparece humo, evacuá.</li>
+        <li>Si el olor aumenta o aparece humo, seguí el protocolo de incendio.</li>
       </ul>
     </div>
     <div class="em-block"><b>Si es olor a gas</b>
@@ -330,6 +364,7 @@
       </ul>
     </div>
     <div class="em-calls">
+      <button class="em-call-btn" style="background:var(--red)" onclick="emGoTo('fuego')"><span class="gicon">&#xef55;</span> Ver protocolo de incendio</button>
       <a class="em-call-btn" href="tel:262"><span class="gicon">&#xf0d4;</span> Seguridad · 262</a>
       <a class="em-call-btn" href="tel:279"><span class="gicon">&#xf0d4;</span> Mantenimiento · 279</a>
     </div>
@@ -341,7 +376,7 @@
       <li>No toques el equipo ni el tomacorriente afectado.</li>
       <li>Si es seguro, cortá la alimentación del sector.</li>
       <li>Nunca uses agua sobre equipos eléctricos.</li>
-      <li>Si aparece llama, tratalo como incendio.</li>
+      <li>Si aparece llama o humo, tratalo como incendio: <b>avisá al Conmutador (interno 100)</b>.</li>
     </ul>
     <div class="em-calls">
       <a class="em-call-btn" href="tel:279"><span class="gicon">&#xf0d4;</span> Mantenimiento · 279</a>
@@ -427,14 +462,16 @@
 
   <!-- ===================== EXTINTORES ===================== -->
   <section class="view" id="view-extintores">
-    <div class="section-head"><h2>Uso seguro del extintor</h2><p>Método PASS — usalo solo si el fuego es incipiente, conocés su uso y tenés salida libre detrás.</p></div>
+    <div class="section-head"><h2>Uso seguro del extintor</h2><p>Método PASS — usalo solo si se cumplen las 4 condiciones y hacé un único intento.</p></div>
     <div class="card" style="margin-top:16px">
       <h3 class="blk"><span class="gicon">&#xef55;</span> ¿Detectaste un fuego?</h3>
       <ul class="checklist">
-        <li><span class="dot"></span><div>¿Es un fuego incipiente, con humo liviano y sin haberse extendido más allá de su punto de origen? Si no, <b>evacuá inmediatamente</b>.</div></li>
-        <li><span class="dot"></span><div>¿Tenés vía de escape libre a tus espaldas y la salida no está comprometida? Si no, <b>evacuá inmediatamente</b>.</div></li>
-        <li><span class="dot"></span><div>¿Estás capacitado, no tenés dudas y contás con el extintor adecuado, controlando el riesgo eléctrico/químico? Si no, <b>evacuá inmediatamente</b>.</div></li>
-        <li><span class="dot"></span><div>Si respondiste que sí a las tres preguntas anteriores: <b>luchá contra el fuego</b> con la técnica básica (Método PASS, debajo).</div></li>
+        <li><span class="dot"></span><div>Antes del extintor: gritá <b>"¡Fuego en [lugar]!"</b>, llamá al <b>Conmutador (interno 100)</b> y <b>cerrá la puerta</b> del sector.</div></li>
+        <li><span class="dot"></span><div><b>Tamaño:</b> ¿es incipiente, contenido en un cesto, un equipo o un foco puntual, sin haber prendido la estructura ni el mobiliario mayor?</div></li>
+        <li><span class="dot"></span><div><b>Humo:</b> ¿está ausente o es mínimo? Con humo denso que reduce la visibilidad, no se intenta.</div></li>
+        <li><span class="dot"></span><div><b>Vía de escape:</b> ¿está despejada y a tus espaldas? Nunca quedes entre el fuego y la salida.</div></li>
+        <li><span class="dot"></span><div><b>Extintor:</b> ¿tenés a mano el adecuado (ABC, CO2 o Clase K según el sector) y sabés usarlo?</div></li>
+        <li><span class="dot"></span><div>Si falta <b>una sola</b> condición: no lo intentes, cerrá la puerta y <b>evacuá</b>. Si se cumplen las 4: <b>un único intento</b> con el Método PASS (debajo).</div></li>
       </ul>
     </div>
     <div class="card" style="margin-top:16px">
@@ -442,7 +479,8 @@
       <ul class="checklist">
         <li><span class="dot"></span><div>Usá el extintor solo si el fuego es <b>incipiente</b> y podés controlar la situación.</div></li>
         <li><span class="dot"></span><div>Priorizá siempre tu seguridad y la de las demás personas.</div></li>
-        <li><span class="dot"></span><div>Si el fuego se expande o hay humo denso, <b>evacuá</b> y llamá a emergencias.</div></li>
+        <li><span class="dot"></span><div>Si el fuego no cede en el primer intento, se expande o hay humo denso: no insistas ni cambies de extintor. Cerrá la puerta, <b>evacuá</b> y avisá al Conmutador.</div></li>
+        <li><span class="dot"></span><div>Aunque lo apagues, <b>Bomberos concurre igual</b> para verificar que no quede rescoldo oculto. El llamado no se cancela.</div></li>
       </ul>
     </div>
     <div class="card" style="margin-top:16px">
@@ -522,8 +560,8 @@
       <h3 class="blk" style="margin:0; border-radius:var(--radius) var(--radius) 0 0">¿Viste humo o fuego?</h3>
       <div style="padding:16px">
         <ul class="checklist">
-          <li><span class="dot"></span><div>Avisá de inmediato: activá la alarma o notificá a Seguridad.</div></li>
-          <li><span class="dot"></span><div>Si es seguro, cerrá la puerta del lugar afectado para retardar el avance del fuego/humo.</div></li>
+          <li><span class="dot"></span><div>Avisá de inmediato y a la vez: gritá <b>"¡Fuego en [lugar]!"</b> al compañero más cercano y llamá al <b>Conmutador (interno 100)</b>, que activa el Código Rojo.</div></li>
+          <li><span class="dot"></span><div>Cerrá la puerta del lugar afectado para retardar el avance del fuego/humo. No hace falta esperar autorización.</div></li>
           <li><span class="dot"></span><div>Dirigite caminando, sin correr, a la salida de emergencia más cercana.</div></li>
           <li><span class="dot"></span><div>No uses ascensores.</div></li>
           <li><span class="dot"></span><div>Concurrí al punto de encuentro asignado.</div></li>
@@ -551,7 +589,7 @@
       <h3 class="blk" style="background:var(--red); border-left-color:var(--red-dark); color:#fff"><span class="gicon">&#xf08c;</span> Nunca hagas esto</h3>
       <ul class="checklist">
         <li><span class="dot"></span><div>No corras.</div></li>
-        <li><span class="dot"></span><div>No grites.</div></li>
+        <li><span class="dot"></span><div>No grites durante la evacuación (el aviso inicial "¡Fuego en…!" sí se da).</div></li>
         <li><span class="dot"></span><div>No uses ascensores.</div></li>
         <li><span class="dot"></span><div>No vuelvas a buscar objetos.</div></li>
         <li><span class="dot"></span><div>No abras puertas calientes.</div></li>
@@ -584,7 +622,7 @@
     <div class="card rol-card"><div class="rol-tag">JE</div><div><h3 style="font-size:15px">Jefe/a de Emergencia</h3><ul>
       <li>Confirma la alarma y decide: proteger en sitio / evacuar horizontal / evacuar vertical.</li>
       <li>Ordena cortes de energías junto a Mantenimiento/Ingeniería.</li>
-      <li>Decide el llamado a Bomberos y conduce el cierre del evento.</li>
+      <li>Ante todo Código Rojo confirmado se llama siempre a Bomberos y Policía (lo marca el Conmutador), aunque el fuego ya esté apagado. Conduce el cierre del evento.</li>
     </ul></div></div>
 
     <div class="card rol-card"><div class="rol-tag">JP</div><div><h3 style="font-size:15px">Jefatura de Piso / Sector</h3><ul>
@@ -593,8 +631,15 @@
       <li>Asegura el conteo del personal a su cargo.</li>
     </ul></div></div>
 
+    <div class="card rol-card"><div class="rol-tag">CON</div><div><h3 style="font-size:15px">Conmutador (24 hs)</h3><ul>
+      <li>Confirma el dato mínimo: lugar exacto del fuego y si hay personas en riesgo.</li>
+      <li>Activa el Código Rojo por audio-evacuación ("Código Rojo en [sector]").</li>
+      <li>Notifica en paralelo a Seguridad y a Mantenimiento, y alerta al JE o Médico de Guardia.</li>
+      <li>Llama siempre a Bomberos (100) y Policía (101) y mantiene la línea abierta con Bomberos hasta su arribo.</li>
+    </ul></div></div>
+
     <div class="card rol-card"><div class="rol-tag">SEG</div><div><h3 style="font-size:15px">Servicio de Seguridad</h3><ul>
-      <li>Verifica la alarma y activa llamadas externas junto al conmutador.</li>
+      <li>Recibe la notificación del Conmutador ante el Código Rojo.</li>
       <li>Apoya la evacuación y controla accesos para servicios externos.</li>
     </ul></div></div>
 
@@ -605,6 +650,7 @@
     </ul></div></div>
 
     <div class="card rol-card"><div class="rol-tag">MNT</div><div><h3 style="font-size:15px">Mantenimiento / Ingeniería</h3><ul>
+      <li>Recibe la notificación del Conmutador ante el Código Rojo.</li>
       <li>Mantiene operatividad y registros de los sistemas PCI.</li>
       <li>Ejecuta cortes de electricidad, gas y HVAC según indicación del JE.</li>
     </ul></div></div>
@@ -623,8 +669,8 @@
       
     </div>
     <div class="card" style="padding:6px 14px">
-      <div class="phone-row"><div class="pi"><span class="gicon">&#xe32a;</span></div><div class="meta"><b>Seguridad (Interno)</b><span>Aviso inmediato ante cualquier emergencia</span></div><a class="call-btn" href="tel:262"><span class="gicon">&#xf0d4;</span> 262</a></div>
-      <div class="phone-row"><div class="pi"><span class="gicon">&#xf0d4;</span></div><div class="meta"><b>Conmutador (Interno)</b><span>Central telefónica del hospital</span></div><a class="call-btn" href="tel:100"><span class="gicon">&#xf0d4;</span> 100</a></div>
+      <div class="phone-row"><div class="pi" style="background:var(--red); color:#fff"><span class="gicon">&#xf0d4;</span></div><div class="meta"><b>Conmutador (Interno)</b><span>Ante incendio: único número a llamar. Activa el Código Rojo</span></div><a class="call-btn" href="tel:100"><span class="gicon">&#xf0d4;</span> 100</a></div>
+      <div class="phone-row"><div class="pi"><span class="gicon">&#xe32a;</span></div><div class="meta"><b>Seguridad (Interno)</b><span>Seguridad del hospital</span></div><a class="call-btn" href="tel:262"><span class="gicon">&#xf0d4;</span> 262</a></div>
       <div class="phone-row"><div class="pi"><span class="gicon">&#xf8cd;</span></div><div class="meta"><b>Mantenimiento (Interno)</b><span>Fallas de red contraincendios</span></div><a class="call-btn" href="tel:279"><span class="gicon">&#xf0d4;</span> 279</a></div>
       <div class="phone-row"><div class="pi"><span class="gicon">&#xf8f2;</span></div><div class="meta"><b>Bomberos</b><span>Emergencia externa</span></div><a class="call-btn" href="tel:100"><span class="gicon">&#xf0d4;</span> 100</a></div>
       <div class="phone-row"><div class="pi"><span class="gicon">&#xef56;</span></div><div class="meta"><b>Policía</b><span>Emergencia externa</span></div><a class="call-btn" href="tel:101"><span class="gicon">&#xf0d4;</span> 101</a></div>
@@ -1255,7 +1301,7 @@ const TRIVIA = [
   {q:"Si el humo es denso o el fuego se extendió más allá de su punto de origen, ¿qué corresponde hacer?", opts:["Intentar apagarlo igual","Evacuar inmediatamente","Esperar y observar un rato","Buscar el extintor sin apuro"], correct:1, exp:"Cuando el fuego ya no es incipiente (humo denso o se extendió), hay que evacuar inmediatamente."},
   {q:"Según \"Nunca hagas esto\", ¿qué NO deberías hacer al evacuar?", opts:["Caminar hacia la salida más cercana","Usar el ascensor para bajar más rápido","Avisar si un compañero no fue alertado","Cerrar puertas detrás tuyo"], correct:1, exp:"Nunca hay que usar ascensores durante una evacuación: hay que usar las escaleras."},
   {q:"Si hay humo en el ambiente, ¿cómo tenés que desplazarte?", opts:["Corriendo y erguido","Agachado o gateando, cerca del piso","Con los ojos cerrados","En ascensor"], correct:1, exp:"Cerca del piso suele haber más aire respirable y mejor visibilidad."},
-  {q:"¿Cuál es el teléfono interno de Seguridad del hospital?", opts:["100","101","262","279"], correct:2, exp:"Seguridad interna es el 262. Conmutador y Bomberos son el 100, Policía el 101, Mantenimiento el 279."},
+  {q:"Detectás un principio de incendio. ¿A quién llamás?", opts:["A Seguridad (262)","Al Conmutador (interno 100)","A Mantenimiento (279)","A nadie: primero intento apagarlo"], correct:1, exp:"El Conmutador es el único que activa el Código Rojo y avisa a la vez a Seguridad, Mantenimiento, Dirección, Bomberos y Policía. Un solo número, un solo llamado, y en simultáneo gritás al compañero más cercano."},
   {q:"Si tu ropa se prende fuego, ¿qué tenés que hacer?", opts:["Correr para que el viento apague las llamas","Tirarte al suelo y rodar","Sacarte la ropa de inmediato sin importar dónde","Buscar agua antes que nada"], correct:1, exp:"Hay que tirarse al suelo y rodar, cubriéndose el rostro con las manos."},
   {q:"Cuando suena la alarma de incendio, ¿qué es lo primero que hay que hacer?", opts:["Terminar la tarea y después salir","Mantener la calma e interrumpir la actividad","Ir a buscar tus pertenencias primero","Esperar a que se apague sola"], correct:1, exp:"Lo primero es mantener la calma e interrumpir inmediatamente la actividad que se está haciendo."},
 ];
