@@ -1673,9 +1673,10 @@ function showToast(msg){ const t=document.getElementById('toast'); t.textContent
 /* ============ Referencias de orientación de los mapas ============ */
 // Editá acá los textos. Lado vacío ('') = no se muestra.
 // arriba/abajo aceptan un texto (centrado) o {texto:'...', lado:'izq'|'der'} para señalar una esquina.
+// repetirAbajo: true = repite el cartel izquierda/derecha también debajo del mapa.
 // flecha: fuerza el símbolo; alinearCon: % horizontal del punto del mapa al que apunta (misma cifra que 'left' del marcador).
 const ORIENTACION = {
-  mapaPaWrap: { izq:'Av. Eva Perón\nEstacionamiento de pacientes y visitantes', der:'Estacionamiento del personal', arriba:'', abajo:'' },
+  mapaPaWrap: { izq:'Av. Eva Perón\nEstacionamiento de pacientes y visitantes', der:'Estacionamiento del personal', arriba:'', abajo:'', repetirAbajo:true },
   mapaPbWrap: { izq:'Av. Eva Perón\nEstacionamiento de pacientes y visitantes', der:'Estacionamiento del personal', arriba:'', abajo:'' }
 };
 const FLECHA_ROT = {'→':0,'↘':45,'↓':90,'↙':135,'←':180,'↖':225,'↑':270,'↗':315};
@@ -1696,6 +1697,7 @@ function renderOrientacion(){
       bar.innerHTML = '<div class="o izq">' + (ref.izq ? flechaSVG('←') + '<span>'+esc(ref.izq)+'</span>' : '') + '</div>' +
                       '<div class="o der">' + (ref.der ? '<span>'+esc(ref.der)+'</span>' + flechaSVG('→') : '') + '</div>';
       wrap.parentElement.insertBefore(bar, wrap);
+      if(ref.repetirAbajo){ const bar2 = bar.cloneNode(true); bar2.style.margin = '6px 0 0'; wrap.after(bar2); }
     }
     function banda(v, flechas){
       const o = (typeof v === 'string') ? {texto:v, lado:'centro'} : v;
