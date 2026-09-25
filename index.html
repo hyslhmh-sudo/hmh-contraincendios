@@ -179,6 +179,20 @@
   .sector-search{position:sticky; top:0; z-index:5; background:var(--paper); padding:10px 0 12px;}
   .sector-search input{width:100%; border:1px solid var(--line); border-radius:10px; padding:11px 14px; font-size:14px; background:#fff;}
   .group-title{font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:.5px; color:var(--steel-dark); margin:18px 2px 8px;}
+  /* Acordeones de Evacuación */
+  .acc-group{font-size:11px; font-weight:800; letter-spacing:.6px; text-transform:uppercase; color:var(--steel-dark); margin:20px 2px 8px;}
+  details.acc{background:var(--card); border:1px solid var(--line); border-left:5px solid var(--acc, var(--steel-dark)); border-radius:var(--radius); margin-bottom:10px; overflow:hidden;}
+  details.acc > summary{list-style:none; cursor:pointer; display:flex; align-items:center; gap:12px; padding:13px 14px; -webkit-tap-highlight-color:transparent;}
+  details.acc > summary::-webkit-details-marker{display:none;}
+  details.acc .acc-ic{flex:none; width:36px; height:36px; border-radius:10px; background:var(--acc, var(--steel-dark)); color:#fff; display:flex; align-items:center; justify-content:center; font-size:19px;}
+  details.acc .acc-t{flex:1; min-width:0;}
+  details.acc .acc-t b{display:block; font-size:14.5px; color:var(--navy); line-height:1.25;}
+  details.acc .acc-t span{display:block; font-size:12px; color:var(--ink-soft); margin-top:2px;}
+  details.acc .acc-chev{flex:none; font-size:15px; color:var(--steel-dark); transition:transform .2s;}
+  details.acc[open] .acc-chev{transform:rotate(180deg);}
+  details.acc[open] > summary{border-bottom:1px solid var(--line); background:var(--celeste-tint);}
+  details.acc .acc-body{padding:6px 16px 12px;}
+  details.acc .acc-link{display:inline-flex; align-items:center; gap:6px; margin-top:8px; font-size:12.5px; font-weight:700; color:var(--steel-dark); cursor:pointer;}
   details.plan-item{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); margin-bottom:10px; overflow:hidden;}
   details.plan-item .doc{display:block; margin:0;}
   summary.plan-acc{cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center; font-size:12.5px; text-transform:uppercase; letter-spacing:.5px; color:#fff; background:var(--navy); padding:12px 18px;}
@@ -562,66 +576,127 @@
 
   <!-- ===================== EVACUACIÓN ===================== -->
   <section class="view" id="view-evacuacion">
-    <div class="section-head"><h2>Evacuación</h2><p>Pasos a seguir y planos de rutas por planta.</p></div>
-    <div style="height:14px"></div>
-    <div class="card" style="padding:0; overflow:hidden; margin-top:16px">
-      <h3 class="blk" style="margin:0; border-radius:var(--radius) var(--radius) 0 0">¿Viste humo o fuego?</h3>
-      <div style="padding:16px">
-        <ul class="checklist">
-          <li><span class="dot"></span><div>Avisá de inmediato y a la vez: gritá <b>"¡Fuego en [lugar]!"</b> al compañero más cercano y llamá al <b>Conmutador (interno 100)</b>, que activa el Código Rojo.</div></li>
-          <li><span class="dot"></span><div>Cerrá la puerta del lugar afectado para retardar el avance del fuego/humo. No hace falta esperar autorización.</div></li>
-          <li><span class="dot"></span><div><b>No evacúes el hospital por tu cuenta.</b> El/la Director/a de la Emergencia decide Confinamiento, Evacuación Horizontal o Evacuación Total, y el/la Líder de Sector da la orden.</div></li>
-          <li><span class="dot"></span><div>Mientras tanto: puertas cerradas, pasillos libres y pacientes preparados para un posible traslado.</div></li>
-          <li><span class="dot"></span><div>Si se ordena evacuar: caminando, sin ascensores, por la ruta indicada, hasta el punto de encuentro.</div></li>
-          <li><span class="dot"></span><div>Visitantes y acompañantes: salen por la salida más cercana, guiados por el personal.</div></li>
-        </ul>
-      </div>
-    </div>
+    <div class="section-head"><h2>Evacuación</h2><p>Tocá cada tema para ver qué hacer.</p></div>
     <div class="card" style="margin-top:16px; cursor:pointer; display:flex; align-items:center; gap:14px; padding:18px" onclick="goTo('planos-menu')">
       <div style="flex:none; width:52px; height:52px; border-radius:14px; background:var(--navy); display:flex; align-items:center; justify-content:center; font-size:28px; color:#fff;"><span class="gicon">&#xe55b;</span></div>
       <div style="flex:1">
         <div style="font-size:16px; font-weight:800; color:var(--navy)">Planos por servicio</div>
-        <div style="font-size:12px; color:var(--ink-soft); margin-top:2px">Rutas de evacuación y matafuegos, por planta</div>
+        <div style="font-size:12px; color:var(--ink-soft); margin-top:2px">Rutas de evacuación, matafuegos y mapas interactivos</div>
       </div>
       <div style="flex:none; font-size:22px; color:var(--steel-dark)">›</div>
     </div>
-    <div class="card">
-      <h3 class="blk" style="background:var(--red); border-left-color:var(--red-dark); color:#fff"><span class="gicon">&#xf083;</span> En caso de humo</h3>
-      <ul class="checklist">
-        <li><span class="dot"></span><div>Agachate o gateá: el aire más respirable suele estar cerca del piso.</div></li>
-        <li><span class="dot"></span><div>Cubrite nariz y boca con un paño, húmedo si es posible.</div></li>
-        <li><span class="dot"></span><div>Mantené las puertas cerradas para retardar el avance del humo.</div></li>
-        <li><span class="dot"></span><div>No abras una puerta que esté caliente al tacto.</div></li>
-      </ul>
-    </div>
-    <div class="card">
-      <h3 class="blk" style="background:var(--red); border-left-color:var(--red-dark); color:#fff"><span class="gicon">&#xf08c;</span> Nunca hagas esto</h3>
-      <ul class="checklist">
-        <li><span class="dot"></span><div>No corras.</div></li>
-        <li><span class="dot"></span><div>No grites durante la evacuación (el aviso inicial "¡Fuego en…!" sí se da).</div></li>
-        <li><span class="dot"></span><div>No uses ascensores.</div></li>
-        <li><span class="dot"></span><div>No vuelvas a buscar objetos.</div></li>
-        <li><span class="dot"></span><div>No abras puertas calientes.</div></li>
-        <li><span class="dot"></span><div>No bloquees puertas cortafuego.</div></li>
-        <li><span class="dot"></span><div>No obstruyas rutas de evacuación.</div></li>
-        <li><span class="dot"></span><div>No utilices agua sobre equipos eléctricos.</div></li>
-      </ul>
-    </div>
-    <div class="card">
-      <h3 class="blk">Recomendaciones</h3>
-      <ul class="checklist">
-        <li><span class="dot"></span><div><b>Mantener la calma y actuar.</b> Conservá la calma. Evitá gritar, correr o conversar sin necesidad. Seguí las indicaciones del/la Líder de Sector.</div></li>
-        <li><span class="dot"></span><div><b>Conocer el plan y las salidas.</b> Conocé el Plan de Evacuación y Autoprotección, los medios de salida y rutas de egreso; revisalos periódicamente. Verificá señalización luminosa y planos del piso.</div></li>
-        <li><span class="dot"></span><div><b>Extintores y señalización.</b> Identificá los extintores cercanos y mantenelos accesibles. Si alguno está obstruido o fuera de lugar, avisá a Seguridad. Respetá cartelería y balizamiento.</div></li>
-        <li><span class="dot"></span><div><b>Inicio de la evacuación.</b> Al ordenarse la evacuación, no demores tu salida. Si un compañero no fue alertado, avisá. Formá columna detrás del/la Líder de Sector, orientada a la salida, y avanzá sin empujar. No regreses al área evacuada.</div></li>
-        <li><span class="dot"></span><div><b>Acondicionar el sector al retirarse.</b> Mantené los pasillos despejados. Cerrá cajones y colocá sillas bajo los escritorios. Retirá objetos que obstruyan el paso. Cerrá puertas para limitar el avance del fuego.</div></li>
-        <li><span class="dot"></span><div><b>Personas a cargo.</b> Cada responsable mantiene listado actualizado de personas a su cargo y reporta el conteo en el punto de encuentro.</div></li>
-        <li><span class="dot"></span><div><b>Desplazamiento con humo.</b> Si hay humo, agachate o gateá: por lo general, el aire más respirable y la mayor visibilidad están cerca del piso. Protegé vías respiratorias si es posible.</div></li>
-        <li><span class="dot"></span><div><b>Ropa encendida.</b> Si tu ropa prende fuego, no corras. Tirate al suelo y rodá, cubriéndote el rostro con las manos. Si podés, humedecela. Si otra persona está en esa situación, ayudala a rodar y/o cubrila con una manta.</div></li>
-        <li><span class="dot"></span><div><b>Si no podés salir.</b> Hacé visible tu presencia: llamá por teléfono, hacé señales por la ventana o usá un paño llamativo. Mantené puertas cerradas para demorar el humo.</div></li>
-        <li><span class="dot"></span><div><b>Puertas y seguridad edilicia.</b> Evitá cierres con llave que impidan la apertura rápida de puertas en cualquier horario. Recordá: un principio de incendio puede originarse por riesgo eléctrico; no demores la respuesta.</div></li>
-      </ul>
-    </div>
+
+    <div class="acc-group">Qué hacer</div>
+    <details class="acc" name="evac" style="--acc:var(--red)">
+      <summary><span class="acc-ic"><span class="gicon">&#xef55;</span></span><span class="acc-t"><b>¿Viste humo o fuego?</b><span>Rol de llamada: los primeros minutos</span></span><span class="acc-chev">▾</span></summary>
+      <div class="acc-body">
+        <ul class="checklist">
+          <li><span class="dot"></span><div>Si alguien está en peligro inmediato, retiralo <b>solo si no te pone en riesgo grave</b>.</div></li>
+          <li><span class="dot"></span><div>Avisá a la vez: gritá <b>"¡Fuego en [lugar]!"</b> al compañero más cercano y llamá al <b>Conmutador (interno 100)</b>, que activa el Código Rojo.</div></li>
+          <li><span class="dot"></span><div>Cerrá la puerta del lugar afectado. No hace falta esperar autorización.</div></li>
+          <li><span class="dot"></span><div>Usá el extintor solo si se cumplen las 4 condiciones, y un único intento.</div></li>
+          <li><span class="dot"></span><div><b>No evacúes el hospital por tu cuenta:</b> seguí los pasos de "¿Suena la alarma?".</div></li>
+        </ul>
+        <span class="acc-link" onclick="goTo('extintores')">Ver uso del extintor ›</span>
+      </div>
+    </details>
+    <details class="acc" name="evac" style="--acc:var(--red-dark)">
+      <summary><span class="acc-ic"><span class="gicon">&#xe7f7;</span></span><span class="acc-t"><b>¿Suena la alarma?</b><span>Personal: quedate en el sector y esperá la orden</span></span><span class="acc-chev">▾</span></summary>
+      <div class="acc-body">
+        <ul class="checklist">
+          <li><span class="dot"></span><div><b>No salgas por tu cuenta.</b> La estrategia (Confinamiento, Evacuación Horizontal o Evacuación Total) la decide el/la Director/a de la Emergencia.</div></li>
+          <li><span class="dot"></span><div>Cerrá las puertas del sector y dejá los pasillos libres.</div></li>
+          <li><span class="dot"></span><div>Prepará a los pacientes a tu cargo para un posible traslado.</div></li>
+          <li><span class="dot"></span><div>En áreas críticas (Quirófano, UTI, UCIP, Neonatología) no interrumpas la atención sin orden.</div></li>
+          <li><span class="dot"></span><div>Esperá la orden del/la <b>Líder de Sector</b> y seguí sus indicaciones.</div></li>
+        </ul>
+      </div>
+    </details>
+    <details class="acc" name="evac" style="--acc:var(--amber)">
+      <summary><span class="acc-ic"><span class="gicon">&#xe566;</span></span><span class="acc-t"><b>Cuando se ordena evacuar</b><span>Cómo salir del sector</span></span><span class="acc-chev">▾</span></summary>
+      <div class="acc-body">
+        <ul class="checklist">
+          <li><span class="dot"></span><div>No demores tu salida. Si un compañero no fue alertado, avisale.</div></li>
+          <li><span class="dot"></span><div>Antes de salir: cerrá cajones, colocá las sillas bajo los escritorios, retirá lo que obstruya el paso y cerrá las puertas.</div></li>
+          <li><span class="dot"></span><div>Formá columna detrás del/la Líder de Sector, orientada a la salida, y avanzá sin empujar.</div></li>
+          <li><span class="dot"></span><div>Caminá sin correr ni gritar, por la ruta indicada. <b>Nunca uses ascensores.</b></div></li>
+          <li><span class="dot"></span><div>No regreses al área evacuada ni vuelvas a buscar objetos.</div></li>
+          <li><span class="dot"></span><div>En el <b>punto de encuentro</b>, cada responsable reporta el conteo de las personas a su cargo.</div></li>
+        </ul>
+        <span class="acc-link" onclick="goTo('planos-menu')">Ver rutas de mi servicio ›</span>
+      </div>
+    </details>
+    <details class="acc" name="evac" style="--acc:var(--green)">
+      <summary><span class="acc-ic"><span class="gicon">&#xea21;</span></span><span class="acc-t"><b>Visitantes y acompañantes</b><span>Qué hacen quienes no trabajan en el hospital</span></span><span class="acc-chev">▾</span></summary>
+      <div class="acc-body">
+        <ul class="checklist">
+          <li><span class="dot"></span><div>Seguí las indicaciones del personal.</div></li>
+          <li><span class="dot"></span><div>Dirigite caminando a la salida más cercana, sin usar ascensores.</div></li>
+          <li><span class="dot"></span><div>Esperá en el punto de encuentro y no vuelvas a entrar hasta que lo autoricen.</div></li>
+        </ul>
+      </div>
+    </details>
+
+    <div class="acc-group">Situaciones especiales</div>
+    <details class="acc" name="evac" style="--acc:var(--steel-dark)">
+      <summary><span class="acc-ic"><span class="gicon">&#xf083;</span></span><span class="acc-t"><b>Si hay humo en el camino</b><span>Cómo desplazarte</span></span><span class="acc-chev">▾</span></summary>
+      <div class="acc-body">
+        <ul class="checklist">
+          <li><span class="dot"></span><div>Agachate o gateá: cerca del piso suele haber aire más respirable y mejor visibilidad.</div></li>
+          <li><span class="dot"></span><div>Cubrite nariz y boca con un paño, húmedo si es posible.</div></li>
+          <li><span class="dot"></span><div>No abras una puerta que esté caliente al tacto.</div></li>
+          <li><span class="dot"></span><div>Mantené las puertas cerradas detrás tuyo para retardar el avance del humo.</div></li>
+        </ul>
+      </div>
+    </details>
+    <details class="acc" name="evac" style="--acc:var(--steel-dark)">
+      <summary><span class="acc-ic"><span class="gicon">&#xe55c;</span></span><span class="acc-t"><b>Si no podés salir</b><span>Cómo hacerte ver</span></span><span class="acc-chev">▾</span></summary>
+      <div class="acc-body">
+        <ul class="checklist">
+          <li><span class="dot"></span><div>Mantené las puertas cerradas para demorar el humo.</div></li>
+          <li><span class="dot"></span><div>Hacé visible tu presencia: llamá por teléfono al Conmutador (interno 100) e indicá dónde estás.</div></li>
+          <li><span class="dot"></span><div>Hacé señales por la ventana o usá un paño llamativo.</div></li>
+        </ul>
+      </div>
+    </details>
+    <details class="acc" name="evac" style="--acc:var(--steel-dark)">
+      <summary><span class="acc-ic"><span class="gicon">&#xe1eb;</span></span><span class="acc-t"><b>Si se prende la ropa</b><span>Tuya o de otra persona</span></span><span class="acc-chev">▾</span></summary>
+      <div class="acc-body">
+        <ul class="checklist">
+          <li><span class="dot"></span><div>No corras: tirate al suelo y rodá, cubriéndote el rostro con las manos. Si podés, humedecé la ropa.</div></li>
+          <li><span class="dot"></span><div>Si le pasa a otra persona, ayudala a rodar y/o cubrila con una manta.</div></li>
+        </ul>
+      </div>
+    </details>
+
+    <div class="acc-group">Prevención</div>
+    <details class="acc" name="evac" style="--acc:var(--red)">
+      <summary><span class="acc-ic"><span class="gicon">&#xf08c;</span></span><span class="acc-t"><b>Nunca hagas esto</b><span>Errores que ponen en riesgo la evacuación</span></span><span class="acc-chev">▾</span></summary>
+      <div class="acc-body">
+        <ul class="checklist">
+          <li><span class="dot"></span><div>No corras.</div></li>
+          <li><span class="dot"></span><div>No grites durante la evacuación (el aviso inicial "¡Fuego en…!" sí se da).</div></li>
+          <li><span class="dot"></span><div>No uses ascensores.</div></li>
+          <li><span class="dot"></span><div>No vuelvas a buscar objetos.</div></li>
+          <li><span class="dot"></span><div>No abras puertas calientes.</div></li>
+          <li><span class="dot"></span><div>No bloquees puertas cortafuego.</div></li>
+          <li><span class="dot"></span><div>No obstruyas rutas de evacuación.</div></li>
+          <li><span class="dot"></span><div>No utilices agua sobre equipos eléctricos.</div></li>
+        </ul>
+      </div>
+    </details>
+    <details class="acc" name="evac" style="--acc:var(--green)">
+      <summary><span class="acc-ic"><span class="gicon">&#xf0be;</span></span><span class="acc-t"><b>Conocé tu entorno</b><span>Lo que tenés que saber antes de una emergencia</span></span><span class="acc-chev">▾</span></summary>
+      <div class="acc-body">
+        <ul class="checklist">
+          <li><span class="dot"></span><div><b>Plan y salidas.</b> Conocé el Plan de Evacuación y Autoprotección, los medios de salida y las rutas de tu servicio. Verificá la señalización luminosa y los planos del piso.</div></li>
+          <li><span class="dot"></span><div><b>Extintores y señalización.</b> Identificá los extintores cercanos y mantenelos accesibles. Si alguno está obstruido o fuera de lugar, avisá a Seguridad.</div></li>
+          <li><span class="dot"></span><div><b>Puertas.</b> Evitá cierres con llave que impidan abrir rápido las puertas en cualquier horario.</div></li>
+          <li><span class="dot"></span><div><b>Personas a cargo.</b> Cada responsable mantiene actualizado el listado de personas a su cargo.</div></li>
+          <li><span class="dot"></span><div><b>Riesgo eléctrico.</b> Un principio de incendio puede originarse por una falla eléctrica: ante chispazos u olor a quemado, no demores el aviso.</div></li>
+        </ul>
+      </div>
+    </details>
   </section>
 
   <!-- ===================== ROLES ===================== -->
