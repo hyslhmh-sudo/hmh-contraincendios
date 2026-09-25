@@ -180,15 +180,17 @@
   .sector-search input{width:100%; border:1px solid var(--line); border-radius:10px; padding:11px 14px; font-size:14px; background:#fff;}
   .group-title{font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:.5px; color:var(--steel-dark); margin:18px 2px 8px;}
   /* Referencias de orientación de los mapas (fuera del plano, sin achicarlo) */
-  .map-tag{position:absolute; transform:translateY(-50%); background:var(--navy); color:#fff; font-size:10.5px; font-weight:800; padding:3px 8px; border-radius:999px; white-space:nowrap; pointer-events:none; box-shadow:0 1px 4px rgba(0,0,0,.25); z-index:2;}
+  .map-tag{position:absolute; transform:translateY(-50%); background:var(--navy); color:#fff; font-size:12.5px; font-weight:800; padding:4px 10px; border-radius:999px; white-space:nowrap; pointer-events:none; box-shadow:0 1px 4px rgba(0,0,0,.25); z-index:2;}
   .map-orient{display:flex; gap:6px; margin-bottom:6px;}
-  .map-orient .o{flex:1; min-width:0; background:var(--navy); color:#fff; border-radius:8px; padding:7px 9px; font-size:11px; font-weight:700; line-height:1.3; display:flex; align-items:center; gap:6px;}
+  .map-orient .o{flex:1; min-width:0; background:var(--navy); color:#fff; border-radius:8px; padding:9px 8px; font-size:13.5px; font-weight:800; line-height:1.3; display:flex; align-items:center; gap:5px;}
   .map-orient .o.der{justify-content:flex-end; text-align:right;}
-  .map-orient .o .ar{flex:none; font-size:15px; line-height:1;}
-  .map-orient-v{background:var(--navy); color:#fff; border-radius:8px; padding:7px 10px; font-size:11px; font-weight:700; text-align:center; margin:6px 0; display:flex; align-items:center; justify-content:center; gap:6px;}
+  .map-orient .o .ar, .map-orient-v .ar{flex:none; display:block; width:34px; height:34px;}
+  .map-orient .o > span{min-width:0;}
+  @media(max-width:400px){ .map-orient .o{font-size:12.5px; padding:9px 7px;} .map-orient .o .ar, .map-orient-v .ar{width:30px; height:30px;} }
+  .map-orient-v{background:var(--navy); color:#fff; border-radius:8px; padding:9px 12px; font-size:13.5px; font-weight:800; text-align:center; margin:6px 0; display:flex; align-items:center; justify-content:center; gap:6px;}
   .map-orient-v.izq{width:fit-content; margin-right:auto;}
   .map-orient-v.der{width:fit-content; margin-left:auto;}
-  .map-orient-v .ar{font-size:15px; line-height:1;}
+
   /* Acordeones de Evacuación */
   .acc-group{font-size:11px; font-weight:800; letter-spacing:.6px; text-transform:uppercase; color:var(--steel-dark); margin:20px 2px 8px;}
   details.acc{background:var(--card); border:1px solid var(--line); border-left:5px solid var(--acc, var(--steel-dark)); border-radius:var(--radius); margin-bottom:10px; overflow:hidden;}
@@ -1676,6 +1678,11 @@ const ORIENTACION = {
   mapaPaWrap: { izq:'Av. Eva Perón\nEstacionamiento de pacientes y visitantes', der:'Estacionamiento del personal', arriba:'', abajo:'' },
   mapaPbWrap: { izq:'Av. Eva Perón\nEstacionamiento de pacientes y visitantes', der:'Estacionamiento del personal', arriba:'', abajo:'' }
 };
+const FLECHA_ROT = {'→':0,'↘':45,'↓':90,'↙':135,'←':180,'↖':225,'↑':270,'↗':315};
+function flechaSVG(ch){
+  const r = FLECHA_ROT[ch] || 0;
+  return '<svg class="ar" viewBox="0 0 24 24" width="38" height="38" style="transform:rotate(' + r + 'deg)" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h17M13 5l7 7-7 7"/></svg>';
+}
 function renderOrientacion(){
   Object.keys(ORIENTACION).forEach(function(id){
     const wrap = document.getElementById(id);
@@ -1683,18 +1690,18 @@ function renderOrientacion(){
     wrap.dataset.orient = '1';
     const ref = ORIENTACION[id];
     const esc = t => t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/\n/g,'<br>');
-    if(ref.arriba){ const o=(typeof ref.arriba==='string')?{texto:ref.arriba,lado:'centro'}:ref.arriba; const d=document.createElement('div'); d.className='map-orient-v '+(o.lado||'centro'); d.innerHTML='<span class="ar">'+({izq:'↖',centro:'↑',der:'↗'})[o.lado||'centro']+'</span> '+esc(o.texto); wrap.parentElement.insertBefore(d, wrap); }
+    if(ref.arriba){ const o=(typeof ref.arriba==='string')?{texto:ref.arriba,lado:'centro'}:ref.arriba; const d=document.createElement('div'); d.className='map-orient-v '+(o.lado||'centro'); d.innerHTML=flechaSVG(({izq:'↖',centro:'↑',der:'↗'})[o.lado||'centro'])+'<span>'+esc(o.texto)+'</span>'; wrap.parentElement.insertBefore(d, wrap); }
     if(ref.izq || ref.der){
       const bar=document.createElement('div'); bar.className='map-orient';
-      bar.innerHTML = '<div class="o izq">' + (ref.izq ? '<span class="ar">←</span><span>'+esc(ref.izq)+'</span>' : '') + '</div>' +
-                      '<div class="o der">' + (ref.der ? '<span>'+esc(ref.der)+'</span><span class="ar">→</span>' : '') + '</div>';
+      bar.innerHTML = '<div class="o izq">' + (ref.izq ? flechaSVG('←') + '<span>'+esc(ref.izq)+'</span>' : '') + '</div>' +
+                      '<div class="o der">' + (ref.der ? '<span>'+esc(ref.der)+'</span>' + flechaSVG('→') : '') + '</div>';
       wrap.parentElement.insertBefore(bar, wrap);
     }
     function banda(v, flechas){
       const o = (typeof v === 'string') ? {texto:v, lado:'centro'} : v;
       const d = document.createElement('div');
       d.className = 'map-orient-v ' + (o.lado||'centro');
-      d.innerHTML = '<span class="ar">' + (o.flecha || flechas[o.lado||'centro']) + '</span> ' + esc(o.texto);
+      d.innerHTML = flechaSVG(o.flecha || flechas[o.lado||'centro']) + '<span>' + esc(o.texto) + '</span>';
       if(typeof o.alinearCon === 'number'){ d.style.marginLeft = 'calc(' + o.alinearCon + '% - 17px)'; }
       return d;
     }
