@@ -391,14 +391,25 @@
 
   <div class="em-view" id="em-alarma">
     <h2 class="em-sub-title"><span class="gicon">&#xe7f7;</span> ¿Suena la alarma?</h2>
-    <ul class="em-list">
-      <li>Mantené la calma e interrumpí tu actividad.</li>
-      <li>Seguí las indicaciones del/la Guía de piso.</li>
-      <li>Dirigite ordenadamente a la salida más cercana, sin ascensor.</li>
-      <li>Concurrí al punto de reunión y esperá el recuento.</li>
-    </ul>
+    <div class="em-block"><b>Si sos personal del hospital</b>
+      <ul class="em-list">
+        <li><b>No salgas por tu cuenta: quedate en tu sector.</b> La estrategia (Confinamiento, Evacuación Horizontal o Evacuación Total) la decide el/la Director/a de la Emergencia.</li>
+        <li>Cerrá las puertas del sector y dejá los pasillos libres.</li>
+        <li>Prepará a los pacientes a tu cargo para un posible traslado.</li>
+        <li>En áreas críticas (Quirófano, UTI, UCIP, Neonatología) no interrumpas la atención sin orden.</li>
+        <li>Esperá la orden del/la <b>Líder de Sector</b> y seguí sus indicaciones.</li>
+        <li>Si se ordena evacuar: caminando, sin ascensores, por la ruta indicada, hasta el <b>punto de encuentro</b>.</li>
+      </ul>
+    </div>
+    <div class="em-block"><b>Si sos visitante o acompañante</b>
+      <ul class="em-list">
+        <li>Seguí las indicaciones del personal.</li>
+        <li>Dirigite caminando a la salida más cercana, sin usar ascensores.</li>
+        <li>Esperá en el punto de encuentro.</li>
+      </ul>
+    </div>
     <div class="em-calls">
-      <a class="em-call-btn" href="tel:262"><span class="gicon">&#xf0d4;</span> Seguridad · 262</a>
+      <button class="em-call-btn" style="background:var(--red)" onclick="emGoTo('fuego')"><span class="gicon">&#xef55;</span> Veo fuego o humo</button>
     </div>
   </div>
 </div>
@@ -559,9 +570,10 @@
         <ul class="checklist">
           <li><span class="dot"></span><div>Avisá de inmediato y a la vez: gritá <b>"¡Fuego en [lugar]!"</b> al compañero más cercano y llamá al <b>Conmutador (interno 100)</b>, que activa el Código Rojo.</div></li>
           <li><span class="dot"></span><div>Cerrá la puerta del lugar afectado para retardar el avance del fuego/humo. No hace falta esperar autorización.</div></li>
-          <li><span class="dot"></span><div>Dirigite caminando, sin correr, a la salida de emergencia más cercana.</div></li>
-          <li><span class="dot"></span><div>No uses ascensores.</div></li>
-          <li><span class="dot"></span><div>Concurrí al punto de encuentro asignado.</div></li>
+          <li><span class="dot"></span><div><b>No evacúes el hospital por tu cuenta.</b> El/la Director/a de la Emergencia decide Confinamiento, Evacuación Horizontal o Evacuación Total, y el/la Líder de Sector da la orden.</div></li>
+          <li><span class="dot"></span><div>Mientras tanto: puertas cerradas, pasillos libres y pacientes preparados para un posible traslado.</div></li>
+          <li><span class="dot"></span><div>Si se ordena evacuar: caminando, sin ascensores, por la ruta indicada, hasta el punto de encuentro.</div></li>
+          <li><span class="dot"></span><div>Visitantes y acompañantes: salen por la salida más cercana, guiados por el personal.</div></li>
         </ul>
       </div>
     </div>
@@ -598,12 +610,12 @@
     <div class="card">
       <h3 class="blk">Recomendaciones</h3>
       <ul class="checklist">
-        <li><span class="dot"></span><div><b>Mantener la calma y actuar.</b> Conservá la calma. Evitá gritar, correr o conversar sin necesidad. Seguí las indicaciones del/la Guía del sector.</div></li>
-        <li><span class="dot"></span><div><b>Conocer el plan y las salidas.</b> Conocé el Plan de Emergencias, los medios de salida y rutas de egreso; revisalos periódicamente. Verificá señalización luminosa y planos del piso.</div></li>
+        <li><span class="dot"></span><div><b>Mantener la calma y actuar.</b> Conservá la calma. Evitá gritar, correr o conversar sin necesidad. Seguí las indicaciones del/la Líder de Sector.</div></li>
+        <li><span class="dot"></span><div><b>Conocer el plan y las salidas.</b> Conocé el Plan de Evacuación y Autoprotección, los medios de salida y rutas de egreso; revisalos periódicamente. Verificá señalización luminosa y planos del piso.</div></li>
         <li><span class="dot"></span><div><b>Extintores y señalización.</b> Identificá los extintores cercanos y mantenelos accesibles. Si alguno está obstruido o fuera de lugar, avisá a Seguridad. Respetá cartelería y balizamiento.</div></li>
-        <li><span class="dot"></span><div><b>Inicio de la evacuación.</b> Al ordenarse la evacuación, no demores tu salida. Si un compañero no fue alertado, avisá. Formá columna detrás del/la Guía, orientada a la salida, y avanzá sin empujar. No regreses al área evacuada.</div></li>
+        <li><span class="dot"></span><div><b>Inicio de la evacuación.</b> Al ordenarse la evacuación, no demores tu salida. Si un compañero no fue alertado, avisá. Formá columna detrás del/la Líder de Sector, orientada a la salida, y avanzá sin empujar. No regreses al área evacuada.</div></li>
         <li><span class="dot"></span><div><b>Acondicionar el sector al retirarse.</b> Mantené los pasillos despejados. Cerrá cajones y colocá sillas bajo los escritorios. Retirá objetos que obstruyan el paso. Cerrá puertas para limitar el avance del fuego.</div></li>
-        <li><span class="dot"></span><div><b>Personas a cargo.</b> Cada responsable mantiene listado actualizado de personas a su cargo y reporta el conteo en el punto de reunión.</div></li>
+        <li><span class="dot"></span><div><b>Personas a cargo.</b> Cada responsable mantiene listado actualizado de personas a su cargo y reporta el conteo en el punto de encuentro.</div></li>
         <li><span class="dot"></span><div><b>Desplazamiento con humo.</b> Si hay humo, agachate o gateá: por lo general, el aire más respirable y la mayor visibilidad están cerca del piso. Protegé vías respiratorias si es posible.</div></li>
         <li><span class="dot"></span><div><b>Ropa encendida.</b> Si tu ropa prende fuego, no corras. Tirate al suelo y rodá, cubriéndote el rostro con las manos. Si podés, humedecela. Si otra persona está en esa situación, ayudala a rodar y/o cubrila con una manta.</div></li>
         <li><span class="dot"></span><div><b>Si no podés salir.</b> Hacé visible tu presencia: llamá por teléfono, hacé señales por la ventana o usá un paño llamativo. Mantené puertas cerradas para demorar el humo.</div></li>
@@ -614,24 +626,26 @@
 
   <!-- ===================== ROLES ===================== -->
   <section class="view" id="view-roles">
-    <div class="section-head"><h2>Roles en emergencia</h2><p>Quién hace qué durante una activación, según la Guía de Seguridad Contraincendios del HMH.</p></div>
+    <div class="section-head"><h2>Roles en emergencia</h2><p>Quién hace qué durante una activación, según el Plan de Evacuación y Autoprotección del HMH (Capítulo IV).</p></div>
 
-    <div class="card rol-card"><div class="rol-tag">JE</div><div><h3 style="font-size:15px">Jefe/a de Emergencia</h3><ul>
-      <li>Confirma la alarma y decide: proteger en sitio / evacuar horizontal / evacuar vertical.</li>
-      <li>Ordena cortes de energías junto a Mantenimiento/Ingeniería.</li>
+    <div class="card rol-card"><div class="rol-tag">DE</div><div><h3 style="font-size:15px">Director/a de la Emergencia <span style="font-size:11px; font-weight:600; color:var(--ink-soft)">· Tarjeta N.° 1</span></h3><ul>
+      <li>Recibe el aviso del Conmutador, confirma la alarma y decide: Confinamiento / Evacuación Horizontal / Evacuación Total.</li>
+      <li>Ordena cortes de energía al/la Jefe/a de Intervención Técnica.</li>
       <li>Ante todo Código Rojo confirmado se llama siempre a Bomberos y Policía (lo marca el Conmutador), aunque el fuego ya esté apagado. Conduce el cierre del evento.</li>
     </ul></div></div>
 
-    <div class="card rol-card"><div class="rol-tag">JP</div><div><h3 style="font-size:15px">Jefatura de Piso / Sector</h3><ul>
-      <li>Ordena cierre de puertas, control de pasillos y preparación de evacuación.</li>
-      <li>Reporta en T+5 minutos al JE: conteo, estado del sector y decisión.</li>
+    <div class="card rol-card"><div class="rol-tag">LS</div><div><h3 style="font-size:15px">Líder de Sector (Enfermería) <span style="font-size:11px; font-weight:600; color:var(--ink-soft)">· Tarjeta N.° 3</span></h3><ul>
+      <li>Recibe el Código Rojo por audio-evacuación.</li>
+      <li>Ordena cierre de puertas, control de pasillos y preparación de pacientes para un posible traslado.</li>
+      <li>Transmite al personal la orden del/la Director/a de la Emergencia y conduce la evacuación del sector si se ordena.</li>
+      <li>Reporta en T+5 minutos al/la Director/a de la Emergencia: conteo, estado del sector y decisión.</li>
       <li>Asegura el conteo del personal a su cargo.</li>
     </ul></div></div>
 
     <div class="card rol-card"><div class="rol-tag">CON</div><div><h3 style="font-size:15px">Conmutador (24 hs)</h3><ul>
       <li>Confirma el dato mínimo: lugar exacto del fuego y si hay personas en riesgo.</li>
       <li>Activa el Código Rojo por audio-evacuación ("Código Rojo en [sector]").</li>
-      <li>Notifica en paralelo a Seguridad y a Mantenimiento, y alerta al JE o Médico de Guardia.</li>
+      <li>Notifica en paralelo a Seguridad y a Mantenimiento, y alerta al/la Director/a de la Emergencia o Médico de Guardia.</li>
       <li>Llama siempre a Bomberos (100) y Policía (101) y mantiene la línea abierta con Bomberos hasta su arribo.</li>
     </ul></div></div>
 
@@ -642,20 +656,21 @@
 
     <div class="card rol-card"><div class="rol-tag">BR</div><div><h3 style="font-size:15px">Brigada <span style="font-size:10.5px; font-weight:700; color:var(--amber); background:#FDF3DC; padding:2px 8px; border-radius:999px; vertical-align:middle">EN FORMACIÓN</span></h3><ul>
       <li>Primer ataque solo si el foco es incipiente y hay salida clara a su espalda.</li>
-      <li>Ejecuta cortes de energía por orden del JE y señaliza toda maniobra.</li>
+      <li>Ejecuta cortes de energía por orden del/la Director/a de la Emergencia y señaliza toda maniobra.</li>
       <li>Apoya la evacuación.</li>
     </ul></div></div>
 
-    <div class="card rol-card"><div class="rol-tag">MNT</div><div><h3 style="font-size:15px">Mantenimiento / Ingeniería</h3><ul>
+    <div class="card rol-card"><div class="rol-tag">JIT</div><div><h3 style="font-size:15px">Jefe/a de Intervención Técnica (Mantenimiento) <span style="font-size:11px; font-weight:600; color:var(--ink-soft)">· Tarjeta N.° 2</span></h3><ul>
       <li>Recibe la notificación del Conmutador ante el Código Rojo.</li>
       <li>Mantiene operatividad y registros de los sistemas PCI.</li>
-      <li>Ejecuta cortes de electricidad, gas y HVAC según indicación del JE.</li>
+      <li>Ejecuta cortes de electricidad, gas y HVAC según indicación del/la Director/a de la Emergencia.</li>
     </ul></div></div>
 
     <div class="card rol-card"><div class="rol-tag">PE</div><div><h3 style="font-size:15px">Personal general / contratistas</h3><ul>
+      <li>Ante fuego, humo u olor a quemado aplica el Rol de Llamada: cualquiera que detecta, actúa (grito + Conmutador interno 100).</li>
       <li>Mantiene rutas libres y respeta la señalización.</li>
-      <li>Evacúa por la salida indicada sin usar ascensores, sin correr ni gritar.</li>
-      <li>Ayuda a pacientes y visitantes según indicación del JE, sin iniciativa propia en áreas críticas.</li>
+      <li>No evacúa por su cuenta: espera la orden y sale por la ruta indicada, sin usar ascensores, sin correr ni gritar.</li>
+      <li>Ayuda a pacientes y visitantes según indicación del/la Líder de Sector.</li>
     </ul></div></div>
   </section>
 
@@ -1291,12 +1306,12 @@ const TRIVIA = [
   {q:"Según el Método PASS, ¿a qué distancia hay que apuntar el extintor de la base del fuego?", opts:["2 a 3 metros","Pegado al fuego","5 a 6 metros","10 metros"], correct:0, exp:"Se apunta la manguera a la base del fuego manteniendo una distancia de 2 a 3 metros."},
   {q:"¿Qué extintor corresponde usar en la cocina (aceites y grasas)?", opts:["ABC (PQS)","CO₂","Clase K","Clase D"], correct:2, exp:"El extintor Clase K está pensado específicamente para aceites y grasas de cocina."},
   {q:"¿Qué extintor corresponde en el Laboratorio de Citogenética (metales combustibles)?", opts:["Clase K","Clase D","HCFC-123","ABC (PQS)"], correct:1, exp:"El extintor Clase D es para metales combustibles, como en Citogenética."},
-  {q:"Si el humo es denso o el fuego se extendió más allá de su punto de origen, ¿qué corresponde hacer?", opts:["Intentar apagarlo igual","Evacuar inmediatamente","Esperar y observar un rato","Buscar el extintor sin apuro"], correct:1, exp:"Cuando el fuego ya no es incipiente (humo denso o se extendió), hay que evacuar inmediatamente."},
-  {q:"Según \"Nunca hagas esto\", ¿qué NO deberías hacer al evacuar?", opts:["Caminar hacia la salida más cercana","Usar el ascensor para bajar más rápido","Avisar si un compañero no fue alertado","Cerrar puertas detrás tuyo"], correct:1, exp:"Nunca hay que usar ascensores durante una evacuación: hay que usar las escaleras."},
+  {q:"Si el humo es denso o el fuego se extendió más allá de su punto de origen, ¿qué corresponde hacer?", opts:["Intentar apagarlo igual","No intentar apagarlo: cerrar la puerta y evacuar el sector","Esperar y observar un rato","Buscar el extintor sin apuro"], correct:1, exp:"Si falta una sola de las 4 condiciones (tamaño, humo, vía de escape, extintor), no se intenta apagar: se cierra la puerta y se evacúa el sector."},
+  {q:"Según \"Nunca hagas esto\", ¿qué NO deberías hacer al evacuar?", opts:["Caminar por la ruta indicada","Usar el ascensor para bajar más rápido","Avisar si un compañero no fue alertado","Cerrar puertas detrás tuyo"], correct:1, exp:"Nunca hay que usar ascensores durante una evacuación: hay que usar las escaleras."},
   {q:"Si hay humo en el ambiente, ¿cómo tenés que desplazarte?", opts:["Corriendo y erguido","Agachado o gateando, cerca del piso","Con los ojos cerrados","En ascensor"], correct:1, exp:"Cerca del piso suele haber más aire respirable y mejor visibilidad."},
   {q:"Detectás un principio de incendio. ¿A quién llamás?", opts:["A Seguridad (262)","Al Conmutador (interno 100)","A Mantenimiento (279)","A nadie: primero intento apagarlo"], correct:1, exp:"El Conmutador es el único que activa el Código Rojo y avisa a la vez a Seguridad, Mantenimiento, Dirección, Bomberos y Policía. Un solo número, un solo llamado, y en simultáneo gritás al compañero más cercano."},
   {q:"Si tu ropa se prende fuego, ¿qué tenés que hacer?", opts:["Correr para que el viento apague las llamas","Tirarte al suelo y rodar","Sacarte la ropa de inmediato sin importar dónde","Buscar agua antes que nada"], correct:1, exp:"Hay que tirarse al suelo y rodar, cubriéndose el rostro con las manos."},
-  {q:"Cuando suena la alarma de incendio, ¿qué es lo primero que hay que hacer?", opts:["Terminar la tarea y después salir","Mantener la calma e interrumpir la actividad","Ir a buscar tus pertenencias primero","Esperar a que se apague sola"], correct:1, exp:"Lo primero es mantener la calma e interrumpir inmediatamente la actividad que se está haciendo."},
+  {q:"Suena la alarma y trabajás en un servicio con pacientes. ¿Qué hacés?", opts:["Salgo por la salida más cercana","Me quedo en el sector, cierro puertas, preparo a los pacientes y espero la orden del/la Líder de Sector","Voy a buscar mis pertenencias","Llamo yo a Bomberos"], correct:1, exp:"El HMH aplica Defensa en el Sitio: la estrategia (Confinamiento, Evacuación Horizontal o Total) la decide el/la Director/a de la Emergencia. Salir por tu cuenta deja pacientes sin atención. Bomberos lo llama el Conmutador."},
 ];
 let triviaIdx = 0;
 let triviaRespuestas = [];
