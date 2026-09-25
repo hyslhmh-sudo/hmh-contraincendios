@@ -197,6 +197,15 @@
   .pass-row{display:flex; gap:12px; align-items:center; padding:8px 0; border-top:1px dashed var(--line); font-size:13.5px;}
   .pass-row:first-child{border-top:none;}
   .pass-row .l{flex:none; width:34px; height:34px; border-radius:9px; color:#fff; font-weight:800; font-size:16px; display:flex; align-items:center; justify-content:center;}
+  .cap-eval{margin-top:14px; padding-top:12px; border-top:1px dashed var(--line);}
+  .cap-step{display:flex; gap:10px; align-items:flex-start; font-size:13.5px; margin:6px 0;}
+  .cap-step .n{flex:none; width:22px; height:22px; border-radius:999px; background:var(--navy); color:#fff; font-size:12px; font-weight:800; display:flex; align-items:center; justify-content:center;}
+  .cap-bar{height:8px; border-radius:999px; background:var(--line); overflow:hidden; margin:8px 0 4px 32px;}
+  .cap-fill{height:100%; width:0; background:var(--green); transition:width .4s;}
+  .cap-pct{font-size:11.5px; color:var(--ink-soft); margin:0 0 10px 32px;}
+  .cap-btn{display:flex; align-items:center; justify-content:center; gap:8px; margin-top:10px; padding:13px; border-radius:12px; font-size:14px; font-weight:800; text-decoration:none; background:#D5DBE3; color:#6B7686; cursor:not-allowed;}
+  .cap-btn.ok{background:var(--green); color:#fff; cursor:pointer;}
+  .cap-manual{display:flex; gap:8px; align-items:flex-start; font-size:12px; color:var(--ink-soft); margin-top:10px;}
   .em-cel{display:inline-flex; align-items:center; gap:6px; margin-top:10px; background:#fff; color:var(--red); font-weight:800; font-size:14px; padding:9px 14px; border-radius:999px; text-decoration:none;}
   .em-strip{margin-top:16px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); border-radius:14px; padding:12px 14px; color:#fff; font-size:13.5px; display:flex; align-items:center; gap:10px;}
   .em-strip b{font-size:17px;}
@@ -782,10 +791,19 @@
       </div>
     </details>
     <details class="acc" name="rec" style="--acc:var(--red)">
-      <summary><span class="acc-ic"><span class="gicon">&#xe04b;</span></span><span class="acc-t"><b>Capacitación institucional HMH</b><span>Seguridad Contraincendios · Lic. Belén Pellegrini</span></span><span class="acc-chev">▾</span></summary>
+      <summary><span class="acc-ic"><span class="gicon">&#xe04b;</span></span><span class="acc-t"><b>Capacitación institucional HMH</b><span>Video + evaluación con certificado</span></span><span class="acc-chev">▾</span></summary>
       <div class="acc-body">
         <div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:10px; margin-top:8px">
-          <iframe data-src="https://www.youtube.com/embed/5cbm6aCkpzc" title="Capacitación institucional HMH" referrerpolicy="strict-origin-when-cross-origin" frameborder="0" allowfullscreen style="position:absolute; top:0; left:0; width:100%; height:100%;"></iframe>
+          <iframe id="capVideo" data-src="https://www.youtube.com/embed/5cbm6aCkpzc?enablejsapi=1&rel=0&playsinline=1" title="Capacitación institucional HMH" referrerpolicy="strict-origin-when-cross-origin" frameborder="0" allowfullscreen style="position:absolute; top:0; left:0; width:100%; height:100%;"></iframe>
+        </div>
+        <p style="font-size:12px; color:var(--ink-soft); margin:8px 0 0">Seguridad Contraincendios · dictada por la Lic. Belén Pellegrini, Responsable de Higiene y Seguridad.</p>
+        <div class="cap-eval">
+          <div class="cap-step"><span class="n">1</span><span>Mirá el video completo.</span></div>
+          <div class="cap-bar"><div class="cap-fill" id="capFill"></div></div>
+          <div class="cap-pct" id="capPct">Visto: 0%</div>
+          <div class="cap-step"><span class="n">2</span><span>Completá la evaluación. Si la aprobás, el certificado llega a tu correo electrónico.</span></div>
+          <a class="cap-btn" id="capBtn" href="https://docs.google.com/forms/d/e/1FAIpQLSfndWr-Pf07wR-poSFPy-GzAyBCyF8oI5ZbzX7tkALLXEAr_A/viewform" target="_blank" rel="noopener" aria-disabled="true" onclick="return capPuedeEvaluar()"><span class="gicon">&#xe873;</span> <span id="capBtnTxt">Se habilita al terminar el video</span></a>
+          <label class="cap-manual" id="capManual" style="display:none"><input type="checkbox" onchange="capConfirmarManual(this.checked)"> No se ve el avance del video. Confirmo que lo vi completo.</label>
         </div>
       </div>
     </details>
@@ -1619,6 +1637,64 @@ document.addEventListener('toggle', function(e){
     document.querySelectorAll('details.acc[open]').forEach(o=>{ if(o!==d && o.getAttribute('name')===grupo) o.open=false; });
     requestAnimationFrame(()=>{ const r=d.getBoundingClientRect(); if(r.top < 70 || r.top > window.innerHeight*0.6) d.scrollIntoView({behavior:'smooth', block:'start'}); });
   }
+}, true);
+
+/* ============ Capacitación: video → evaluación ============ */
+// La evaluación se habilita cuando se reprodujo al menos el 90% del video.
+// El avance queda guardado en el celular: si se sale y se vuelve, continúa.
+const CAP_KEY = 'hmh_cap_5cbm6aCkpzc';
+const CAP_UMBRAL = 0.9;
+let capPlayer = null, capTimer = null, capApiPedida = false;
+function capEstado(){ try{ return JSON.parse(localStorage.getItem(CAP_KEY)) || {visto:0, dur:0, ok:false}; }catch(e){ return {visto:0, dur:0, ok:false}; } }
+function capGuardar(st){ try{ localStorage.setItem(CAP_KEY, JSON.stringify(st)); }catch(e){} }
+function capPintar(){
+  const st = capEstado();
+  const pct = st.ok ? 100 : (st.dur ? Math.min(100, Math.round(st.visto / st.dur * 100)) : 0);
+  const fill = document.getElementById('capFill'); if(!fill) return;
+  fill.style.width = pct + '%';
+  document.getElementById('capPct').textContent = st.ok ? 'Video completo ✓' : ('Visto: ' + pct + '%');
+  const btn = document.getElementById('capBtn');
+  btn.classList.toggle('ok', !!st.ok);
+  btn.setAttribute('aria-disabled', st.ok ? 'false' : 'true');
+  document.getElementById('capBtnTxt').textContent = st.ok ? 'Hacer la evaluación' : 'Se habilita al terminar el video';
+}
+function capPuedeEvaluar(){
+  if(capEstado().ok) return true;
+  showToast('Primero mirá el video completo');
+  return false;
+}
+function capConfirmarManual(v){ if(v){ const st=capEstado(); st.ok=true; capGuardar(st); capPintar(); } }
+function capTick(){
+  if(!capPlayer || !capPlayer.getPlayerState) return;
+  if(capPlayer.getPlayerState() !== 1) return; // 1 = reproduciendo
+  const st = capEstado();
+  st.dur = capPlayer.getDuration() || st.dur;
+  st.visto += 1 * (capPlayer.getPlaybackRate ? capPlayer.getPlaybackRate() : 1);
+  if(st.dur && st.visto >= st.dur * CAP_UMBRAL) st.ok = true;
+  capGuardar(st); capPintar();
+}
+function capIniciarPlayer(){
+  const f = document.getElementById('capVideo');
+  if(!f || !f.getAttribute('src') || !(window.YT && YT.Player)) return;
+  capPlayer = new YT.Player(f, {events:{
+    onReady: function(){ const st=capEstado(); if(!st.dur){ st.dur = capPlayer.getDuration(); capGuardar(st); } capPintar(); },
+    onStateChange: function(e){ if(e.data === 0){ const st=capEstado(); if(st.dur && st.visto >= st.dur*0.5){ st.ok = true; capGuardar(st); capPintar(); } } }
+  }});
+  clearInterval(capTimer); capTimer = setInterval(capTick, 1000);
+}
+window.onYouTubeIframeAPIReady = capIniciarPlayer;
+document.addEventListener('toggle', function(e){
+  const d = e.target;
+  if(!(d instanceof HTMLDetailsElement) || !d.querySelector('#capVideo')) return;
+  if(d.open){
+    capPintar();
+    if(window.YT && YT.Player){ setTimeout(capIniciarPlayer, 50); }
+    else if(!capApiPedida){
+      capApiPedida = true;
+      const sc = document.createElement('script'); sc.src = 'https://www.youtube.com/iframe_api'; document.head.appendChild(sc);
+      setTimeout(function(){ if(!(window.YT && YT.Player) && !capEstado().ok){ document.getElementById('capManual').style.display='flex'; } }, 8000);
+    }
+  } else { clearInterval(capTimer); capPlayer = null; }
 }, true);
 
 /* ============ Init ============ */
