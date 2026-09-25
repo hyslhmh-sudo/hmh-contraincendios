@@ -294,7 +294,7 @@
 <!-- ===================== MODO EMERGENCIA (sin login) ===================== -->
 <div id="view-emergencia">
   <div class="em-topbar">
-    <button class="em-back" id="emBackBtn" onclick="emGoTo('menu')">← Atrás</button>
+    <button class="em-back" id="emBackBtn" onclick="emBack()">← Atrás</button>
     <button class="em-close" onclick="closeEmergency()">Cerrar <span class="gicon">&#xe5cd;</span></button>
   </div>
 
@@ -405,26 +405,55 @@
 
   <div class="em-view" id="em-alarma">
     <h2 class="em-sub-title"><span class="gicon">&#xe7f7;</span> ¿Suena la alarma?</h2>
-    <div class="em-block"><b>Si sos personal del hospital</b>
+    <p style="color:#B8C3D9; font-size:13px; line-height:1.5; margin:0 0 14px">El sistema está sectorizado: la alarma suena solo en la zona que la activó. ¿De qué sector es?</p>
+    <div class="em-grid" style="margin-bottom:16px">
+      <button class="em-tile" style="background:var(--red)" onclick="emGoTo('alarma-propio')"><span class="em-ic"><span class="gicon">&#xe55c;</span></span><span>Es de MI sector</span></button>
+      <button class="em-tile" style="background:var(--steel)" onclick="emGoTo('alarma-otro')"><span class="em-ic"><span class="gicon">&#xe55b;</span></span><span>Es de OTRO sector</span></button>
+    </div>
+    <div class="em-block"><b>Visitantes y acompañantes</b>
       <ul class="em-list">
-        <li><b>No salgas por tu cuenta: quedate en tu sector.</b> La estrategia (Confinamiento, Evacuación Horizontal o Evacuación Total) la decide el/la Director/a de la Emergencia.</li>
-        <li>Cerrá las puertas del sector y dejá los pasillos libres.</li>
-        <li>Prepará a los pacientes a tu cargo para un posible traslado.</li>
-        <li>En áreas críticas (Quirófano, UTI, UCIP, Neonatología) no interrumpas la atención sin orden.</li>
-        <li>Esperá la orden del/la <b>Líder de Sector</b> y seguí sus indicaciones.</li>
-        <li>Si se ordena evacuar: caminando, sin ascensores, por la ruta indicada, hasta el <b>punto de encuentro</b>.</li>
+        <li>No salgas por tu cuenta: seguí las indicaciones del personal.</li>
       </ul>
     </div>
-    <div class="em-block"><b>Si sos visitante o acompañante</b>
+  </div>
+
+  <div class="em-view" id="em-alarma-propio">
+    <h2 class="em-sub-title"><span class="gicon">&#xe7f7;</span> Alarma en MI sector</h2>
+    <div class="em-block"><b>1 · ¿Hay evidencia inequívoca de fuego?</b>
       <ul class="em-list">
-        <li>Seguí las indicaciones del personal.</li>
-        <li>Dirigite caminando a la salida más cercana, sin usar ascensores.</li>
-        <li>Esperá en el punto de encuentro.</li>
+        <li>Llamas o fuego visible, en tu sector o en uno vecino.</li>
+        <li>Humo denso que ya reduce la visibilidad.</li>
+        <li>Alguien activó el pulsador y confirma haber visto fuego.</li>
+        <li>Se anunció <b>Código Rojo</b> por audio-evacuación en tu sector.</li>
+        <li><b>Si se cumple alguna: no verifiques.</b> Aplicá ya el protocolo de incendio.</li>
       </ul>
     </div>
-    <div class="em-calls">
-      <button class="em-call-btn" style="background:var(--red)" onclick="emGoTo('fuego')"><span class="gicon">&#xef55;</span> Veo fuego o humo</button>
+    <div class="em-calls" style="margin-bottom:16px">
+      <button class="em-call-btn" style="background:var(--red)" onclick="emGoTo('fuego')"><span class="gicon">&#xef55;</span> Ir al protocolo de incendio</button>
     </div>
+    <div class="em-block"><b>2 · Si no hay evidencia: verificar (máximo 2 minutos)</b>
+      <ul class="em-list">
+        <li>El/la <b>Líder de Sector</b> (Enfermero/a Jefe de Turno o quien tenga mayor jerarquía presente) recorre el sector con la vista, <b>sin exponerse</b>, buscando fuego, humo o su origen.</li>
+        <li><b>El resto del personal no interrumpe la atención</b> por el solo sonido de la sirena. Atento a olor o humo y a las instrucciones del/la Líder de Sector.</li>
+        <li>No se evacúa todavía. La verificación no se extiende más de 2 minutos.</li>
+      </ul>
+    </div>
+    <div class="em-block"><b>3 · Resultado</b>
+      <ul class="em-list">
+        <li><b>Nada anormal:</b> informar al Conmutador (interno 100) que fue negativa, pedir el restablecimiento del sistema a Mantenimiento, registrar el episodio y retomar la actividad.</li>
+        <li><b>Fuego, humo u olor a quemado:</b> protocolo de incendio de inmediato, sin perder más tiempo.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="em-view" id="em-alarma-otro">
+    <h2 class="em-sub-title"><span class="gicon">&#xe7f7;</span> Alarma o Código Rojo de OTRO sector</h2>
+    <ul class="em-list">
+      <li><b>No evacúes ni confines tu sector.</b> Una alarma de otra zona no implica acción propia.</li>
+      <li>Seguí con la atención normal, atento a nuevas instrucciones por audio-evacuación.</li>
+      <li>Si tu sector es el <b>refugio adyacente</b> del área afectada: liberá los pasillos y tené camas o sillas disponibles para recibir pacientes.</li>
+      <li>No tomes decisiones individuales: esperá indicaciones del/la Líder de Sector o del/la Director/a de la Emergencia.</li>
+    </ul>
   </div>
 </div>
 
@@ -595,20 +624,31 @@
           <li><span class="dot"></span><div>Avisá a la vez: gritá <b>"¡Fuego en [lugar]!"</b> al compañero más cercano y llamá al <b>Conmutador (interno 100)</b>, que activa el Código Rojo.</div></li>
           <li><span class="dot"></span><div>Cerrá la puerta del lugar afectado. No hace falta esperar autorización.</div></li>
           <li><span class="dot"></span><div>Usá el extintor solo si se cumplen las 4 condiciones, y un único intento.</div></li>
-          <li><span class="dot"></span><div><b>No evacúes el hospital por tu cuenta:</b> seguí los pasos de "¿Suena la alarma?".</div></li>
+          <li><span class="dot"></span><div><b>No evacúes el hospital por tu cuenta:</b> la estrategia la decide el/la Director/a de la Emergencia y el/la Líder de Sector da la orden.</div></li>
         </ul>
         <span class="acc-link" onclick="goTo('extintores')">Ver uso del extintor ›</span>
       </div>
     </details>
     <details class="acc" name="evac" style="--acc:var(--red-dark)">
-      <summary><span class="acc-ic"><span class="gicon">&#xe7f7;</span></span><span class="acc-t"><b>¿Suena la alarma?</b><span>Personal: quedate en el sector y esperá la orden</span></span><span class="acc-chev">▾</span></summary>
+      <summary><span class="acc-ic"><span class="gicon">&#xe7f7;</span></span><span class="acc-t"><b>Suena la alarma en tu sector</b><span>Verificar primero, en máximo 2 minutos</span></span><span class="acc-chev">▾</span></summary>
       <div class="acc-body">
         <ul class="checklist">
-          <li><span class="dot"></span><div><b>No salgas por tu cuenta.</b> La estrategia (Confinamiento, Evacuación Horizontal o Evacuación Total) la decide el/la Director/a de la Emergencia.</div></li>
-          <li><span class="dot"></span><div>Cerrá las puertas del sector y dejá los pasillos libres.</div></li>
-          <li><span class="dot"></span><div>Prepará a los pacientes a tu cargo para un posible traslado.</div></li>
-          <li><span class="dot"></span><div>En áreas críticas (Quirófano, UTI, UCIP, Neonatología) no interrumpas la atención sin orden.</div></li>
-          <li><span class="dot"></span><div>Esperá la orden del/la <b>Líder de Sector</b> y seguí sus indicaciones.</div></li>
+          <li><span class="dot"></span><div><b>Pasá directo al protocolo de incendio si hay:</b> llamas visibles (en tu sector o uno vecino), humo denso, un pulsador activado por alguien que vio fuego, o Código Rojo anunciado en tu sector.</div></li>
+          <li><span class="dot"></span><div>Si no hay evidencia: el/la <b>Líder de Sector</b> (Enfermero/a Jefe de Turno o mayor jerarquía presente) recorre el sector con la vista, sin exponerse. <b>Máximo 2 minutos.</b></div></li>
+          <li><span class="dot"></span><div>Mientras tanto, el resto del personal <b>no interrumpe la atención</b> de pacientes. Atento a olor o humo y a las instrucciones del/la Líder de Sector.</div></li>
+          <li><span class="dot"></span><div><b>Nada anormal:</b> se informa al Conmutador (interno 100), Mantenimiento restablece el sistema, se registra el episodio y se retoma la actividad.</div></li>
+          <li><span class="dot"></span><div><b>Se confirma fuego, humo u olor a quemado:</b> protocolo de incendio de inmediato.</div></li>
+        </ul>
+      </div>
+    </details>
+    <details class="acc" name="evac" style="--acc:var(--steel)">
+      <summary><span class="acc-ic"><span class="gicon">&#xe55b;</span></span><span class="acc-t"><b>Alarma o Código Rojo de otro sector</b><span>Tu sector sigue funcionando</span></span><span class="acc-chev">▾</span></summary>
+      <div class="acc-body">
+        <ul class="checklist">
+          <li><span class="dot"></span><div><b>No evacúes ni confines tu sector:</b> el sistema está sectorizado y la alarma corresponde a otra zona.</div></li>
+          <li><span class="dot"></span><div>Seguí con la atención normal, atento a nuevas instrucciones por audio-evacuación.</div></li>
+          <li><span class="dot"></span><div>Si tu sector es el <b>refugio adyacente</b> del área afectada (Evacuación Horizontal): liberá los pasillos y tené camas o sillas disponibles para recibir pacientes.</div></li>
+          <li><span class="dot"></span><div>No tomes decisiones individuales: esperá indicaciones del/la Líder de Sector o del/la Director/a de la Emergencia.</div></li>
         </ul>
       </div>
     </details>
@@ -630,8 +670,8 @@
       <summary><span class="acc-ic"><span class="gicon">&#xea21;</span></span><span class="acc-t"><b>Visitantes y acompañantes</b><span>Qué hacen quienes no trabajan en el hospital</span></span><span class="acc-chev">▾</span></summary>
       <div class="acc-body">
         <ul class="checklist">
-          <li><span class="dot"></span><div>Seguí las indicaciones del personal.</div></li>
-          <li><span class="dot"></span><div>Dirigite caminando a la salida más cercana, sin usar ascensores.</div></li>
+          <li><span class="dot"></span><div>Si suena una alarma, no salgas por tu cuenta: seguí las indicaciones del personal.</div></li>
+          <li><span class="dot"></span><div>Si el personal indica salir: caminando, por la salida más cercana, sin usar ascensores.</div></li>
           <li><span class="dot"></span><div>Esperá en el punto de encuentro y no vuelvas a entrar hasta que lo autoricen.</div></li>
         </ul>
       </div>
@@ -710,6 +750,8 @@
     </ul></div></div>
 
     <div class="card rol-card"><div class="rol-tag">LS</div><div><h3 style="font-size:15px">Líder de Sector (Enfermería) <span style="font-size:11px; font-weight:600; color:var(--ink-soft)">· Tarjeta N.° 3</span></h3><ul>
+      <li>Es el/la Enfermero/a Jefe de Turno o quien tenga mayor jerarquía presente.</li>
+      <li>Ante alarma en su sector sin evidencia inequívoca de fuego, verifica con una recorrida visual (máximo 2 minutos) e informa el resultado al Conmutador.</li>
       <li>Recibe el Código Rojo por audio-evacuación.</li>
       <li>Ordena cierre de puertas, control de pasillos y preparación de pacientes para un posible traslado.</li>
       <li>Transmite al personal la orden del/la Director/a de la Emergencia y conduce la evacuación del sector si se ordena.</li>
@@ -718,6 +760,7 @@
     </ul></div></div>
 
     <div class="card rol-card"><div class="rol-tag">CON</div><div><h3 style="font-size:15px">Conmutador (24 hs)</h3><ul>
+      <li>Recibe las verificaciones de alarma de los Líderes de Sector, negativas o positivas. Ante una positiva, sigue la secuencia del protocolo de incendio.</li>
       <li>Confirma el dato mínimo: lugar exacto del fuego y si hay personas en riesgo.</li>
       <li>Activa el Código Rojo por audio-evacuación ("Código Rojo en [sector]").</li>
       <li>Notifica en paralelo a Seguridad y a Mantenimiento, y alerta al/la Director/a de la Emergencia o Médico de Guardia.</li>
@@ -737,12 +780,14 @@
 
     <div class="card rol-card"><div class="rol-tag">JIT</div><div><h3 style="font-size:15px">Jefe/a de Intervención Técnica (Mantenimiento) <span style="font-size:11px; font-weight:600; color:var(--ink-soft)">· Tarjeta N.° 2</span></h3><ul>
       <li>Recibe la notificación del Conmutador ante el Código Rojo.</li>
+      <li>Restablece el sistema de alarma tras una verificación negativa.</li>
       <li>Mantiene operatividad y registros de los sistemas PCI.</li>
       <li>Ejecuta cortes de electricidad, gas y HVAC según indicación del/la Director/a de la Emergencia.</li>
     </ul></div></div>
 
     <div class="card rol-card"><div class="rol-tag">PE</div><div><h3 style="font-size:15px">Personal general / contratistas</h3><ul>
       <li>Ante fuego, humo u olor a quemado aplica el Rol de Llamada: cualquiera que detecta, actúa (grito + Conmutador interno 100).</li>
+      <li>Ante una alarma de su zona no interrumpe la atención de pacientes: espera el resultado de la verificación del/la Líder de Sector. Ante alarma de otro sector, sigue trabajando con normalidad.</li>
       <li>Mantiene rutas libres y respeta la señalización.</li>
       <li>No evacúa por su cuenta: espera la orden y sale por la ruta indicada, sin usar ascensores, sin correr ni gritar.</li>
       <li>Ayuda a pacientes y visitantes según indicación del/la Líder de Sector.</li>
@@ -1312,7 +1357,11 @@ function closeEmergency(){
   }
 }
 
+const EM_PADRE = {'alarma-propio':'alarma', 'alarma-otro':'alarma'};
+let emActual = 'menu';
+function emBack(){ emGoTo(EM_PADRE[emActual] || 'menu'); }
 function emGoTo(name){
+  emActual = name;
   document.querySelectorAll('#view-emergencia .em-view').forEach(v=>v.classList.remove('active'));
   document.getElementById('em-'+name).classList.add('active');
   document.getElementById('emBackBtn').style.visibility = (name==='menu') ? 'hidden' : 'visible';
@@ -1386,7 +1435,7 @@ const TRIVIA = [
   {q:"Si hay humo en el ambiente, ¿cómo tenés que desplazarte?", opts:["Corriendo y erguido","Agachado o gateando, cerca del piso","Con los ojos cerrados","En ascensor"], correct:1, exp:"Cerca del piso suele haber más aire respirable y mejor visibilidad."},
   {q:"Detectás un principio de incendio. ¿A quién llamás?", opts:["A Seguridad (262)","Al Conmutador (interno 100)","A Mantenimiento (279)","A nadie: primero intento apagarlo"], correct:1, exp:"El Conmutador es el único que activa el Código Rojo y avisa a la vez a Seguridad, Mantenimiento, Dirección, Bomberos y Policía. Un solo número, un solo llamado, y en simultáneo gritás al compañero más cercano."},
   {q:"Si tu ropa se prende fuego, ¿qué tenés que hacer?", opts:["Correr para que el viento apague las llamas","Tirarte al suelo y rodar","Sacarte la ropa de inmediato sin importar dónde","Buscar agua antes que nada"], correct:1, exp:"Hay que tirarse al suelo y rodar, cubriéndose el rostro con las manos."},
-  {q:"Suena la alarma y trabajás en un servicio con pacientes. ¿Qué hacés?", opts:["Salgo por la salida más cercana","Me quedo en el sector, cierro puertas, preparo a los pacientes y espero la orden del/la Líder de Sector","Voy a buscar mis pertenencias","Llamo yo a Bomberos"], correct:1, exp:"El HMH aplica Defensa en el Sitio: la estrategia (Confinamiento, Evacuación Horizontal o Total) la decide el/la Director/a de la Emergencia. Salir por tu cuenta deja pacientes sin atención. Bomberos lo llama el Conmutador."},
+  {q:"Suena la alarma de tu sector, pero nadie ve humo ni fuego. ¿Qué corresponde?", opts:["Evacuar el sector de inmediato","El/la Líder de Sector verifica en máximo 2 minutos y el resto sigue atendiendo pacientes","Esperar a ver si la alarma se apaga sola","Restablecer la alarma sin avisar a nadie"], correct:1, exp:"Sin evidencia inequívoca se verifica primero, en un plazo máximo de 2 minutos, sin interrumpir la atención. Si no hay nada anormal, se informa al Conmutador y Mantenimiento restablece el sistema. Si hay llamas, humo denso o Código Rojo en tu sector, no se verifica: protocolo de incendio directo."},
 ];
 let triviaIdx = 0;
 let triviaRespuestas = [];
