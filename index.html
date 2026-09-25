@@ -1295,10 +1295,13 @@ const TRIVIA = [
 ];
 let triviaIdx = 0;
 let triviaRespuestas = [];
+let triviaOrden = [];   // orden de las opciones de cada pregunta, mezclado en cada partida
+function mezclar(arr){ const a = arr.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
 
 function iniciarTrivia(){
   triviaIdx = 0;
   triviaRespuestas = [];
+  triviaOrden = TRIVIA.map(q => mezclar(q.opts.map((_,i)=>i)));
   document.getElementById('triviaIntro').style.display = 'none';
   document.getElementById('triviaBody').style.display = 'block';
   renderTriviaPregunta();
@@ -1312,9 +1315,10 @@ function renderTriviaPregunta(){
     '<div style="font-size:14.5px; font-weight:800; color:var(--navy); margin-bottom:12px">' + item.q + '</div>' +
     '<div id="triviaOpts" style="display:flex; flex-direction:column; gap:8px"></div>';
   const cont = document.getElementById('triviaOpts');
-  item.opts.forEach((opt, i)=>{
+  triviaOrden[triviaIdx].forEach((i)=>{
     const btn = document.createElement('button');
-    btn.textContent = opt;
+    btn.textContent = item.opts[i];
+    btn.dataset.opt = i;
     btn.style.cssText = 'text-align:left; padding:12px 14px; border-radius:10px; border:1.5px solid var(--line); background:#fff; font-size:13.5px; cursor:pointer;';
     btn.onclick = function(){ responderTrivia(i); };
     cont.appendChild(btn);
@@ -1326,7 +1330,8 @@ function responderTrivia(i){
   const correcta = (i === item.correct);
   triviaRespuestas.push({elegida:i, correcta:correcta});
   const cont = document.getElementById('triviaOpts');
-  Array.from(cont.children).forEach((btn, idx)=>{
+  Array.from(cont.children).forEach((btn)=>{
+    const idx = Number(btn.dataset.opt);
     btn.disabled = true;
     if(idx === item.correct){ btn.style.borderColor='var(--green)'; btn.style.background='#EAF6EF'; btn.style.fontWeight='700'; }
     else if(idx === i){ btn.style.borderColor='var(--red)'; btn.style.background='#FDEDED'; }
