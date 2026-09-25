@@ -475,8 +475,8 @@
   <!-- ===================== HOME ===================== -->
   <section class="view" id="view-home">
     <div class="home-lead">
-      <h2 id="homeGreeting">¿Qué necesitás consultar?</h2>
-      <p id="homeSub">Elegí una opción.</p>
+      <h2 id="homeGreeting">Seguridad Contraincendios</h2>
+      <p id="homeSub">Ante una emergencia, tocá el botón rojo <b>Emergencia</b>. Para consultar, elegí un tema.</p>
     </div>
     <div id="syncBanner"></div>
     <details class="acc" name="home" id="instalarCard" style="--acc:var(--navy)">
@@ -1249,7 +1249,7 @@ function renderHome(){
       <p>${t.desc}</p>
     </div>`).join('');
   const greetings = {
-    publico:'¿Qué necesitás consultar?', admin:'Panel de Administración'
+    publico:'Seguridad Contraincendios'
   };
   document.getElementById('homeGreeting').textContent = greetings[currentRole] || '¿Qué necesitás hacer?';
   const banner = document.getElementById('syncBanner');
