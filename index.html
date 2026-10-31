@@ -331,7 +331,7 @@
     <div class="em-block"><b>2 · Alertá: las dos cosas a la vez</b>
       <ul class="em-list">
         <li>Gritá <b>"¡Fuego en [lugar]!"</b> al compañero más cercano.</li>
-        <li>Llamá al <b>Conmutador (interno 1000)</b>. Si estás solo/a, llamá primero.</li>
+        <li>Llamá al <b>Conmutador (interno 1000)</b>. Si estás solo, llamá primero.</li>
       </ul>
     </div>
     <div class="em-block"><b>3 · Cerrá la puerta del sector</b>
@@ -434,9 +434,9 @@
     <div class="em-calls" style="margin-bottom:16px"><button class="em-call-btn" style="background:var(--red)" onclick="emGoTo('fuego')"><span class="gicon">&#xef55;</span> Ir al protocolo de incendio</button></div>
     <div class="em-block"><b>Si no hay evidencia: verificar (máx. 2 min)</b>
       <ul class="em-list">
-        <li>El/la <b>Líder de Sector</b> recorre el sector con la vista, sin exponerse.</li>
+        <li>El <b>Líder de Sector</b> recorre el sector con la vista, sin exponerse.</li>
         <li>El resto <b>sigue atendiendo pacientes</b>. No se evacúa.</li>
-        <li><b>Sin novedad:</b> el/la Líder avisa al Conmutador (interno 1000).</li>
+        <li><b>Sin novedad:</b> el Líder avisa al Conmutador (interno 1000).</li>
         <li><b>Hay humo o fuego:</b> protocolo de incendio.</li>
       </ul>
     </div>
@@ -448,7 +448,7 @@
       <ul class="em-list">
         <li><b>No evacúes ni confines.</b> Seguí atendiendo, atento a los avisos.</li>
         <li>Si tu sector es el refugio del área afectada: liberá pasillos y prepará camas o sillas.</li>
-        <li>Esperá indicaciones del/la Líder de Sector.</li>
+        <li>Esperá indicaciones del Líder de Sector.</li>
       </ul>
     </div>
   </div>
@@ -591,13 +591,25 @@
       <div style="flex:none; font-size:22px; color:var(--steel-dark)">›</div>
     </div>
     <div class="acc-group">En una evacuación</div>
+    <details class="acc" name="evac" style="--acc:var(--navy)">
+      <summary><span class="acc-ic txt">1–4</span><span class="acc-t"><b>Las cuatro etapas</b><span>Quién ordena cada una</span></span><span class="acc-chev">▾</span></summary>
+      <div class="acc-body">
+        <ul class="checklist">
+          <li><span class="dot"></span><div><b>1 · Confinamiento del local.</b> Se saca a las personas del local afectado y se cierra la puerta. Ordena: Líder de Sector.</div></li>
+          <li><span class="dot"></span><div><b>2 · Evacuación horizontal.</b> Todo el sector pasa al sector vecino (refugio), del otro lado de las puertas cortafuego. Ordena: Líder de Sector, con aviso al Director.</div></li>
+          <li><span class="dot"></span><div><b>3 · Evacuación vertical.</b> De Planta Alta a Planta Baja por las escaleras protegidas. Ordena: Director de la Emergencia.</div></li>
+          <li><span class="dot"></span><div><b>4 · Evacuación total.</b> Todos salen al punto de encuentro. Ordena: Director de la Emergencia o jefe de Bomberos.</div></li>
+          <li><span class="dot"></span><div>Cada etapa se activa solo si la anterior no alcanza. <b>Nunca se usan los ascensores.</b></div></li>
+        </ul>
+      </div>
+    </details>
     <details class="acc" name="evac" style="--acc:var(--red)">
       <summary><span class="acc-ic"><span class="gicon">&#xe7f7;</span></span><span class="acc-t"><b>Código Rojo en tu sector</b><span>Esperá la orden</span></span><span class="acc-chev">▾</span></summary>
       <div class="acc-body">
         <ul class="checklist">
-          <li><span class="dot"></span><div>El hospital <b>no se evacúa por decisión individual</b>. El/la Director/a de la Emergencia decide la estrategia.</div></li>
+          <li><span class="dot"></span><div>El hospital <b>no se evacúa por decisión individual</b>. El Director de la Emergencia decide la estrategia.</div></li>
           <li><span class="dot"></span><div>Cerrá puertas, liberá pasillos y prepará a los pacientes para un posible traslado.</div></li>
-          <li><span class="dot"></span><div>Esperá la orden del/la <b>Líder de Sector</b>.</div></li>
+          <li><span class="dot"></span><div>Esperá la orden del <b>Líder de Sector</b>.</div></li>
         </ul>
       </div>
     </details>
@@ -606,7 +618,7 @@
       <div class="acc-body">
         <ul class="checklist">
           <li><span class="dot"></span><div>No demores. Avisá a quien no se haya enterado.</div></li>
-          <li><span class="dot"></span><div>Seguí al/la Líder de Sector por la ruta indicada, caminando y sin empujar.</div></li>
+          <li><span class="dot"></span><div>Seguí al Líder de Sector por la ruta indicada, caminando y sin empujar.</div></li>
           <li><span class="dot"></span><div><b>Nunca uses ascensores.</b> No vuelvas a buscar objetos.</div></li>
           <li><span class="dot"></span><div>Cerrá las puertas detrás tuyo.</div></li>
           <li><span class="dot"></span><div>En el <b>punto de encuentro</b>, reportá el conteo de las personas a tu cargo.</div></li>
@@ -678,7 +690,7 @@
       <div class="acc-body">
         <ul class="checklist">
           <li><span class="dot"></span><div>Cualquiera que detecta, actúa: aviso y <b>Conmutador (interno 1000)</b>.</div></li>
-          <li><span class="dot"></span><div>No evacúa por su cuenta: espera la orden del/la Líder de Sector.</div></li>
+          <li><span class="dot"></span><div>No evacúa por su cuenta: espera la orden del Líder de Sector.</div></li>
           <li><span class="dot"></span><div>No interrumpe la atención por una alarma sin orden.</div></li>
           <li><span class="dot"></span><div>Mantiene rutas libres y respeta la señalización.</div></li>
         </ul>
@@ -689,7 +701,7 @@
       <div class="acc-body">
         <ul class="checklist">
           <li><span class="dot"></span><div>Verifica la alarma de su sector (máx. 2 min) e informa al Conmutador.</div></li>
-          <li><span class="dot"></span><div>Transmite la orden del/la Director/a y conduce la evacuación del sector.</div></li>
+          <li><span class="dot"></span><div>Ordena el confinamiento del local y la evacuación horizontal de su sector (etapas 1 y 2), con aviso al Director. En las etapas 3 y 4 transmite la orden del Director y conduce la evacuación del sector.</div></li>
           <li><span class="dot"></span><div>Reporta el conteo del personal y pacientes a su cargo.</div></li>
         </ul>
       </div>
@@ -700,23 +712,25 @@
         <ul class="checklist">
           <li><span class="dot"></span><div>Recibe los avisos y las verificaciones de alarma.</div></li>
           <li><span class="dot"></span><div>Activa el Código Rojo por audio-evacuación.</div></li>
-          <li><span class="dot"></span><div>Avisa a Seguridad, Mantenimiento y al/la Director/a de la Emergencia.</div></li>
-          <li><span class="dot"></span><div>Ante incendio, llama siempre a Bomberos y Policía.</div></li>
+          <li><span class="dot"></span><div>Avisa a Seguridad, Mantenimiento y al Director de la Emergencia.</div></li>
+          <li><span class="dot"></span><div>Ante incendio, llama siempre a Bomberos (100) y a Policía (101), aunque el fuego ya esté apagado, y avisa al personal policial que está en el hospital.</div></li>
         </ul>
       </div>
     </details>
     <details class="acc" name="roles" style="--acc:var(--navy)">
-      <summary><span class="acc-ic txt">DE</span><span class="acc-t"><b>Director/a de la Emergencia</b><span>Tarjeta N.° 1</span></span><span class="acc-chev">▾</span></summary>
+      <summary><span class="acc-ic txt">DE</span><span class="acc-t"><b>Director de la Emergencia</b><span>Tarjeta N.° 1</span></span><span class="acc-chev">▾</span></summary>
       <div class="acc-body">
         <ul class="checklist">
-          <li><span class="dot"></span><div>Confirma la alarma y decide: Confinamiento, Evacuación Horizontal o Evacuación Total.</div></li>
+          <li><span class="dot"></span><div>Recibe el aviso de las etapas 1 y 2, que conduce el Líder de Sector, y decide las etapas 3 (evacuación vertical a Planta Baja) y 4 (evacuación total).</div></li>
           <li><span class="dot"></span><div>Ante olor a gas, decide si se llama a Bomberos o a la empresa de gas.</div></li>
-          <li><span class="dot"></span><div>Conduce el cierre del evento.</div></li>
+          <li><span class="dot"></span><div>Cuando llega Bomberos, informa la situación al jefe de dotación. <b>Bomberos conduce la extinción y el rescate</b>; el Director sigue a cargo de los pacientes y de su derivación.</div></li>
+          <li><span class="dot"></span><div>Es el único vocero ante los medios.</div></li>
+          <li><span class="dot"></span><div>Autoriza el reingreso solo con el visto bueno de Bomberos y conduce el cierre del evento.</div></li>
         </ul>
       </div>
     </details>
     <details class="acc" name="roles" style="--acc:var(--amber)">
-      <summary><span class="acc-ic txt">JIT</span><span class="acc-t"><b>Jefe/a de Intervención Técnica</b><span>Mantenimiento · Tarjeta N.° 2</span></span><span class="acc-chev">▾</span></summary>
+      <summary><span class="acc-ic txt">JIT</span><span class="acc-t"><b>Jefe de Intervención Técnica</b><span>Mantenimiento · Tarjeta N.° 2</span></span><span class="acc-chev">▾</span></summary>
       <div class="acc-body">
         <ul class="checklist">
           <li><span class="dot"></span><div>Corta electricidad, gas y ventilación según indicación.</div></li>
@@ -1008,6 +1022,7 @@
         <option value="ucip-a-neonatologia">UCIP → Neonatología</option>
         <option value="neonatologia-a-ucip">Neonatología → UCIP</option>
       </select>
+        <p style="font-size:12.5px; color:var(--ink-soft); margin-top:10px; line-height:1.45">Es un <b>traslado de protección</b> al sector vecino, no una salida. Si la emergencia avanza, desde el sector de refugio se sale por su propia salida, nunca volviendo por el sector afectado.</p>
       </div>
     </details>
   </section>
@@ -1291,7 +1306,7 @@ const TRIVIA = [
   {q:"Sentís olor a gas en tu sector. ¿Qué hacés?", opts:["Cierro la puerta y llamo al Conmutador desde el teléfono del sector","Abro puertas y ventanas, me alejo y aviso al Conmutador desde un teléfono fuera de la zona","Apago las luces y los equipos para evitar riesgos","Busco el origen del olor con un encendedor"], correct:1, exp:"Ante gas se hace lo contrario que ante incendio: se ventila (no se confina) y no se usa ningún teléfono, radio ni interruptor dentro de la zona, porque cualquier chispa puede provocar una explosión. Se avisa recién al estar fuera del sector."},
   {q:"Un equipo tira chispas y sale humo, pero no hay llama. ¿Qué hacés?", opts:["Lo desenchufo rápido","Le tiro agua","No lo toco, me alejo y aviso: grito + Conmutador desde el lugar","Espero a ver si el humo se disipa"], correct:2, exp:"Con chispas o arco eléctrico no se toca el equipo ni se intenta desconectarlo: riesgo de electrocución. Se avisa como ante un incendio y Mantenimiento corta el circuito en el tablero."},
   {q:"Si tu ropa se prende fuego, ¿qué tenés que hacer?", opts:["Correr para que el viento apague las llamas","Tirarte al suelo y rodar","Sacarte la ropa de inmediato sin importar dónde","Buscar agua antes que nada"], correct:1, exp:"Hay que tirarse al suelo y rodar, cubriéndose el rostro con las manos."},
-  {q:"Suena la alarma de tu sector, pero nadie ve humo ni fuego. ¿Qué corresponde?", opts:["Evacuar el sector de inmediato","El/la Líder de Sector verifica en máximo 2 minutos y el resto sigue atendiendo pacientes","Esperar a ver si la alarma se apaga sola","Restablecer la alarma sin avisar a nadie"], correct:1, exp:"Sin evidencia inequívoca se verifica primero, en un plazo máximo de 2 minutos, sin interrumpir la atención. Si no hay nada anormal, se informa al Conmutador y Mantenimiento restablece el sistema. Si hay llamas, humo denso o Código Rojo en tu sector, no se verifica: protocolo de incendio directo."},
+  {q:"Suena la alarma de tu sector, pero nadie ve humo ni fuego. ¿Qué corresponde?", opts:["Evacuar el sector de inmediato","El Líder de Sector verifica en máximo 2 minutos y el resto sigue atendiendo pacientes","Esperar a ver si la alarma se apaga sola","Restablecer la alarma sin avisar a nadie"], correct:1, exp:"Sin evidencia inequívoca se verifica primero, en un plazo máximo de 2 minutos, sin interrumpir la atención. Si no hay nada anormal, se informa al Conmutador y Mantenimiento restablece el sistema. Si hay llamas, humo denso o Código Rojo en tu sector, no se verifica: protocolo de incendio directo."},
 ];
 let triviaIdx = 0;
 let triviaRespuestas = [];
