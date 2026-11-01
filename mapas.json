@@ -35,7 +35,9 @@
     {
      "id": "neonatologia",
      "nombre": "Neonatología",
-     "refugio": ""
+     "refugio": "",
+     "critico": true,
+     "criticoTexto": ""
     },
     {
      "id": "oncologia",
@@ -50,7 +52,9 @@
     {
      "id": "quirofano",
      "nombre": "Quirófano",
-     "refugio": ""
+     "refugio": "",
+     "critico": true,
+     "criticoTexto": ""
     },
     {
      "id": "residencia-medica",
@@ -65,12 +69,16 @@
     {
      "id": "ucip",
      "nombre": "UCIP",
-     "refugio": ""
+     "refugio": "",
+     "critico": true,
+     "criticoTexto": ""
     },
     {
      "id": "utpr",
      "nombre": "UTPR",
-     "refugio": ""
+     "refugio": "",
+     "critico": true,
+     "criticoTexto": ""
     }
    ],
    "marcadores": [
@@ -3006,7 +3014,8 @@
      ]
     }
    ],
-   "exteriores": []
+   "exteriores": [],
+   "traslados": []
   },
   "pb": {
    "nombre": "Planta Baja",
@@ -3115,7 +3124,9 @@
     {
      "id": "uti",
      "nombre": "UTI",
-     "refugio": ""
+     "refugio": "",
+     "critico": true,
+     "criticoTexto": ""
     }
    ],
    "marcadores": [
@@ -3391,23 +3402,10 @@
     }
    ],
    "horizontales": [],
-   "exteriores": []
+   "exteriores": [],
+   "traslados": []
   }
  },
- "asistencias": [
-  {
-   "id": "camina",
-   "nombre": "Camina solo"
-  },
-  {
-   "id": "ayuda",
-   "nombre": "Necesita ayuda o silla de ruedas"
-  },
-  {
-   "id": "camilla",
-   "nombre": "Camilla o cama"
-  }
- ],
  "niveles": {
   "preferente": "Verde · salida de preferencia",
   "alternativa": "Azul · salida alternativa",

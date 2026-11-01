@@ -92,7 +92,7 @@
   .zona-label{font-size:2.8px; font-weight:800; fill:#fff; pointer-events:none;}
   .service-route-pb{fill:none; stroke:#0E8F4F; stroke-width:0.9; stroke-linecap:butt; stroke-linejoin:round; display:none;}
   .service-route-pb.show{display:inline; stroke-dasharray:2.4,1.6; animation:flowRoute 1s linear infinite;}
-  .service-route-pb.exit-blocked{stroke:#9a9a9a; stroke-dasharray:1.2,1; animation:none;}
+  .service-route-pb.exit-blocked{stroke:#D62828; stroke-dasharray:.5,1.1; animation:none; opacity:.7;}
   .zona-estanca-pb{display:none; stroke-width:0.4; fill-opacity:0.28;}
   .zona-label-bg-pb{fill:#0D313F; fill-opacity:0.92; stroke:#fff; stroke-width:0.3;}
   .zona-label-pb{font-size:2.8px; font-weight:800; fill:#fff; pointer-events:none;}
@@ -109,7 +109,7 @@
   .service-route.show{display:inline;}
   .service-route.show:not(.exit-blocked){stroke-dasharray:2.4,1.6; animation:flowRoute 1s linear infinite;}
   
-  .service-route.exit-blocked{stroke:#9a9a9a; stroke-dasharray:1.2,1; stroke-width:0.8;}
+  .service-route.exit-blocked{stroke:#D62828; stroke-dasharray:.5,1.1; stroke-width:0.8; opacity:.7;}
   @keyframes flowRoute{ to{ stroke-dashoffset:-4.1; } }
   .map-mk{position:absolute; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:16px; transform:translate(-50%,-50%); cursor:pointer; border:3px solid #fff; box-shadow:0 1px 4px rgba(0,0,0,.25);}
   .map-mk.salida{background:var(--red);}
@@ -321,6 +321,14 @@
 .tg-nv[aria-pressed="true"]{border-color:var(--navy)}
 .tg-nv[aria-pressed="true"] .tg-sw{background:var(--navy)}
 .tg-nv[aria-pressed="true"] .tg-sw::after{left:19px}
+.info-serv{margin-top:12px;border-radius:12px;padding:10px 12px;font-size:12.5px;line-height:1.45;color:var(--navy);background:var(--tint)}
+.info-serv .crit{margin-top:8px;border-left:4px solid var(--red);background:#FDEDED;border-radius:8px;padding:8px 10px}
+.info-serv .crit b{color:var(--red)}
+.service-route.traslado,.service-route-pb.traslado{stroke-width:1;}
+.service-route.traslado.tr-recomendado,.service-route-pb.traslado.tr-recomendado{stroke:#E0218A;}
+.service-route.traslado.tr-no-apto,.service-route-pb.traslado.tr-no-apto{stroke:#8A9099;opacity:.75;}
+.service-route.traslado.show,.service-route-pb.traslado.show{stroke-dasharray:none;animation:none;}
+.service-route.traslado.tr-no-apto.show,.service-route-pb.traslado.tr-no-apto.show{stroke-dasharray:1.4,.9;}
 .map-mk.encuentro, .map-mk-pb.encuentro{background:#1E7B4B; cursor:default;}
 .map-mk.encuentro::after, .map-mk-pb.encuentro::after{content:attr(data-num); position:absolute; top:-11px; left:50%; transform:translateX(-50%); min-width:17px; height:17px; padding:0 4px; border-radius:999px; background:#1E7B4B; color:#fff; font-size:10px; font-weight:800; line-height:17px; text-align:center; white-space:nowrap; box-sizing:border-box;}
 .map-mk-pb.escalera-pb{background:#7C3AED;}
@@ -745,7 +753,7 @@
         </ul>
       </div>
     </details>
-    <p style="font-size:12px; color:var(--ink-soft); margin-top:14px; text-align:center">Versión hmh-v14 · 01/11/2026 · Servicio de Higiene y Seguridad Laboral</p>
+    <p style="font-size:12px; color:var(--ink-soft); margin-top:14px; text-align:center">Versión hmh-v15 · 01/11/2026 · Servicio de Higiene y Seguridad Laboral</p>
   </section>
 
   <!-- ===================== EXTINTORES ===================== -->
@@ -1078,14 +1086,15 @@
       <label style="font-size:13px; font-weight:800; color:var(--navy); display:block; margin-bottom:8px">Tu servicio</label>
       <select id="servicioSelect" onchange="mostrarRutasServicio(this.value)" style="width:100%; padding:12px; border-radius:10px; border:1.5px solid var(--line); font-size:14px; background:#fff; color:var(--navy)">
         <option value="">— Elegí tu servicio —</option></select>
-      <label style="font-size:13px; font-weight:800; color:var(--navy); display:block; margin:12px 0 8px">Asistencia que requiere el paciente</label>
-      <select id="asistSelect" class="asist-select" onchange="cambiarAsistencia(this.value)" style="width:100%; padding:12px; border-radius:10px; border:1.5px solid var(--line); font-size:14px; background:#fff; color:var(--navy)">
-        <option value="">Todas</option></select>
       <div class="leyenda-rutas" style="margin-top:12px">
         <button type="button" class="tg-nv" data-nv="preferente" aria-pressed="true" onclick="toggleNivel('preferente')"><span class="l" style="background:#0E8F4F"></span><span><b>Verde:</b> salida de preferencia, al punto de encuentro más próximo.</span><span class="tg-sw"></span></button>
         <button type="button" class="tg-nv" data-nv="alternativa" aria-pressed="false" onclick="toggleNivel('alternativa')"><span class="l" style="background:#1F5FBF"></span><span><b>Azul:</b> salida alternativa, si no se puede salir por la verde (más tiempo de evacuación).</span><span class="tg-sw"></span></button>
         <button type="button" class="tg-nv" data-nv="no-recomendada" aria-pressed="false" onclick="toggleNivel('no-recomendada')"><span class="l" style="background:#E6A700"></span><span><b>Amarillo:</b> no recomendada pero posible: ahí no está planificada la asistencia del paciente.</span><span class="tg-sw"></span></button>
+        <div style="font-size:11.5px;font-weight:800;color:var(--steel-dark);text-transform:uppercase;letter-spacing:.4px;margin-top:6px">Pacientes que no pueden evacuar caminando</div>
+        <button type="button" class="tg-nv" data-nv="tr-recomendado" aria-pressed="false" onclick="toggleNivel('tr-recomendado')"><span class="l" style="background:#E0218A"></span><span><b>Rosa:</b> traslado horizontal recomendado al sector de refugio.</span><span class="tg-sw"></span></button>
+        <button type="button" class="tg-nv" data-nv="tr-no-apto" aria-pressed="false" onclick="toggleNivel('tr-no-apto')"><span class="l" style="background:#8A9099"></span><span><b>Gris:</b> recorrido no apto para camilla o cama.</span><span class="tg-sw"></span></button>
       </div>
+      <div id="infoPa" class="info-serv" style="display:none"></div>
     </div>
     <div id="mapaPaWrap" style="position:relative; width:100%; border-radius:var(--radius); overflow:visible; border:1px solid var(--line)">
       <img style="width:100%; display:block" alt="Mapa interactivo Planta Alta">
@@ -1104,7 +1113,7 @@
           <path d="M0,0 L10,5 L0,10 z" fill="#0E8F4F"/>
         </marker>
         <marker id="arrow-blocked" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="2.2" markerHeight="2.2" orient="auto-start-reverse">
-          <path d="M0,0 L10,5 L0,10 z" fill="#9a9a9a"/>
+          <path d="M0,0 L10,5 L0,10 z" fill="#D62828"/>
         </marker>
               <marker id="arrow-horizontal" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="2.2" markerHeight="2.2" orient="auto-start-reverse">
           <path d="M0,0 L10,5 L0,10 z" fill="#0E7C7B"/>
@@ -1157,14 +1166,15 @@
       <label style="font-size:13px; font-weight:800; color:var(--navy); display:block; margin-bottom:8px">Tu servicio</label>
       <select id="servicioSelectPB" onchange="mostrarRutasServicioPB(this.value)" style="width:100%; padding:12px; border-radius:10px; border:1.5px solid var(--line); font-size:14px; background:#fff; color:var(--navy)">
         <option value="">— Elegí tu servicio —</option></select>
-      <label style="font-size:13px; font-weight:800; color:var(--navy); display:block; margin:12px 0 8px">Asistencia que requiere el paciente</label>
-      <select id="asistSelectPB" class="asist-select" onchange="cambiarAsistencia(this.value)" style="width:100%; padding:12px; border-radius:10px; border:1.5px solid var(--line); font-size:14px; background:#fff; color:var(--navy)">
-        <option value="">Todas</option></select>
       <div class="leyenda-rutas" style="margin-top:12px">
         <button type="button" class="tg-nv" data-nv="preferente" aria-pressed="true" onclick="toggleNivel('preferente')"><span class="l" style="background:#0E8F4F"></span><span><b>Verde:</b> salida de preferencia, al punto de encuentro más próximo.</span><span class="tg-sw"></span></button>
         <button type="button" class="tg-nv" data-nv="alternativa" aria-pressed="false" onclick="toggleNivel('alternativa')"><span class="l" style="background:#1F5FBF"></span><span><b>Azul:</b> salida alternativa, si no se puede salir por la verde (más tiempo de evacuación).</span><span class="tg-sw"></span></button>
         <button type="button" class="tg-nv" data-nv="no-recomendada" aria-pressed="false" onclick="toggleNivel('no-recomendada')"><span class="l" style="background:#E6A700"></span><span><b>Amarillo:</b> no recomendada pero posible: ahí no está planificada la asistencia del paciente.</span><span class="tg-sw"></span></button>
+        <div style="font-size:11.5px;font-weight:800;color:var(--steel-dark);text-transform:uppercase;letter-spacing:.4px;margin-top:6px">Pacientes que no pueden evacuar caminando</div>
+        <button type="button" class="tg-nv" data-nv="tr-recomendado" aria-pressed="false" onclick="toggleNivel('tr-recomendado')"><span class="l" style="background:#E0218A"></span><span><b>Rosa:</b> traslado horizontal recomendado al sector de refugio.</span><span class="tg-sw"></span></button>
+        <button type="button" class="tg-nv" data-nv="tr-no-apto" aria-pressed="false" onclick="toggleNivel('tr-no-apto')"><span class="l" style="background:#8A9099"></span><span><b>Gris:</b> recorrido no apto para camilla o cama.</span><span class="tg-sw"></span></button>
       </div>
+      <div id="infoPb" class="info-serv" style="display:none"></div>
     </div>
     <div id="mapaPbWrap" style="position:relative; width:100%; border-radius:var(--radius); overflow:visible; border:1px solid var(--line)">
       <img style="width:100%; display:block" alt="Mapa interactivo Planta Baja">
@@ -1174,7 +1184,7 @@
           <path d="M0,0 L10,5 L0,10 z" fill="#0E8F4F"/>
         </marker>
         <marker id="arrow-pb-blocked" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="2.2" markerHeight="2.2" orient="auto-start-reverse">
-          <path d="M0,0 L10,5 L0,10 z" fill="#9a9a9a"/>
+          <path d="M0,0 L10,5 L0,10 z" fill="#D62828"/>
         </marker>
       </defs>
       <g id="zonasGroupPB"></g>
@@ -1469,7 +1479,7 @@ function renderMapas(){
     svg.querySelectorAll('.'+C.route).forEach(function(e){ e.remove(); });
     if(!svg.querySelector('#arrow-nv-alternativa-'+k)){
       const defs = svg.querySelector('defs');
-      defs.insertAdjacentHTML('beforeend', [['preferente','#0E8F4F'],['alternativa','#1F5FBF'],['no-recomendada','#E6A700']].map(function(c){ return '<marker id="arrow-nv-'+c[0]+'-'+k+'" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="2.2" markerHeight="2.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="'+c[1]+'"/></marker>'; }).join(''));
+      defs.insertAdjacentHTML('beforeend', [['preferente','#0E8F4F'],['alternativa','#1F5FBF'],['no-recomendada','#E6A700'],['tr-recomendado','#E0218A'],['tr-no-apto','#8A9099']].map(function(c){ return '<marker id="arrow-nv-'+c[0]+'-'+k+'" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="2.2" markerHeight="2.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="'+c[1]+'"/></marker>'; }).join(''));
     }
     P.rutas.forEach(function(r){
       if(!r.puntos || r.puntos.length < 2) return;
@@ -1479,6 +1489,14 @@ function renderMapas(){
       p.dataset.service = r.servicio; p.dataset.exit = r.salida; p.dataset.nivel = nv; p.dataset.asist = r.asistencia || '';
       p.setAttribute('d', dMapa(r.puntos));
       p.setAttribute('marker-end', 'url(#arrow-nv-'+nv+'-'+k+')');
+      svg.appendChild(p);
+    });
+    (P.traslados||[]).forEach(function(t){
+      if(!t.puntos || t.puntos.length < 2) return;
+      const p = document.createElementNS(ns,'path');
+      p.setAttribute('class', C.route + ' traslado tr-' + (t.tipo==='no-apto'?'no-apto':'recomendado'));
+      p.dataset.traslado = t.servicio; p.dataset.tr = 'tr-' + (t.tipo==='no-apto'?'no-apto':'recomendado');
+      p.setAttribute('d', dMapa(t.puntos));
       svg.appendChild(p);
     });
     (P.exteriores||[]).forEach(function(e){
@@ -1515,7 +1533,7 @@ window.addEventListener('load', cargarMapas);
 
 let servicioActual = '';
 let asistActual = '';
-const verNivel = {'preferente': true, 'alternativa': false, 'no-recomendada': false};   // la verde arranca activada; cada color se activa o desactiva con su botón
+const verNivel = {'preferente': true, 'alternativa': false, 'no-recomendada': false, 'tr-recomendado': false, 'tr-no-apto': false};   // la verde arranca activada; cada color se activa o desactiva con su botón
 function toggleNivel(nv){
   verNivel[nv] = !verNivel[nv];
   document.querySelectorAll('.tg-nv[data-nv="'+nv+'"]').forEach(function(b){ b.setAttribute('aria-pressed', verNivel[nv] ? 'true' : 'false'); });
@@ -1529,10 +1547,21 @@ function cambiarAsistencia(v){
   if(servicioActualPB) mostrarRutasServicioPB(servicioActualPB);
 }
 /* Rutas por color y asistencia: verde (preferente) y azul (alternativa) siguen por el tramo exterior hasta el punto de encuentro; amarillo termina en la salida. */
+function infoServicio(k, servicioKey){
+  const el = document.getElementById(k==='pa' ? 'infoPa' : 'infoPb'); if(!el) return;
+  const P = MAPAS && MAPAS.plantas[k]; const s = P && P.servicios.find(function(x){ return x.id===servicioKey; });
+  if(!s){ el.style.display='none'; el.innerHTML=''; return; }
+  const ref = s.refugio ? (P.servicios.find(function(x){ return x.id===s.refugio; })||{}).nombre : '';
+  const nTr = (P.traslados||[]).filter(function(t){ return t.servicio===servicioKey; }).length;
+  let h = '<b>Sector de refugio</b> (pacientes que no caminan): ' + (ref ? escMapa(ref) : 's/d (revisar)') + (nTr ? '' : '<br><span style="color:var(--ink-soft)">Traslado aún no dibujado (s/d).</span>');
+  if(s.critico) h += '<div class="crit"><b>Situación crítica</b> (cirugía en curso, trabajo de parto, ARM/AVM, neonatos): seguí el protocolo propio del servicio.<br>' + (s.criticoTexto ? escMapa(s.criticoTexto).replace(/\n/g,'<br>') : 's/d (revisar): protocolo a validar con el servicio.') + '</div>';
+  el.innerHTML = h; el.style.display = 'block';
+}
 function mostrarRutasPlanta(k, servicioKey, bloqueadas){
   const C = MAPA_CONF[k], svg = document.getElementById(C.svg);
   const asistOk = function(a){ return !asistActual || !a || a === asistActual; };
   svg.querySelectorAll('.'+C.route).forEach(function(r){ r.classList.remove('show', 'exit-blocked', 'nv-preferente', 'nv-alternativa'); if(r.classList.contains('ruta-ext')) r.removeAttribute('marker-end'); });
+  infoServicio(k, servicioKey);
   if(!servicioKey) return;
   const orden = {'preferente':0, 'alternativa':1, 'no-recomendada':2};
   const porSalida = {};
@@ -1553,6 +1582,10 @@ function mostrarRutasPlanta(k, servicioKey, bloqueadas){
         if(r.dataset.nivel !== 'no-recomendada'){ const prev = porSalida[r.dataset.exit]; if(!prev || orden[r.dataset.nivel] < orden[prev]) porSalida[r.dataset.exit] = r.dataset.nivel; }
       }
     });
+  svg.querySelectorAll('.'+C.route+'.traslado[data-traslado="'+servicioKey+'"]').forEach(function(t){
+    if(!verNivel[t.dataset.tr]) return;
+    t.classList.add('show'); t.setAttribute('marker-end', 'url(#arrow-nv-'+t.dataset.tr+'-'+k+')'); svg.appendChild(t);
+  });
   svg.querySelectorAll('.'+C.route+'.ruta-ext').forEach(function(e){
     const nv = porSalida[e.dataset.exit];
     if(!nv || !asistOk(e.dataset.asist)) return;
