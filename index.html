@@ -314,6 +314,13 @@
 .leyenda-rutas{display:flex;flex-direction:column;gap:6px;font-size:12.5px;color:var(--navy);line-height:1.35}
 .leyenda-rutas span.l{display:inline-block;width:26px;height:5px;border-radius:3px;margin-right:8px;vertical-align:middle;flex:none}
 .leyenda-rutas div{display:flex;align-items:center}
+.tg-nv{display:flex;align-items:center;gap:0;width:100%;text-align:left;font:inherit;font-size:12.5px;color:var(--navy);background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:8px 10px;cursor:pointer;line-height:1.35}
+.tg-nv>span:nth-child(2){flex:1}
+.tg-nv .tg-sw{flex:none;width:38px;height:22px;border-radius:999px;background:#C9CED6;position:relative;margin-left:10px;transition:background .15s}
+.tg-nv .tg-sw::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:left .15s}
+.tg-nv[aria-pressed="true"]{border-color:var(--navy)}
+.tg-nv[aria-pressed="true"] .tg-sw{background:var(--navy)}
+.tg-nv[aria-pressed="true"] .tg-sw::after{left:19px}
 .map-mk.encuentro, .map-mk-pb.encuentro{background:#1E7B4B; cursor:default;}
 .map-mk.encuentro::after, .map-mk-pb.encuentro::after{content:attr(data-num); position:absolute; top:-11px; left:50%; transform:translateX(-50%); min-width:17px; height:17px; padding:0 4px; border-radius:999px; background:#1E7B4B; color:#fff; font-size:10px; font-weight:800; line-height:17px; text-align:center; white-space:nowrap; box-sizing:border-box;}
 .map-mk-pb.escalera-pb{background:#7C3AED;}
@@ -738,7 +745,7 @@
         </ul>
       </div>
     </details>
-    <p style="font-size:12px; color:var(--ink-soft); margin-top:14px; text-align:center">Versión hmh-v12 · 01/11/2026 · Servicio de Higiene y Seguridad Laboral</p>
+    <p style="font-size:12px; color:var(--ink-soft); margin-top:14px; text-align:center">Versión hmh-v13 · 01/11/2026 · Servicio de Higiene y Seguridad Laboral</p>
   </section>
 
   <!-- ===================== EXTINTORES ===================== -->
@@ -1075,9 +1082,9 @@
       <select id="asistSelect" class="asist-select" onchange="cambiarAsistencia(this.value)" style="width:100%; padding:12px; border-radius:10px; border:1.5px solid var(--line); font-size:14px; background:#fff; color:var(--navy)">
         <option value="">Todas</option></select>
       <div class="leyenda-rutas" style="margin-top:12px">
-        <div><span class="l" style="background:#0E8F4F"></span><span><b>Verde:</b> salida de preferencia, al punto de encuentro más próximo.</span></div>
-        <div><span class="l" style="background:#1F5FBF"></span><span><b>Azul:</b> salida alternativa, si no se puede salir por la verde (más tiempo de evacuación).</span></div>
-        <div><span class="l" style="background:#E6A700"></span><span><b>Amarillo:</b> no recomendada pero posible: ahí no está planificada la asistencia del paciente.</span></div>
+        <div><span class="l" style="background:#0E8F4F"></span><span><b>Verde:</b> salida de preferencia, al punto de encuentro más próximo. Se ve siempre.</span></div>
+        <button type="button" class="tg-nv" data-nv="alternativa" aria-pressed="false" onclick="toggleNivel('alternativa')"><span class="l" style="background:#1F5FBF"></span><span><b>Azul:</b> salida alternativa, si no se puede salir por la verde (más tiempo de evacuación).</span><span class="tg-sw"></span></button>
+        <button type="button" class="tg-nv" data-nv="no-recomendada" aria-pressed="false" onclick="toggleNivel('no-recomendada')"><span class="l" style="background:#E6A700"></span><span><b>Amarillo:</b> no recomendada pero posible: ahí no está planificada la asistencia del paciente.</span><span class="tg-sw"></span></button>
       </div>
     </div>
     <div id="mapaPaWrap" style="position:relative; width:100%; border-radius:var(--radius); overflow:visible; border:1px solid var(--line)">
@@ -1154,9 +1161,9 @@
       <select id="asistSelectPB" class="asist-select" onchange="cambiarAsistencia(this.value)" style="width:100%; padding:12px; border-radius:10px; border:1.5px solid var(--line); font-size:14px; background:#fff; color:var(--navy)">
         <option value="">Todas</option></select>
       <div class="leyenda-rutas" style="margin-top:12px">
-        <div><span class="l" style="background:#0E8F4F"></span><span><b>Verde:</b> salida de preferencia, al punto de encuentro más próximo.</span></div>
-        <div><span class="l" style="background:#1F5FBF"></span><span><b>Azul:</b> salida alternativa, si no se puede salir por la verde (más tiempo de evacuación).</span></div>
-        <div><span class="l" style="background:#E6A700"></span><span><b>Amarillo:</b> no recomendada pero posible: ahí no está planificada la asistencia del paciente.</span></div>
+        <div><span class="l" style="background:#0E8F4F"></span><span><b>Verde:</b> salida de preferencia, al punto de encuentro más próximo. Se ve siempre.</span></div>
+        <button type="button" class="tg-nv" data-nv="alternativa" aria-pressed="false" onclick="toggleNivel('alternativa')"><span class="l" style="background:#1F5FBF"></span><span><b>Azul:</b> salida alternativa, si no se puede salir por la verde (más tiempo de evacuación).</span><span class="tg-sw"></span></button>
+        <button type="button" class="tg-nv" data-nv="no-recomendada" aria-pressed="false" onclick="toggleNivel('no-recomendada')"><span class="l" style="background:#E6A700"></span><span><b>Amarillo:</b> no recomendada pero posible: ahí no está planificada la asistencia del paciente.</span><span class="tg-sw"></span></button>
       </div>
     </div>
     <div id="mapaPbWrap" style="position:relative; width:100%; border-radius:var(--radius); overflow:visible; border:1px solid var(--line)">
@@ -1508,6 +1515,13 @@ window.addEventListener('load', cargarMapas);
 
 let servicioActual = '';
 let asistActual = '';
+const verNivel = {'alternativa': false, 'no-recomendada': false};   // la verde se ve siempre
+function toggleNivel(nv){
+  verNivel[nv] = !verNivel[nv];
+  document.querySelectorAll('.tg-nv[data-nv="'+nv+'"]').forEach(function(b){ b.setAttribute('aria-pressed', verNivel[nv] ? 'true' : 'false'); });
+  if(servicioActual) mostrarRutasServicio(servicioActual);
+  if(servicioActualPB) mostrarRutasServicioPB(servicioActualPB);
+}
 function cambiarAsistencia(v){
   asistActual = v;
   document.querySelectorAll('.asist-select').forEach(function(s){ s.value = v; });
@@ -1527,6 +1541,7 @@ function mostrarRutasPlanta(k, servicioKey, bloqueadas){
     .forEach(function(r){
       r.classList.add('nv-' + r.dataset.nivel);
       if(!asistOk(r.dataset.asist)) return;
+      if(r.dataset.nivel !== 'preferente' && !verNivel[r.dataset.nivel]) return;
       r.classList.add('show');
       if(bloqueadas.includes(r.dataset.exit)){
         r.classList.add('exit-blocked');
