@@ -51,6 +51,7 @@ label.ck{display:flex;gap:6px;align-items:center;font-size:13px;margin:6px 0}
 .mk.sel{box-shadow:0 0 0 4px var(--amber),0 1px 4px rgba(0,0,0,.3)}
 .mk.dim{opacity:.55}
 path.r{fill:none;stroke:#0E8F4F;stroke-width:.9;stroke-linejoin:round}
+path.r.ant{stroke:#C2410C;stroke-width:.5;stroke-dasharray:1,.8;opacity:.75}
 path.r.other{stroke:#9a9a9a;stroke-width:.5;opacity:.55}
 path.r.hz{stroke:#0E7C7B;stroke-dasharray:2.6,1.4}
 path.r.sel{stroke:#E8A200;stroke-width:1.2}
@@ -113,6 +114,8 @@ table.ref select{width:100%;padding:5px;border:1px solid var(--line);border-radi
     <li><b>Rutas:</b> elegí el servicio, tocá «+ Nueva ruta», tocá el plano donde empieza (dentro del servicio) y en cada esquina del recorrido. Para terminar, tocá la salida a la que llega. Con «Ángulos rectos» cada tramo sale horizontal o vertical.</li>
     <li>Para corregir una ruta: tocala (queda amarilla), arrastrá sus puntos. Doble toque sobre un tramo agrega un punto; tocá un punto y «Borrar punto» lo saca.</li>
     <li><b>Salidas y escaleras:</b> tocá un marcador para cambiar número, tipo o nombre, o arrastralo. «+ Agregar» y después tocá el plano.</li>
+    <li>Para <b>dibujar todo de nuevo</b>: en Rutas tocá «Empezar de cero en esta planta». Las rutas actuales quedan como guía en naranja punteado (no se publican) y vas dibujando servicio por servicio; la revisión muestra el avance. Publicá recién cuando todos los servicios tengan sus rutas.</li>
+    <li><b>Puntos de encuentro:</b> los planos tienen margen en los cuatro lados para marcarlos afuera del edificio (Salidas y escaleras › + Agregar marcador › tipo «Punto de encuentro»).</li>
     <li>Usá «↶ Deshacer» si algo salió mal.</li>
   </ol>
   <h3 style="font-size:13px">Cómo se publica (para que se vea en la app)</h3>
@@ -138,7 +141,7 @@ let D = null;                 // datos (mapas.json)
 let planta = 'pa', modo = 'rutas';
 let servSel = '', rutaSel = -1, ptoSel = -1, mkSel = -1, hzSel = -1;
 let dibujando = null;         // {tipo:'ruta'|'hz', puntos:[]}
-let agregarMk = false, orto = true, verOtras = true;
+let agregarMk = false, orto = true, verOtras = true, verAnt = true;
 const undo = [];
 const $ = id => document.getElementById(id);
 const esc = t => String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
@@ -192,6 +195,7 @@ function dibujar(){
   h+='<defs><marker id="ar" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="2.2" markerHeight="2.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0E8F4F"/></marker><marker id="arS" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="2.2" markerHeight="2.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#E8A200"/></marker><marker id="arH" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="2.2" markerHeight="2.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0E7C7B"/></marker></defs>';
   if(modo==='refugios' || modo==='horizontal') (p.zonas||[]).forEach(z=>{ h+='<path class="zona" d="'+dpath(z.puntos,true)+'" fill="'+esc(z.color)+'" stroke="'+esc(z.color)+'"/>'; });
   if(modo==='rutas'){
+    if(verAnt) (p.rutasAnteriores||[]).filter(r=>r.servicio===servSel).forEach(r=>{ h+='<path class="r ant" d="'+dpath(r.puntos)+'"/>'; });
     p.rutas.forEach((r,i)=>{
       const mine=r.servicio===servSel; if(!mine && !verOtras) return;
       const cls='r'+(mine?'':' other')+(i===rutaSel?' sel':'');
@@ -279,6 +283,8 @@ function panelRutas(p){
   h+='<div class="row"><button class="btn dark" data-act="nuevoServ">+ Nuevo servicio</button>'+(servSel?'<button class="btn" data-act="renServ">Renombrar</button><button class="btn" data-act="borServ">Borrar</button>':'')+'</div>';
   h+='<label class="ck"><input type="checkbox" data-act="verOtras"'+(verOtras?' checked':'')+'> Ver en gris las rutas de los demás servicios</label>';
   h+='<label class="ck"><input type="checkbox" data-act="orto"'+(orto?' checked':'')+'> Ángulos rectos al dibujar</label>';
+  if((p.rutasAnteriores||[]).length) h+='<label class="ck"><input type="checkbox" data-act="verAnt"'+(verAnt?' checked':'')+'> Ver las rutas anteriores de este servicio como guía (naranja punteado; no se publican)</label>';
+  h+='<div class="row"><button class="btn" data-act="borTodas">Empezar de cero en esta planta</button>'+((p.rutasAnteriores||[]).length?'<button class="btn" data-act="quitarGuia">Quitar la guía</button>':'')+'</div>';
   if(!servSel) return h+'<div class="hint">Elegí un servicio para ver y editar sus rutas, o creá uno nuevo.</div>';
   const rs=p.rutas.map((r,i)=>[r,i]).filter(x=>x[0].servicio===servSel);
   if(dibujando) return h+'<div class="hint live"><b>Dibujando ruta nueva.</b> Tocá el plano donde empieza (dentro del servicio) y en cada esquina. Para terminar, tocá la <b>salida</b> a la que llega. Puntos: '+dibujando.puntos.length+'.</div><div class="row"><button class="btn" data-act="quitarUlt"'+(dibujando.puntos.length?'':' disabled')+'>Quitar último punto</button><button class="btn red" data-act="cancelar">Cancelar</button></div>';
@@ -327,6 +333,7 @@ function revision(p){
   const dup=p.marcadores.map(m=>String(m.num)).filter((n,i,a)=>a.indexOf(n)!==i);
   const sinRef=p.servicios.filter(s=>!s.refugio).length;
   let h='<div class="list">';
+  if((p.rutasAnteriores||[]).length) h+='<div class="item"><span>Avance del redibujo</span><span class="tag">'+(p.servicios.length-sinRuta.length)+' de '+p.servicios.length+' servicios</span></div>';
   h+='<div class="item"><span>Servicios sin rutas</span><span class="tag'+(sinRuta.length?' warn':'')+'">'+sinRuta.length+'</span></div>';
   if(sinRuta.length) h+='<div class="hint">'+sinRuta.map(s=>esc(s.nombre)).join(', ')+'</div>';
   h+='<div class="item"><span>Rutas a salidas que no existen</span><span class="tag'+(rotas.length?' warn':'')+'">'+rotas.length+'</span></div>';
@@ -354,6 +361,9 @@ function accion(a,n){
     case 'serv': servSel=n.value; rutaSel=-1; ptoSel=-1; cambio(); break;
     case 'verOtras': verOtras=n.checked; dibujar(); break;
     case 'orto': orto=n.checked; break;
+    case 'verAnt': verAnt=n.checked; dibujar(); break;
+    case 'borTodas': { if(!p.rutas.length){ toast('No hay rutas en esta planta'); return; } if(!confirm('Se van a sacar las '+p.rutas.length+' rutas de '+p.nombre+' para dibujarlas de nuevo.\n\nQuedan como guía en naranja punteado (no se ven en la app). Se puede deshacer.\n\n¿Seguir?')) return; snap(); p.rutasAnteriores=(p.rutasAnteriores||[]).concat(p.rutas); p.rutas=[]; rutaSel=-1; verAnt=true; cambio(); toast('Listo: dibujá las rutas nuevas servicio por servicio'); break; }
+    case 'quitarGuia': if(!confirm('¿Quitar la guía de rutas anteriores de esta planta?')) return; snap(); delete p.rutasAnteriores; cambio(); break;
     case 'nuevoServ': { const nom=prompt('Nombre del servicio nuevo en '+p.nombre+' (como lo conoce el personal):'); if(!nom||!nom.trim()) return; let id=slug(nom); if(!id) return; if(p.servicios.some(s=>s.id===id)){ toast('Ya existe un servicio con ese nombre'); return; } snap(); p.servicios.push({id,nombre:nom.trim(),refugio:''}); servSel=id; cambio(); toast('Servicio creado: ahora dibujá sus rutas'); break; }
     case 'renServ': { const s=p.servicios.find(s=>s.id===servSel); const nom=prompt('Nuevo nombre:', s.nombre); if(!nom||!nom.trim()) return; snap(); s.nombre=nom.trim(); cambio(); break; }
     case 'borServ': { const s=p.servicios.find(s=>s.id===servSel); const n2=p.rutas.filter(r=>r.servicio===servSel).length; if(!confirm('¿Borrar «'+s.nombre+'» y sus '+n2+' ruta(s)?')) return; snap(); p.servicios=p.servicios.filter(x=>x.id!==servSel); p.rutas=p.rutas.filter(r=>r.servicio!==servSel); p.servicios.forEach(x=>{ if(x.refugio===servSel) x.refugio=''; }); servSel=''; rutaSel=-1; cambio(); break; }
@@ -378,6 +388,8 @@ function accion(a,n){
   }
 }
 function descargar(){
+  const falt=['pa','pb'].map(k=>{ const q=D.plantas[k]; return q.servicios.filter(s=>!q.rutas.some(r=>r.servicio===s.id)).length; }).reduce((a,b)=>a+b,0);
+  if(falt && !confirm('Hay '+falt+' servicio(s) sin rutas. Si publicás este archivo, en la app esos servicios no van a mostrar salidas.\n\n¿Descargar igual?')) return;
   guardar();
   const blob=new Blob([JSON.stringify(D,null,1)],{type:'application/json'});
   const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='mapas.json'; document.body.appendChild(a); a.click(); a.remove();
