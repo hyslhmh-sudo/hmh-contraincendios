@@ -311,6 +311,7 @@
       <button class="em-tile" style="background:var(--red-dark)" onclick="emGoTo('humo')"><span class="em-ic"><span class="gicon">&#xf083;</span></span><span>Humo, olor a quemado o chispazos</span></button>
       <button class="em-tile" style="background:#6B4E16" onclick="emGoTo('gas')"><span class="em-ic"><span class="gicon">&#xe51e;</span></span><span>Olor a gas</span></button>
       <button class="em-tile" style="background:var(--steel)" onclick="emGoTo('alarma')"><span class="em-ic"><span class="gicon">&#xe7f7;</span></span><span>Suena la alarma</span></button>
+      <button class="em-tile" style="background:#1F2937; grid-column:1/-1" onclick="emGoTo('bomba')"><span class="em-ic"><span style="font-family:inherit; font-weight:800; font-size:26px; line-height:1">!</span></span><span>Amenaza de bomba (llamada, mensaje u objeto sospechoso)</span></button>
     </div>
     <div class="em-strip"><span class="gicon" style="font-size:22px">&#xf0d4;</span><div>Ante fuego o humo, llamá al Conmutador: <b>interno 1000</b><br><a href="tel:+542804468400" style="color:#fff; font-weight:700">Desde celular: 280 4468-400</a></div></div>
   </div>
@@ -405,6 +406,71 @@
     <div class="em-block"><b>4 · Después</b>
       <ul class="em-list">
         <li>No reingreses hasta que lo autoricen, aunque el olor baje.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="em-view" id="em-bomba">
+    <h2 class="em-sub-title"><span style="font-family:inherit; font-weight:800; font-size:22px; line-height:1">!</span> Amenaza de bomba</h2>
+    <div class="em-conmutador" style="background:#1F2937">
+      <div class="lbl">CÓDIGO NEGRO · SIEMPRE SE TOMA COMO REAL</div>
+      <div class="num" style="font-size:22px">No cortes · Anotá · Avisá por señas</div>
+      <div class="sub">Mantené la calma. Cuanto más dure la llamada, más datos tiene la Policía.</div>
+    </div>
+    <div class="em-block"><b>1 · Si la recibís por teléfono</b>
+      <ul class="em-list">
+        <li><b>No cortes</b>, aunque corte quien llama. Anotá las palabras exactas.</li>
+        <li>Hacé señas a un compañero para que avise al <b>Conmutador (interno 1000)</b>.</li>
+        <li>Anotá la hora de inicio y de fin, la línea donde entró y el número que aparece en pantalla.</li>
+      </ul>
+    </div>
+    <div class="em-block"><b>2 · Preguntá, si podés</b>
+      <ul class="em-list">
+        <li>¿Cuándo va a explotar? ¿Dónde está? ¿Qué aspecto tiene?</li>
+        <li>¿Qué tipo de bomba es? ¿Qué la hace explotar? ¿La puso usted? ¿Por qué?</li>
+        <li>¿Cómo se llama? ¿Desde dónde llama?</li>
+      </ul>
+    </div>
+    <div class="em-block"><b>3 · Prestá atención</b>
+      <ul class="em-list">
+        <li><b>Voz:</b> hombre, mujer, niño o distorsionada; tranquila, nerviosa, enojada, rápida o lenta; acento; ¿te resulta conocida?</li>
+        <li><b>Ruido de fondo:</b> calle, música, voces, vehículos, oficina.</li>
+        <li><b>Lenguaje:</b> correcto, vulgar, incoherente, leído o grabado.</li>
+      </ul>
+    </div>
+    <div class="em-block"><b>4 · Si llega por escrito, por mail o por redes</b>
+      <ul class="em-list">
+        <li><b>No lo borres, no respondas, no reenvíes.</b> Conservalo como llegó; si es digital, sacá captura de pantalla.</li>
+        <li>Anotá cómo llegó, quién lo encontró y a qué hora, y avisá al Conmutador.</li>
+      </ul>
+    </div>
+    <div class="em-block"><b>5 · Revisá tu sector</b>
+      <ul class="em-list">
+        <li>El Líder de Sector recorre el sector buscando algo fuera de lugar, <b>sin tocar nada</b>.</li>
+        <li>Avisá al Conmutador el resultado: <b>«sector revisado sin novedad»</b> o <b>«hallazgo en [lugar]»</b>.</li>
+      </ul>
+    </div>
+    <div class="em-block"><b>6 · ¿Objeto olvidado u objeto sospechoso?</b>
+      <ul class="em-list">
+        <li>Un bolso olvidado no es sospechoso por sí mismo: primero buscá al dueño.</li>
+        <li>Es sospechoso si está <b>escondido</b>, tiene <b>cables, pilas, líquidos u olor raro</b>, o <b>no es habitual</b> en ese lugar.</li>
+        <li>Si es sospechoso: <b>no lo toques, no lo muevas, no lo tapes.</b></li>
+        <li>Alejá a las personas <b>fuera de su vista</b>, detrás de paredes. Si lo podés ver, te puede alcanzar.</li>
+        <li>No uses celular ni radio cerca. Avisá su ubicación exacta desde lejos.</li>
+      </ul>
+    </div>
+    <div class="em-block"><b>7 · Si se ordena salir</b>
+      <ul class="em-list">
+        <li>La decisión la toma el Director de la Emergencia con la Policía, según el riesgo: a veces alcanza con revisar, a veces se evacúa un sector, a veces todo el hospital.</li>
+        <li>Llevate tus cosas (bolso, mochila, cartera): lo que queda complica la búsqueda.</li>
+        <li>Usá solo la ruta indicada. <b>Nunca pases cerca del objeto.</b></li>
+      </ul>
+    </div>
+    <div class="em-block"><b>8 · Después</b>
+      <ul class="em-list">
+        <li>Completá la <b>planilla de recepción de amenaza</b> (está en el Conmutador y en cada teléfono de admisión).</li>
+        <li>El Conmutador llama a la Policía (101), avisa a la policía del hospital y al Director. El <b>Código Negro</b> se anuncia solo por orden del Director.</li>
+        <li>El reingreso, solo con autorización de la Policía.</li>
       </ul>
     </div>
   </div>
@@ -530,6 +596,123 @@
       <h3>Recursos</h3>
       <p>Videos y presentaciones de capacitación.</p>
     </div></div>
+  </section>
+
+  <!-- ===================== CÓDIGOS ===================== -->
+  <section class="view" id="view-codigos">
+    <div class="section-head"><h2>Códigos de emergencia</h2><p>Se anuncian por audio-evacuación para no generar pánico. Tocá cada código para ver qué hacer.</p></div>
+    <details class="acc" name="cod" style="--acc:var(--red)">
+      <summary><span class="acc-ic txt">R</span><span class="acc-t"><b>Código Rojo + lugar</b><span>Incendio confirmado en ese lugar</span></span><span class="acc-chev">▾</span></summary>
+      <div class="acc-body">
+        <ul class="checklist">
+          <li><span class="dot"></span><div><b>Si es tu sector:</b> seguí el protocolo de incendio (botón rojo <b>Emergencia</b> → <b>Veo fuego</b>) y las indicaciones del Líder de Sector.</div></li>
+          <li><span class="dot"></span><div><b>Si es otro sector:</b> no evacúes ni confines. Cerrá puertas, seguí atendiendo y esperá instrucciones.</div></li>
+          <li><span class="dot"></span><div>Si tu sector es el <b>refugio</b> del sector afectado: liberá pasillos y prepará camas o sillas para recibir pacientes.</div></li>
+        </ul>
+      </div>
+    </details>
+    <details class="acc" name="cod" style="--acc:var(--green)">
+      <summary><span class="acc-ic txt">V</span><span class="acc-t"><b>Código Verde + sector</b><span>Evacuación horizontal de ese sector</span></span><span class="acc-chev">▾</span></summary>
+      <div class="acc-body">
+        <ul class="checklist">
+          <li><span class="dot"></span><div><b>Si es tu sector:</b> salen primero las visitas; después, los pacientes, según indique el Líder de Sector, hacia el sector de refugio.</div></li>
+          <li><span class="dot"></span><div>Es un <b>traslado de protección</b> al sector vecino, del otro lado de las puertas cortafuego. No es una salida.</div></li>
+          <li><span class="dot"></span><div>Cerrá las puertas al pasar. <b>Nunca uses los ascensores.</b></div></li>
+          <li><span class="dot"></span><div><b>Si tu sector es el refugio:</b> recibí a los pacientes y ayudá a ubicarlos.</div></li>
+        </ul>
+      </div>
+    </details>
+    <details class="acc" name="cod" style="--acc:#1F2937">
+      <summary><span class="acc-ic txt">N</span><span class="acc-t"><b>Código Negro</b><span>Amenaza de bomba</span></span><span class="acc-chev">▾</span></summary>
+      <div class="acc-body">
+        <ul class="checklist">
+          <li><span class="dot"></span><div>Siempre se toma como real. Seguí las indicaciones del Director de la Emergencia y de la Policía.</div></li>
+          <li><span class="dot"></span><div>El Líder de Sector revisa el sector sin tocar nada y avisa al Conmutador: «sin novedad» o «hallazgo en [lugar]».</div></li>
+          <li><span class="dot"></span><div>Un bolso olvidado no es sospechoso por sí mismo. Si un objeto está escondido, tiene cables o líquidos, o no es habitual: no lo toques, alejate fuera de su vista y avisá desde lejos.</div></li>
+          <li><span class="dot"></span><div>No uses celular ni radio cerca de un objeto sospechoso.</div></li>
+          <li><span class="dot"></span><div>Si se ordena salir: llevate tus cosas y usá solo la ruta indicada, nunca cerca del objeto.</div></li>
+          <li><span class="dot"></span><div>Si recibís la amenaza: botón rojo <b>Emergencia</b> → <b>Amenaza de bomba</b>.</div></li>
+        </ul>
+      </div>
+    </details>
+    <p style="font-size:12.5px; color:var(--ink-soft); margin-top:12px; line-height:1.45">Los códigos los define el Plan de Evacuación y Autoprotección del HMH (versión en revisión).</p>
+  </section>
+
+  <!-- ===================== AYUDA ===================== -->
+  <section class="view" id="view-ayuda">
+    <div class="section-head"><h2>Ayuda</h2><p>Cómo usar la app y cómo mantenerla.</p></div>
+    <div class="inst-t" style="margin:6px 0 8px">Para usuarios</div>
+    <details class="acc" name="ayu" style="--acc:var(--navy)">
+      <summary><span class="acc-ic txt">?</span><span class="acc-t"><b>¿Para qué sirve?</b></span><span class="acc-chev">▾</span></summary>
+      <div class="acc-body">
+        <ul class="checklist">
+          <li><span class="dot"></span><div>Es una guía rápida para saber qué hacer ante fuego, humo, gas, alarma o amenaza de bomba en el HMH.</div></li>
+          <li><span class="dot"></span><div>No reemplaza la capacitación ni el Plan de Evacuación y Autoprotección: los resume.</div></li>
+          <li><span class="dot"></span><div>La marca de agua «En revisión» indica que el contenido puede cambiar hasta que el plan se apruebe.</div></li>
+        </ul>
+      </div>
+    </details>
+    <details class="acc" name="ayu" style="--acc:var(--red)">
+      <summary><span class="acc-ic txt">!</span><span class="acc-t"><b>En una emergencia</b></span><span class="acc-chev">▾</span></summary>
+      <div class="acc-body">
+        <ul class="checklist">
+          <li><span class="dot"></span><div>Tocá el botón rojo <b>Emergencia</b> y elegí lo que está pasando. Cada pantalla tiene los pasos en orden.</div></li>
+          <li><span class="dot"></span><div>Primero avisá: <b>Conmutador, interno 1000</b>. Desde celular: 280 4468-400.</div></li>
+          <li><span class="dot"></span><div>Para entender un anuncio por audio, entrá a <b>Códigos</b>.</div></li>
+        </ul>
+      </div>
+    </details>
+    <details class="acc" name="ayu" style="--acc:var(--steel)">
+      <summary><span class="acc-ic txt">↻</span><span class="acc-t"><b>Sin conexión y actualizaciones</b></span><span class="acc-chev">▾</span></summary>
+      <div class="acc-body">
+        <ul class="checklist">
+          <li><span class="dot"></span><div>Abrila una vez con internet: queda guardada y después abre sin señal.</div></li>
+          <li><span class="dot"></span><div>Los videos, la evaluación y el Buzón necesitan internet (el Buzón guarda el mensaje y lo envía cuando vuelve la señal).</div></li>
+          <li><span class="dot"></span><div>Si no ves los cambios nuevos, cerrá la app del todo y abrila dos veces con internet.</div></li>
+          <li><span class="dot"></span><div>Para guardarla en el celular, mirá «Guardá la app en tu celular» en el Inicio.</div></li>
+        </ul>
+      </div>
+    </details>
+    <details class="acc" name="ayu" style="--acc:var(--green)">
+      <summary><span class="acc-ic txt">@</span><span class="acc-t"><b>Consultas</b></span><span class="acc-chev">▾</span></summary>
+      <div class="acc-body">
+        <ul class="checklist">
+          <li><span class="dot"></span><div>Escribí al Servicio de Higiene y Seguridad Laboral desde el <b>Buzón</b>.</div></li>
+        </ul>
+      </div>
+    </details>
+    <div class="inst-t" style="margin:18px 0 8px">Para la administradora</div>
+    <details class="acc" name="ayu" style="--acc:var(--navy-2)">
+      <summary><span class="acc-ic txt">GH</span><span class="acc-t"><b>Dónde está y cómo publicar</b></span><span class="acc-chev">▾</span></summary>
+      <div class="acc-body">
+        <ul class="checklist">
+          <li><span class="dot"></span><div>Repositorio: <b>hyslhmh-sudo/hmh-contraincendios</b> (GitHub Pages). Archivos: index.html, sw.js, manifest.webmanifest e íconos.</div></li>
+          <li><span class="dot"></span><div>Para cambiar algo: partir siempre de la versión publicada en el repositorio, nunca de una copia vieja.</div></li>
+          <li><span class="dot"></span><div>Subir el index.html nuevo y, en el mismo cambio, el sw.js con un número de VERSION más alto (por ejemplo, hmh-v3 → hmh-v4). Sin eso, los celulares que ya la tienen instalada no se actualizan.</div></li>
+          <li><span class="dot"></span><div>GitHub publica en uno o dos minutos. Para comprobarlo, abrir la app en el navegador y revisar esta pantalla: abajo figura la versión.</div></li>
+        </ul>
+      </div>
+    </details>
+    <details class="acc" name="ayu" style="--acc:var(--amber)">
+      <summary><span class="acc-ic txt">PL</span><span class="acc-t"><b>Relación con el plan</b></span><span class="acc-chev">▾</span></summary>
+      <div class="acc-body">
+        <ul class="checklist">
+          <li><span class="dot"></span><div>El contenido tiene que decir lo mismo que el Plan de Evacuación y Autoprotección (texto común, hoja «Textos»). Si cambia el plan, se cambia la app.</div></li>
+          <li><span class="dot"></span><div>Los íconos vienen en una fuente reducida: para un ícono nuevo hay que usar uno de los que ya están o un texto.</div></li>
+          <li><span class="dot"></span><div>Pendientes: punto de encuentro, interno del personal policial del hospital y nombre oficial del 103.</div></li>
+        </ul>
+      </div>
+    </details>
+    <details class="acc" name="ayu" style="--acc:var(--steel-dark)">
+      <summary><span class="acc-ic txt">BZ</span><span class="acc-t"><b>Buzón</b></span><span class="acc-chev">▾</span></summary>
+      <div class="acc-body">
+        <ul class="checklist">
+          <li><span class="dot"></span><div>Los mensajes se guardan en la planilla de Google conectada por Apps Script (dirección en SYNC_URL, dentro del index.html).</div></li>
+          <li><span class="dot"></span><div>Si la planilla deja de responder, los mensajes quedan en el celular de quien los escribió hasta que se puedan enviar.</div></li>
+        </ul>
+      </div>
+    </details>
+    <p style="font-size:12px; color:var(--ink-soft); margin-top:14px; text-align:center">Versión hmh-v3 · 01/11/2026 · Servicio de Higiene y Seguridad Laboral</p>
   </section>
 
   <!-- ===================== EXTINTORES ===================== -->
@@ -1174,6 +1357,7 @@
   <button class="" data-v="home" onclick="goTo(&#39;home&#39;)"><span class="gicon">&#xe9b2;</span><span>Inicio</span></button>
   <button data-v="telefonos" onclick="goTo(&#39;telefonos&#39;)"><span class="gicon">&#xf0d4;</span><span>Teléfonos</span></button>
   <button data-v="buzon" onclick="goTo(&#39;buzon&#39;)"><span class="gicon">&#xe159;</span><span>Buzón</span></button>
+  <button data-v="ayuda" onclick="goTo(&#39;ayuda&#39;)"><span style="font-family:inherit; font-weight:800; font-size:24px; line-height:1">?</span><span>Ayuda</span></button>
 </nav>
 
 </div><!-- /app-shell -->
@@ -1185,12 +1369,14 @@
 const ROLES = { publico:{label:'Público'} };
 
 const TILES = [
-  {id:'emergencia', action:'openEmergency()', title:'Qué hacer ante…', desc:'Fuego, humo, gas o alarma.', icon:'<span class="gicon">&#xe1eb;</span>', accent:'var(--red)', roles:['publico','admin']},
+  {id:'emergencia', action:'openEmergency()', title:'Qué hacer ante…', desc:'Fuego, humo, gas, alarma o amenaza de bomba.', icon:'<span class="gicon">&#xe1eb;</span>', accent:'var(--red)', roles:['publico','admin']},
   {id:'evacuacion', title:'Evacuación', desc:'Pasos y mapas de salida.', icon:'<span class="gicon">&#xe566;</span>', accent:'var(--amber)', roles:['publico','admin']},
   {id:'extintores', title:'Uso del extintor', desc:'Cuándo y cómo usarlo.', icon:'<span class="gicon">&#xf1d8;</span>', accent:'var(--red-dark)', roles:['publico','admin']},
   {id:'roles', title:'Roles en emergencia', desc:'Quién hace qué.', icon:'<span class="gicon">&#xf233;</span>', accent:'var(--navy-2)', roles:['publico','admin']},
   {id:'telefonos', title:'Teléfonos', desc:'Conmutador y emergencias.', icon:'<span class="gicon">&#xf0d4;</span>', accent:'var(--green)', roles:['publico','admin']},
+  {id:'codigos', title:'Códigos', desc:'Rojo, Verde y Negro: qué hacer.', icon:'<span style="font-family:inherit; font-weight:800; font-size:22px; line-height:1">C</span>', accent:'var(--red)', roles:['publico','admin']},
   {id:'recursos', title:'Recursos', desc:'Trivia y videos.', icon:'<span class="gicon">&#xe04b;</span>', accent:'var(--steel)', roles:['publico','admin']},
+  {id:'ayuda', title:'Ayuda', desc:'Cómo usar y mantener la app.', icon:'<span style="font-family:inherit; font-weight:800; font-size:22px; line-height:1">?</span>', accent:'var(--navy)', roles:['publico','admin']},
 ];
 
 /* ============ SINCRONIZACIÓN CON GOOGLE SHEETS + GMAIL ============ */
