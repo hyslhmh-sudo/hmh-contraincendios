@@ -114,7 +114,7 @@ table.ref select{width:100%;padding:5px;border:1px solid var(--line);border-radi
   <h3 style="font-size:13px">Cómo se trabaja</h3>
   <ol>
     <li>Elegí la planta (arriba) y lo que querés editar: <b>Rutas</b>, <b>Salidas y escaleras</b>, <b>Refugios</b> o <b>Evac. horizontal</b>.</li>
-    <li><b>Rutas:</b> elegí el servicio, tocá «+ Nueva ruta», tocá el plano donde empieza (dentro del servicio) y en cada esquina del recorrido. Para terminar, tocá la salida a la que llega. Antes de empezar elegí el <b>color</b> y la <b>asistencia</b> del paciente. Todas las líneas son horizontales o verticales (ángulos de 90°): el editor no deja dibujar en diagonal.</li>
+    <li><b>Rutas:</b> elegí el servicio, tocá «+ Nueva ruta», tocá el plano donde empieza (dentro del servicio) y en cada esquina del recorrido. Para terminar, tocá la salida a la que llega (en Planta Alta, la escalera por la que baja: celeste o violeta). Antes de empezar elegí el <b>color</b> y la <b>asistencia</b> del paciente. Todas las líneas son horizontales o verticales (ángulos de 90°): el editor no deja dibujar en diagonal.</li>
     <li><b>Colores:</b> <span style="color:#0E8F4F;font-weight:800">verde</span> = salida de preferencia (lleva al punto de encuentro más próximo según la asistencia que requiere el paciente); <span style="color:#1F5FBF;font-weight:800">azul</span> = salida alternativa, si no se puede salir por la de preferencia (lleva al punto de encuentro, con más tiempo de evacuación); <span style="color:#B07F00;font-weight:800">amarillo</span> = no recomendada pero posible (lleva a una salida de emergencia donde no está planificada la asistencia requerida).</li>
     <li><b>Asistencia:</b> camina solo, necesita ayuda o silla de ruedas, camilla o cama (se pueden renombrar al pie del panel de Rutas). «Todas las asistencias» = la ruta sirve para todos.</li>
     <li><b>Tramos exteriores:</b> de cada salida al punto de encuentro se dibuja una sola vez (botón «Tramos exteriores»): tocá la salida, cada esquina y terminá en el punto de encuentro. Lo usan todas las rutas verdes y azules que llegan a esa salida.</li>
@@ -325,7 +325,7 @@ function llegarA(pts, m, frenar){
 function clickMarcador(i, ev){
   const p=P(), m=p.marcadores[i];
   if(dibujando && dibujando.tipo==='ruta'){
-    if(!(m.tipo==='salida'||m.tipo==='escalera-pb')){ toast('Las rutas terminan en una salida (roja) o en la escalera a Planta Baja (violeta)'); return; }
+    if(m.tipo==='encuentro'){ toast('Las rutas terminan en una salida o en una escalera; el punto de encuentro se une en «Tramos exteriores»'); return; }
     const pts=dibujando.puntos; if(!pts.length){ toast('Primero tocá el plano donde empieza la ruta'); return; }
     llegarA(pts, m, 2.5);
     if(pts.length<2){ toast('La ruta necesita al menos dos puntos'); return; }
@@ -356,7 +356,7 @@ function panel(){
   el.innerHTML=h; enlazar(el);
 }
 function servOpts(p, sel, vacio){ return (vacio?'<option value="">'+vacio+'</option>':'')+p.servicios.slice().sort((a,b)=>a.nombre.localeCompare(b.nombre,'es')).map(s=>'<option value="'+esc(s.id)+'"'+(s.id===sel?' selected':'')+'>'+esc(s.nombre)+'</option>').join(''); }
-function salidaOpts(p, sel){ return p.marcadores.filter(m=>m.tipo==='salida'||m.tipo==='escalera-pb').map(m=>'<option value="'+esc(m.num)+'"'+(String(m.num)===String(sel)?' selected':'')+'>'+esc(m.num)+(m.nombre?' · '+esc(m.nombre):'')+(m.tipo==='escalera-pb'?' (escalera a PB)':'')+'</option>').join(''); }
+function salidaOpts(p, sel){ return p.marcadores.filter(m=>m.tipo!=='encuentro').map(m=>'<option value="'+esc(m.num)+'"'+(String(m.num)===String(sel)?' selected':'')+'>'+esc(m.num)+(m.nombre?' · '+esc(m.nombre):'')+(m.tipo==='escalera-pb'?' (escalera a PB)':m.tipo==='escalera'?' (escalera)':'')+'</option>').join(''); }
 function nivelOpts(sel){ return Object.keys(NIVELES).map(k=>'<option value="'+k+'"'+(k===sel?' selected':'')+'>'+NIVELES[k].nombre+'</option>').join(''); }
 function asistOpts(sel){ return '<option value="">Todas las asistencias</option>'+(D.asistencias||[]).map(a=>'<option value="'+esc(a.id)+'"'+(a.id===sel?' selected':'')+'>'+esc(a.nombre)+'</option>').join(''); }
 function chip(k){ return '<span class="chip" style="background:'+NIVELES[k].color+'"></span>'; }
@@ -369,7 +369,7 @@ function panelRutas(p){
   h+='<div class="row"><button class="btn" data-act="borTodas">Empezar de cero en esta planta</button>'+((p.rutasAnteriores||[]).length?'<button class="btn" data-act="quitarGuia">Quitar la guía</button>':'')+'</div>';
   if(!servSel) return h+leyenda()+'<div class="hint">Elegí un servicio para ver y editar sus rutas, o creá uno nuevo.</div>';
   const rs=p.rutas.map((r,i)=>[r,i]).filter(x=>x[0].servicio===servSel);
-  if(dibujando) return h+'<div class="hint live">'+chip(dibujando.nivel)+'<b>Dibujando ruta '+NIVELES[dibujando.nivel].nombre.split(' ·')[0].toLowerCase()+'</b> · '+esc(asistNombre(dibujando.asistencia))+'.<br>Tocá el plano donde empieza (dentro del servicio) y en cada esquina: cada tramo sale horizontal o vertical. Para terminar, tocá la <b>salida</b> a la que llega. Puntos: '+dibujando.puntos.length+'.</div><div class="row"><button class="btn" data-act="quitarUlt"'+(dibujando.puntos.length?'':' disabled')+'>Quitar último punto</button><button class="btn red" data-act="cancelar">Cancelar</button></div>';
+  if(dibujando) return h+'<div class="hint live">'+chip(dibujando.nivel)+'<b>Dibujando ruta '+NIVELES[dibujando.nivel].nombre.split(' ·')[0].toLowerCase()+'</b> · '+esc(asistNombre(dibujando.asistencia))+'.<br>Tocá el plano donde empieza (dentro del servicio) y en cada esquina: cada tramo sale horizontal o vertical. Para terminar, tocá la <b>salida</b> o, en Planta Alta, la <b>escalera</b> por la que baja. Puntos: '+dibujando.puntos.length+'.</div><div class="row"><button class="btn" data-act="quitarUlt"'+(dibujando.puntos.length?'':' disabled')+'>Quitar último punto</button><button class="btn red" data-act="cancelar">Cancelar</button></div>';
   h+='<h3>Ruta nueva</h3><div class="row">Color <select data-act="nuevoNivel">'+nivelOpts(nuevoNivel)+'</select></div>';
   h+='<div class="row">Asistencia <select data-act="nuevaAsist">'+asistOpts(nuevaAsist)+'</select></div>';
   h+='<div class="row"><button class="btn green" data-act="nuevaRuta">+ Nueva ruta</button></div>';
