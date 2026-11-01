@@ -292,6 +292,16 @@
   .checklist li{display:flex; gap:10px; padding:9px 0; border-top:1px dashed var(--line); font-size:13.5px;}
   .checklist li:first-child{border-top:none;}
   .checklist li .dot{flex:none; width:8px;height:8px;border-radius:999px; background:var(--steel); margin-top:6px;}
+
+/* hmh-v4 · contraste en el modo emergencia */
+.em-tile-gas, .em-conm-gas{background:var(--amber) !important; color:#1A1A1A !important;}
+.em-tile-claro{background:var(--celeste-tint) !important; color:var(--navy) !important;}
+.em-tile-bomba, .em-conm-bomba{background:var(--red) !important; color:#fff !important; box-shadow:inset 0 0 0 3px #fff;}
+.em-conm-bomba .lbl{display:inline-block; background:#111; color:#fff; padding:4px 10px; border-radius:8px; opacity:1; font-size:11px;}
+.em-list li.em-warn{background:var(--red); color:#fff; font-weight:600;}
+.em-list li.em-warn b{font-weight:800;}
+.em-block > b{color:#FFD166;}
+.em-call-btn{background:#1E7B4B;}
 </style>
 </head>
 <body>
@@ -309,9 +319,9 @@
     <div class="em-grid">
       <button class="em-tile" style="background:var(--red)" onclick="emGoTo('fuego')"><span class="em-ic"><span class="gicon">&#xef55;</span></span><span>Veo fuego</span></button>
       <button class="em-tile" style="background:var(--red-dark)" onclick="emGoTo('humo')"><span class="em-ic"><span class="gicon">&#xf083;</span></span><span>Humo, olor a quemado o chispazos</span></button>
-      <button class="em-tile" style="background:#6B4E16" onclick="emGoTo('gas')"><span class="em-ic"><span class="gicon">&#xe51e;</span></span><span>Olor a gas</span></button>
-      <button class="em-tile" style="background:var(--steel)" onclick="emGoTo('alarma')"><span class="em-ic"><span class="gicon">&#xe7f7;</span></span><span>Suena la alarma</span></button>
-      <button class="em-tile" style="background:#1F2937; grid-column:1/-1" onclick="emGoTo('bomba')"><span class="em-ic"><span style="font-family:inherit; font-weight:800; font-size:26px; line-height:1">!</span></span><span>Amenaza de bomba (llamada, mensaje u objeto sospechoso)</span></button>
+      <button class="em-tile em-tile-gas" onclick="emGoTo('gas')"><span class="em-ic"><span class="gicon">&#xe51e;</span></span><span>Olor a gas</span></button>
+      <button class="em-tile em-tile-claro" onclick="emGoTo('alarma')"><span class="em-ic"><span class="gicon">&#xe7f7;</span></span><span>Suena la alarma</span></button>
+      <button class="em-tile em-tile-bomba" style="grid-column:1/-1" onclick="emGoTo('bomba')"><span class="em-ic"><span style="font-family:inherit; font-weight:800; font-size:26px; line-height:1">!</span></span><span>Amenaza de bomba (llamada, mensaje u objeto sospechoso)</span></button>
     </div>
     <div class="em-strip"><span class="gicon" style="font-size:22px">&#xf0d4;</span><div>Ante fuego o humo, llamá al Conmutador: <b>interno 1000</b><br><a href="tel:+542804468400" style="color:#fff; font-weight:700">Desde celular: 280 4468-400</a></div></div>
   </div>
@@ -346,7 +356,7 @@
         <li>Humo ausente o mínimo.</li>
         <li>Salida libre a tu espalda.</li>
         <li>Extintor adecuado a mano y sabés usarlo.</li>
-        <li><b>Si falta una:</b> no lo intentes. Evacuá el sector.</li>
+        <li class="em-warn"><b>Si falta una:</b> no lo intentes. Evacuá el sector.</li>
       </ul>
     </div>
     <div class="em-block"><b>5 · Un solo intento</b>
@@ -362,7 +372,7 @@
     <p style="color:#B8C3D9; font-size:13px; line-height:1.5; margin:0 0 14px">Sin llama visible. Tiene la misma urgencia que un incendio.</p>
     <div class="em-block"><b>1 · Si hay chispas o un corto</b>
       <ul class="em-list">
-        <li><b>No toques ni desconectes el equipo</b> y nunca uses agua. Alejate.</li>
+        <li class="em-warn"><b>No toques ni desconectes el equipo</b> y nunca uses agua. Alejate.</li>
       </ul>
     </div>
     <div class="em-block"><b>2 · Alertá, igual que ante fuego</b>
@@ -381,16 +391,16 @@
 
   <div class="em-view" id="em-gas">
     <h2 class="em-sub-title"><span class="gicon">&#xe51e;</span> Olor a gas</h2>
-    <div class="em-conmutador" style="background:#6B4E16">
+    <div class="em-conmutador em-conm-gas">
       <div class="lbl">AL REVÉS QUE ANTE UN INCENDIO</div>
       <div class="num" style="font-size:22px">Ventilá · Alejate · Avisá</div>
       <div class="sub">No cierres la puerta. No uses teléfonos ni interruptores en la zona.</div>
     </div>
     <div class="em-block"><b>1 · Nada eléctrico ni con llama</b>
       <ul class="em-list">
-        <li>No toques interruptores, ni para apagar.</li>
-        <li>No uses teléfono, celular, radio ni ascensor en la zona.</li>
-        <li>No enciendas fósforos ni encendedores.</li>
+        <li class="em-warn">No toques interruptores, ni para apagar.</li>
+        <li class="em-warn">No uses teléfono, celular, radio ni ascensor en la zona.</li>
+        <li class="em-warn">No enciendas fósforos ni encendedores.</li>
       </ul>
     </div>
     <div class="em-block"><b>2 · Ventilá</b>
@@ -412,14 +422,14 @@
 
   <div class="em-view" id="em-bomba">
     <h2 class="em-sub-title"><span style="font-family:inherit; font-weight:800; font-size:22px; line-height:1">!</span> Amenaza de bomba</h2>
-    <div class="em-conmutador" style="background:#1F2937">
+    <div class="em-conmutador em-conm-bomba">
       <div class="lbl">CÓDIGO NEGRO · SIEMPRE SE TOMA COMO REAL</div>
       <div class="num" style="font-size:22px">No cortes · Anotá · Avisá por señas</div>
       <div class="sub">Mantené la calma. Cuanto más dure la llamada, más datos tiene la Policía.</div>
     </div>
     <div class="em-block"><b>1 · Si la recibís por teléfono</b>
       <ul class="em-list">
-        <li><b>No cortes</b>, aunque corte quien llama. Anotá las palabras exactas.</li>
+        <li class="em-warn"><b>No cortes</b>, aunque corte quien llama. Anotá las palabras exactas.</li>
         <li>Hacé señas a un compañero para que avise al <b>Conmutador (interno 1000)</b>.</li>
         <li>Anotá la hora de inicio y de fin, la línea donde entró y el número que aparece en pantalla.</li>
       </ul>
@@ -440,7 +450,7 @@
     </div>
     <div class="em-block"><b>4 · Si llega por escrito, por mail o por redes</b>
       <ul class="em-list">
-        <li><b>No lo borres, no respondas, no reenvíes.</b> Conservalo como llegó; si es digital, sacá captura de pantalla.</li>
+        <li class="em-warn"><b>No lo borres, no respondas, no reenvíes.</b> Conservalo como llegó; si es digital, sacá captura de pantalla.</li>
         <li>Anotá cómo llegó, quién lo encontró y a qué hora, y avisá al Conmutador.</li>
       </ul>
     </div>
@@ -454,8 +464,8 @@
       <ul class="em-list">
         <li>Un bolso olvidado no es sospechoso por sí mismo: primero buscá al dueño.</li>
         <li>Es sospechoso si está <b>escondido</b>, tiene <b>cables, pilas, líquidos u olor raro</b>, o <b>no es habitual</b> en ese lugar.</li>
-        <li>Si es sospechoso: <b>no lo toques, no lo muevas, no lo tapes.</b></li>
-        <li>Alejá a las personas <b>fuera de su vista</b>, detrás de paredes. Si lo podés ver, te puede alcanzar.</li>
+        <li class="em-warn">Si es sospechoso: <b>no lo toques, no lo muevas, no lo tapes.</b></li>
+        <li class="em-warn">Alejá a las personas <b>fuera de su vista</b>, detrás de paredes. Si lo podés ver, te puede alcanzar.</li>
         <li>No uses celular ni radio cerca. Avisá su ubicación exacta desde lejos.</li>
       </ul>
     </div>
@@ -463,7 +473,7 @@
       <ul class="em-list">
         <li>La decisión la toma el Director de la Emergencia con la Policía, según el riesgo: a veces alcanza con revisar, a veces se evacúa un sector, a veces todo el hospital.</li>
         <li>Llevate tus cosas (bolso, mochila, cartera): lo que queda complica la búsqueda.</li>
-        <li>Usá solo la ruta indicada. <b>Nunca pases cerca del objeto.</b></li>
+        <li class="em-warn">Usá solo la ruta indicada. <b>Nunca pases cerca del objeto.</b></li>
       </ul>
     </div>
     <div class="em-block"><b>8 · Después</b>
@@ -480,7 +490,7 @@
     <p style="color:#B8C3D9; font-size:13px; line-height:1.5; margin:0 0 14px">La alarma suena solo en la zona que la activó. ¿De qué sector es?</p>
     <div class="em-grid" style="margin-bottom:16px">
       <button class="em-tile" style="background:var(--red)" onclick="emGoTo('alarma-propio')"><span class="em-ic"><span class="gicon">&#xe55c;</span></span><span>Es de MI sector</span></button>
-      <button class="em-tile" style="background:var(--steel)" onclick="emGoTo('alarma-otro')"><span class="em-ic"><span class="gicon">&#xe55b;</span></span><span>Es de OTRO sector</span></button>
+      <button class="em-tile em-tile-claro" onclick="emGoTo('alarma-otro')"><span class="em-ic"><span class="gicon">&#xe55b;</span></span><span>Es de OTRO sector</span></button>
     </div>
     <div class="em-block"><b>Visitantes y acompañantes</b>
       <ul class="em-list">
@@ -494,7 +504,7 @@
     <div class="em-block"><b>¿Hay evidencia de fuego?</b>
       <ul class="em-list">
         <li>Llamas visibles, humo denso, alguien vio fuego y activó el pulsador, o Código Rojo en tu sector.</li>
-        <li><b>Si hay alguna: no verifiques.</b> Protocolo de incendio ya.</li>
+        <li class="em-warn"><b>Si hay alguna: no verifiques.</b> Protocolo de incendio ya.</li>
       </ul>
     </div>
     <div class="em-calls" style="margin-bottom:16px"><button class="em-call-btn" style="background:var(--red)" onclick="emGoTo('fuego')"><span class="gicon">&#xef55;</span> Ir al protocolo de incendio</button></div>
@@ -712,7 +722,7 @@
         </ul>
       </div>
     </details>
-    <p style="font-size:12px; color:var(--ink-soft); margin-top:14px; text-align:center">Versión hmh-v3 · 01/11/2026 · Servicio de Higiene y Seguridad Laboral</p>
+    <p style="font-size:12px; color:var(--ink-soft); margin-top:14px; text-align:center">Versión hmh-v4 · 01/11/2026 · Servicio de Higiene y Seguridad Laboral</p>
   </section>
 
   <!-- ===================== EXTINTORES ===================== -->
