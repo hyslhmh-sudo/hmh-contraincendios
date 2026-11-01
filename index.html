@@ -302,6 +302,12 @@
 .em-list li.em-warn b{font-weight:800;}
 .em-block > b{color:#FFD166;}
 .service-route{stroke:#0E8F4F;}
+.service-route.nv-alternativa,.service-route-pb.nv-alternativa{stroke:#1F5FBF;}
+.service-route.nv-no-recomendada,.service-route-pb.nv-no-recomendada{stroke:#E6A700;}
+.service-route.ruta-ext.show,.service-route-pb.ruta-ext.show{stroke-dasharray:1.6,.8;}
+.leyenda-rutas{display:flex;flex-direction:column;gap:6px;font-size:12.5px;color:var(--navy);line-height:1.35}
+.leyenda-rutas span.l{display:inline-block;width:26px;height:5px;border-radius:3px;margin-right:8px;vertical-align:middle;flex:none}
+.leyenda-rutas div{display:flex;align-items:center}
 .map-mk.encuentro, .map-mk-pb.encuentro{background:#1E7B4B; cursor:default;}
 .map-mk.encuentro::after, .map-mk-pb.encuentro::after{content:attr(data-num); position:absolute; top:-11px; left:50%; transform:translateX(-50%); min-width:17px; height:17px; padding:0 4px; border-radius:999px; background:#1E7B4B; color:#fff; font-size:10px; font-weight:800; line-height:17px; text-align:center; white-space:nowrap; box-sizing:border-box;}
 .map-mk-pb.escalera-pb{background:#7C3AED;}
@@ -726,7 +732,7 @@
         </ul>
       </div>
     </details>
-    <p style="font-size:12px; color:var(--ink-soft); margin-top:14px; text-align:center">Versión hmh-v8 · 01/11/2026 · Servicio de Higiene y Seguridad Laboral</p>
+    <p style="font-size:12px; color:var(--ink-soft); margin-top:14px; text-align:center">Versión hmh-v9 · 01/11/2026 · Servicio de Higiene y Seguridad Laboral</p>
   </section>
 
   <!-- ===================== EXTINTORES ===================== -->
@@ -1059,6 +1065,14 @@
       <label style="font-size:13px; font-weight:800; color:var(--navy); display:block; margin-bottom:8px">Tu servicio</label>
       <select id="servicioSelect" onchange="mostrarRutasServicio(this.value)" style="width:100%; padding:12px; border-radius:10px; border:1.5px solid var(--line); font-size:14px; background:#fff; color:var(--navy)">
         <option value="">— Elegí tu servicio —</option></select>
+      <label style="font-size:13px; font-weight:800; color:var(--navy); display:block; margin:12px 0 8px">Asistencia que requiere el paciente</label>
+      <select id="asistSelect" class="asist-select" onchange="cambiarAsistencia(this.value)" style="width:100%; padding:12px; border-radius:10px; border:1.5px solid var(--line); font-size:14px; background:#fff; color:var(--navy)">
+        <option value="">Todas</option></select>
+      <div class="leyenda-rutas" style="margin-top:12px">
+        <div><span class="l" style="background:#0E8F4F"></span><span><b>Verde:</b> salida de preferencia, al punto de encuentro más próximo.</span></div>
+        <div><span class="l" style="background:#1F5FBF"></span><span><b>Azul:</b> salida alternativa, si no se puede salir por la verde (más tiempo de evacuación).</span></div>
+        <div><span class="l" style="background:#E6A700"></span><span><b>Amarillo:</b> no recomendada pero posible: ahí no está planificada la asistencia del paciente.</span></div>
+      </div>
     </div>
     <div id="mapaPaWrap" style="position:relative; width:100%; border-radius:var(--radius); overflow:visible; border:1px solid var(--line)">
       <img style="width:100%; display:block" alt="Mapa interactivo Planta Alta">
@@ -1130,6 +1144,14 @@
       <label style="font-size:13px; font-weight:800; color:var(--navy); display:block; margin-bottom:8px">Tu servicio</label>
       <select id="servicioSelectPB" onchange="mostrarRutasServicioPB(this.value)" style="width:100%; padding:12px; border-radius:10px; border:1.5px solid var(--line); font-size:14px; background:#fff; color:var(--navy)">
         <option value="">— Elegí tu servicio —</option></select>
+      <label style="font-size:13px; font-weight:800; color:var(--navy); display:block; margin:12px 0 8px">Asistencia que requiere el paciente</label>
+      <select id="asistSelectPB" class="asist-select" onchange="cambiarAsistencia(this.value)" style="width:100%; padding:12px; border-radius:10px; border:1.5px solid var(--line); font-size:14px; background:#fff; color:var(--navy)">
+        <option value="">Todas</option></select>
+      <div class="leyenda-rutas" style="margin-top:12px">
+        <div><span class="l" style="background:#0E8F4F"></span><span><b>Verde:</b> salida de preferencia, al punto de encuentro más próximo.</span></div>
+        <div><span class="l" style="background:#1F5FBF"></span><span><b>Azul:</b> salida alternativa, si no se puede salir por la verde (más tiempo de evacuación).</span></div>
+        <div><span class="l" style="background:#E6A700"></span><span><b>Amarillo:</b> no recomendada pero posible: ahí no está planificada la asistencia del paciente.</span></div>
+      </div>
     </div>
     <div id="mapaPbWrap" style="position:relative; width:100%; border-radius:var(--radius); overflow:visible; border:1px solid var(--line)">
       <img style="width:100%; display:block" alt="Mapa interactivo Planta Baja">
@@ -1432,13 +1454,26 @@ function renderMapas(){
     });
     const svg = document.getElementById(C.svg);
     svg.querySelectorAll('.'+C.route).forEach(function(e){ e.remove(); });
+    if(!svg.querySelector('#arrow-nv-alternativa-'+k)){
+      const defs = svg.querySelector('defs');
+      defs.insertAdjacentHTML('beforeend', [['preferente','#0E8F4F'],['alternativa','#1F5FBF'],['no-recomendada','#E6A700']].map(function(c){ return '<marker id="arrow-nv-'+c[0]+'-'+k+'" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="2.2" markerHeight="2.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="'+c[1]+'"/></marker>'; }).join(''));
+    }
     P.rutas.forEach(function(r){
       if(!r.puntos || r.puntos.length < 2) return;
+      const nv = ['alternativa','no-recomendada'].indexOf(r.nivel) > -1 ? r.nivel : 'preferente';
       const p = document.createElementNS(ns,'path');
-      p.setAttribute('class', C.route + (tipos[r.salida]==='escalera-pb' ? ' exit9' : ''));
-      p.dataset.service = r.servicio; p.dataset.exit = r.salida;
+      p.setAttribute('class', C.route + ' nv-' + nv + (!r.nivel && tipos[r.salida]==='escalera-pb' ? ' exit9' : ''));
+      p.dataset.service = r.servicio; p.dataset.exit = r.salida; p.dataset.nivel = nv; p.dataset.asist = r.asistencia || '';
       p.setAttribute('d', dMapa(r.puntos));
-      p.setAttribute('marker-end', 'url(#'+C.arrow+')');
+      p.setAttribute('marker-end', 'url(#arrow-nv-'+nv+'-'+k+')');
+      svg.appendChild(p);
+    });
+    (P.exteriores||[]).forEach(function(e){
+      if(!e.puntos || e.puntos.length < 2) return;
+      const p = document.createElementNS(ns,'path');
+      p.setAttribute('class', C.route + ' ruta-ext');
+      p.dataset.exit = e.salida; p.dataset.encuentro = e.encuentro; p.dataset.asist = e.asistencia || '';
+      p.setAttribute('d', dMapa(e.puntos));
       svg.appendChild(p);
     });
     const zg = document.getElementById(C.zg);
@@ -1453,6 +1488,8 @@ function renderMapas(){
       document.getElementById(C.hsel).innerHTML = '<option value="">— Elegí un recorrido —</option>' + (P.horizontales||[]).map(function(h){ return '<option value="'+escMapa(h.id)+'">'+escMapa(h.nombre)+'</option>'; }).join('');
     }
   });
+  const ops = '<option value="">Todas</option>' + (MAPAS.asistencias||[]).map(function(a){ return '<option value="'+escMapa(a.id)+'">'+escMapa(a.nombre)+'</option>'; }).join('');
+  document.querySelectorAll('.asist-select').forEach(function(s){ s.innerHTML = ops; s.value = asistActual; });
   if(servicioActual){ document.getElementById('servicioSelect').value = servicioActual; mostrarRutasServicio(servicioActual); }
   if(servicioActualPB){ document.getElementById('servicioSelectPB').value = servicioActualPB; mostrarRutasServicioPB(servicioActualPB); }
 }
@@ -1464,6 +1501,45 @@ function cargarMapas(){
 window.addEventListener('load', cargarMapas);
 
 let servicioActual = '';
+let asistActual = '';
+function cambiarAsistencia(v){
+  asistActual = v;
+  document.querySelectorAll('.asist-select').forEach(function(s){ s.value = v; });
+  if(servicioActual) mostrarRutasServicio(servicioActual);
+  if(servicioActualPB) mostrarRutasServicioPB(servicioActualPB);
+}
+/* Rutas por color y asistencia: verde (preferente) y azul (alternativa) siguen por el tramo exterior hasta el punto de encuentro; amarillo termina en la salida. */
+function mostrarRutasPlanta(k, servicioKey, bloqueadas){
+  const C = MAPA_CONF[k], svg = document.getElementById(C.svg);
+  const asistOk = function(a){ return !asistActual || !a || a === asistActual; };
+  svg.querySelectorAll('.'+C.route).forEach(function(r){ r.classList.remove('show', 'exit-blocked', 'nv-preferente', 'nv-alternativa'); if(r.classList.contains('ruta-ext')) r.removeAttribute('marker-end'); });
+  if(!servicioKey) return;
+  const orden = {'preferente':0, 'alternativa':1, 'no-recomendada':2};
+  const porSalida = {};
+  Array.from(svg.querySelectorAll('.'+C.route+'[data-service="' + servicioKey + '"]'))
+    .sort(function(a,b){ return orden[b.dataset.nivel] - orden[a.dataset.nivel]; })
+    .forEach(function(r){
+      r.classList.add('nv-' + r.dataset.nivel);
+      if(!asistOk(r.dataset.asist)) return;
+      r.classList.add('show');
+      if(bloqueadas.includes(r.dataset.exit)){
+        r.classList.add('exit-blocked');
+        r.setAttribute('marker-end', 'url(#'+(k==='pa'?'arrow-blocked':'arrow-pb-blocked')+')');
+        svg.insertBefore(r, svg.firstChild);
+      } else {
+        r.setAttribute('marker-end', 'url(#arrow-nv-'+r.dataset.nivel+'-'+k+')');
+        svg.appendChild(r);
+        if(r.dataset.nivel !== 'no-recomendada'){ const prev = porSalida[r.dataset.exit]; if(!prev || orden[r.dataset.nivel] < orden[prev]) porSalida[r.dataset.exit] = r.dataset.nivel; }
+      }
+    });
+  svg.querySelectorAll('.'+C.route+'.ruta-ext').forEach(function(e){
+    const nv = porSalida[e.dataset.exit];
+    if(!nv || !asistOk(e.dataset.asist)) return;
+    e.classList.add('show', 'nv-' + nv);
+    e.setAttribute('marker-end', 'url(#arrow-nv-'+nv+'-'+k+')');
+    svg.appendChild(e);
+  });
+}
 
 function mostrarRutaHorizontal(routeId){
   document.querySelectorAll('.horizontal-route').forEach(function(r){ r.classList.remove('show'); });
@@ -1493,24 +1569,8 @@ let servicioActualPB = '';
 function mostrarRutasServicioPB(servicioKey){
   servicioActualPB = servicioKey;
   notaSalidas('.service-route-pb', '.map-mk-pb.salida-pb', 'blocked-pb', servicioKey, document.getElementById('mapaPbNota'), document.getElementById('mapaPbNotaTexto'));
-  const rutas = document.querySelectorAll('.service-route-pb');
-  rutas.forEach(function(r){ r.classList.remove('show', 'exit-blocked'); });
-  if(!servicioKey) return;
   const bloqueadas = Array.from(document.querySelectorAll('.map-mk-pb.salida-pb.blocked-pb')).map(function(s){ return s.dataset.num; });
-  const rutasServicio = document.querySelectorAll('.service-route-pb[data-service="' + servicioKey + '"]');
-  const svg = document.getElementById('routeSvgPB');
-  rutasServicio.forEach(function(r){
-    r.classList.add('show');
-    const exitNum = r.dataset.exit;
-    if(bloqueadas.includes(exitNum)){
-      r.classList.add('exit-blocked');
-      r.setAttribute('marker-end', 'url(#arrow-pb-blocked)');
-      svg.insertBefore(r, svg.firstChild);
-    } else {
-      r.setAttribute('marker-end', 'url(#arrow-pb)');
-      svg.appendChild(r);
-    }
-  });
+  mostrarRutasPlanta('pb', servicioKey, bloqueadas);
 }
 
 function etiquetaSalida(n, esPB){ return (esPB && NOMBRE_SALIDA_PB[n]) ? NOMBRE_SALIDA_PB[n] : n; }
@@ -1538,24 +1598,8 @@ function toggleSalidaPB(el){
 function mostrarRutasServicio(servicioKey){
   servicioActual = servicioKey;
   notaSalidas('.service-route', '.map-mk.salida', 'blocked', servicioKey, document.getElementById('mapaPaNota'), document.getElementById('mapaPaNotaTexto'));
-  const svg = document.getElementById('routeSvg');
-  const rutas = document.querySelectorAll('.service-route');
-  rutas.forEach(function(r){ r.classList.remove('show', 'exit-blocked'); });
-  if(!servicioKey) return;
   const bloqueadas = Array.from(document.querySelectorAll('.map-mk.salida.blocked')).map(function(s){ return s.dataset.num; });
-  const rutasServicio = document.querySelectorAll('.service-route[data-service="' + servicioKey + '"]');
-  rutasServicio.forEach(function(r){
-    r.classList.add('show');
-    const exitNum = r.dataset.exit;
-    if(bloqueadas.includes(exitNum)){
-      r.classList.add('exit-blocked');
-      r.setAttribute('marker-end', 'url(#arrow-blocked)');
-      svg.insertBefore(r, svg.firstChild);
-    } else {
-      r.setAttribute('marker-end', 'url(#arrow-fast)');
-      svg.appendChild(r);
-    }
-  });
+  mostrarRutasPlanta('pa', servicioKey, bloqueadas);
 }
 
 function toggleSalida(el){

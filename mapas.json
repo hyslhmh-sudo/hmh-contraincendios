@@ -1637,7 +1637,8 @@
       ]
      ]
     }
-   ]
+   ],
+   "exteriores": []
   },
   "pb": {
    "nombre": "Planta Baja",
@@ -2774,7 +2775,27 @@
      ]
     }
    ],
-   "horizontales": []
+   "horizontales": [],
+   "exteriores": []
   }
+ },
+ "asistencias": [
+  {
+   "id": "camina",
+   "nombre": "Camina solo"
+  },
+  {
+   "id": "ayuda",
+   "nombre": "Necesita ayuda o silla de ruedas"
+  },
+  {
+   "id": "camilla",
+   "nombre": "Camilla o cama"
+  }
+ ],
+ "niveles": {
+  "preferente": "Verde · salida de preferencia",
+  "alternativa": "Azul · salida alternativa",
+  "no-recomendada": "Amarillo · no recomendada pero posible"
  }
 }

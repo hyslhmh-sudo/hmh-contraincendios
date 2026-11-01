@@ -54,11 +54,13 @@ path.r{fill:none;stroke:#0E8F4F;stroke-width:.9;stroke-linejoin:round}
 path.r.ant{stroke:#C2410C;stroke-width:.5;stroke-dasharray:1,.8;opacity:.75}
 path.r.other{stroke:#9a9a9a;stroke-width:.5;opacity:.55}
 path.r.hz{stroke:#0E7C7B;stroke-dasharray:2.6,1.4}
-path.r.sel{stroke:#E8A200;stroke-width:1.2}
-path.r.draft{stroke:#E8A200;stroke-dasharray:1.2,.8}
+path.r.sel{stroke-width:1.3;filter:drop-shadow(0 0 .6px #C026D3) drop-shadow(0 0 .6px #C026D3)}
+path.r.draft{stroke:#C026D3;stroke-dasharray:1.2,.8}
+path.r.ext{stroke-dasharray:1.6,.7}
 path.hit{fill:none;stroke:transparent;stroke-width:3;cursor:pointer}
-circle.h{fill:#fff;stroke:#E8A200;stroke-width:.45;cursor:grab}
-circle.h.sel{fill:#E8A200}
+circle.h{fill:#fff;stroke:#C026D3;stroke-width:.45;cursor:grab}
+circle.h.sel{fill:#C026D3}
+.chip{display:inline-block;width:22px;height:5px;border-radius:3px;vertical-align:middle;margin-right:6px}
 path.zona{fill-opacity:.18;stroke-width:.3;pointer-events:none}
 .toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 16px;border-radius:999px;font-size:13px;opacity:0;transition:opacity .2s;z-index:50;pointer-events:none}
 .toast.show{opacity:1}
@@ -78,6 +80,7 @@ table.ref select{width:100%;padding:5px;border:1px solid var(--line);border-radi
   <button class="btn" data-planta="pb">Planta Baja</button>
   <span class="sp"></span>
   <button class="btn" data-modo="rutas">Rutas</button>
+  <button class="btn" data-modo="exterior">Tramos exteriores</button>
   <button class="btn" data-modo="marcadores">Salidas y escaleras</button>
   <button class="btn" data-modo="refugios">Refugios</button>
   <button class="btn" data-modo="horizontal">Evac. horizontal</button>
@@ -111,8 +114,11 @@ table.ref select{width:100%;padding:5px;border:1px solid var(--line);border-radi
   <h3 style="font-size:13px">Cómo se trabaja</h3>
   <ol>
     <li>Elegí la planta (arriba) y lo que querés editar: <b>Rutas</b>, <b>Salidas y escaleras</b>, <b>Refugios</b> o <b>Evac. horizontal</b>.</li>
-    <li><b>Rutas:</b> elegí el servicio, tocá «+ Nueva ruta», tocá el plano donde empieza (dentro del servicio) y en cada esquina del recorrido. Para terminar, tocá la salida a la que llega. Con «Ángulos rectos» cada tramo sale horizontal o vertical.</li>
-    <li>Para corregir una ruta: tocala (queda amarilla), arrastrá sus puntos. Doble toque sobre un tramo agrega un punto; tocá un punto y «Borrar punto» lo saca.</li>
+    <li><b>Rutas:</b> elegí el servicio, tocá «+ Nueva ruta», tocá el plano donde empieza (dentro del servicio) y en cada esquina del recorrido. Para terminar, tocá la salida a la que llega. Antes de empezar elegí el <b>color</b> y la <b>asistencia</b> del paciente. Todas las líneas son horizontales o verticales (ángulos de 90°): el editor no deja dibujar en diagonal.</li>
+    <li><b>Colores:</b> <span style="color:#0E8F4F;font-weight:800">verde</span> = salida de preferencia (lleva al punto de encuentro más próximo según la asistencia que requiere el paciente); <span style="color:#1F5FBF;font-weight:800">azul</span> = salida alternativa, si no se puede salir por la de preferencia (lleva al punto de encuentro, con más tiempo de evacuación); <span style="color:#B07F00;font-weight:800">amarillo</span> = no recomendada pero posible (lleva a una salida de emergencia donde no está planificada la asistencia requerida).</li>
+    <li><b>Asistencia:</b> camina solo, necesita ayuda o silla de ruedas, camilla o cama (se pueden renombrar al pie del panel de Rutas). «Todas las asistencias» = la ruta sirve para todos.</li>
+    <li><b>Tramos exteriores:</b> de cada salida al punto de encuentro se dibuja una sola vez (botón «Tramos exteriores»): tocá la salida, cada esquina y terminá en el punto de encuentro. Lo usan todas las rutas verdes y azules que llegan a esa salida.</li>
+    <li>Para corregir una ruta: tocala (queda resaltada en violeta), arrastrá sus puntos: los vecinos acompañan para que los ángulos sigan rectos. Doble toque sobre un tramo agrega un punto; tocá un punto y «Borrar punto» lo saca.</li>
     <li><b>Salidas y escaleras:</b> tocá un marcador para cambiar número, tipo o nombre, o arrastralo. «+ Agregar» y después tocá el plano.</li>
     <li>Para <b>dibujar todo de nuevo</b>: en Rutas tocá «Empezar de cero en esta planta». Las rutas actuales quedan como guía en naranja punteado (no se publican) y vas dibujando servicio por servicio; la revisión muestra el avance. Publicá recién cuando todos los servicios tengan sus rutas.</li>
     <li><b>Puntos de encuentro:</b> los planos tienen margen en los cuatro lados para marcarlos afuera del edificio (Salidas y escaleras › + Agregar marcador › tipo «Punto de encuentro»).</li>
@@ -136,12 +142,21 @@ const ICON = {
   encuentro:'<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="white" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg>'
 };
 const TIPOS = {salida:'Salida al exterior', escalera:'Escalera protegida (refugio)', 'escalera-pb':'Escalera que baja a Planta Baja', encuentro:'Punto de encuentro'};
+const NIVELES = {
+  'preferente':     {nombre:'Verde · salida de preferencia', color:'#0E8F4F', ayuda:'Lleva al punto de encuentro más próximo según la asistencia que requiere el paciente.'},
+  'alternativa':    {nombre:'Azul · salida alternativa', color:'#1F5FBF', ayuda:'Si no se puede salir por la de preferencia. Lleva al punto de encuentro (más tiempo de evacuación) según la asistencia que requiere el paciente.'},
+  'no-recomendada': {nombre:'Amarillo · no recomendada pero posible', color:'#E6A700', ayuda:'Lleva a una salida de emergencia donde no está planificada la asistencia requerida. No sigue al punto de encuentro.'}
+};
+const ASIST_DEF = [{id:'camina',nombre:'Camina solo'},{id:'ayuda',nombre:'Necesita ayuda o silla de ruedas'},{id:'camilla',nombre:'Camilla o cama'}];
+const nv = r => NIVELES[r.nivel] ? r.nivel : 'preferente';
 const LS = 'hmh_editor_mapas_borrador';
 let D = null;                 // datos (mapas.json)
 let planta = 'pa', modo = 'rutas';
 let servSel = '', rutaSel = -1, ptoSel = -1, mkSel = -1, hzSel = -1;
 let dibujando = null;         // {tipo:'ruta'|'hz', puntos:[]}
-let agregarMk = false, orto = true, verOtras = true, verAnt = true;
+let agregarMk = false, verOtras = true, verAnt = true, extSel = -1;
+const orto = true;            // las líneas son siempre horizontales o verticales (90°)
+let nuevoNivel = 'preferente', nuevaAsist = '';
 const undo = [];
 const $ = id => document.getElementById(id);
 const esc = t => String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
@@ -162,6 +177,8 @@ fetch('mapas.json',{cache:'no-cache'}).then(r=>r.json()).then(pub=>{
 }).catch(()=>{ document.getElementById('panel').innerHTML='<p>No se pudo leer <b>mapas.json</b>. Abrí el editor con internet, desde la dirección de la app.</p>'; });
 
 function iniciar(){
+  if(!Array.isArray(D.asistencias) || !D.asistencias.length) D.asistencias = ASIST_DEF.map(a=>Object.assign({},a));
+  ['pa','pb'].forEach(k=>{ D.plantas[k].exteriores = D.plantas[k].exteriores || []; });
   document.querySelectorAll('[data-planta]').forEach(b=>b.onclick=()=>{ planta=b.dataset.planta; limpiarSel(); actualizarBotones(); cargarPlano(); });
   document.querySelectorAll('[data-modo]').forEach(b=>b.onclick=()=>{ modo=b.dataset.modo; limpiarSel(); actualizarBotones(); cambio(); });
   $('bDeshacer').onclick=()=>{ if(!undo.length){ toast('No hay nada para deshacer'); return; } D=JSON.parse(undo.pop()); limpiarSel(); cambio(); };
@@ -172,7 +189,7 @@ function iniciar(){
   svg.addEventListener('pointerdown', onDown);
   svg.addEventListener('dblclick', onDbl);
   window.addEventListener('pointermove', onMove);
-  window.addEventListener('pointerup', ()=>{ if(arr){ arr=null; cambio(); } });
+  window.addEventListener('pointerup', soltar);
   document.addEventListener('keydown', e=>{ if(e.key==='Escape'){ dibujando=null; agregarMk=false; cambio(); } if((e.ctrlKey||e.metaKey)&&e.key==='z'){ e.preventDefault(); $('bDeshacer').click(); } });
   actualizarBotones(); cargarPlano();
 }
@@ -180,33 +197,62 @@ function actualizarBotones(){
   document.querySelectorAll('[data-planta]').forEach(b=>b.classList.toggle('on',b.dataset.planta===planta));
   document.querySelectorAll('[data-modo]').forEach(b=>b.classList.toggle('on',b.dataset.modo===modo));
 }
-function limpiarSel(){ servSel=''; rutaSel=-1; ptoSel=-1; mkSel=-1; hzSel=-1; dibujando=null; agregarMk=false; }
+function limpiarSel(){ servSel=''; rutaSel=-1; ptoSel=-1; mkSel=-1; hzSel=-1; extSel=-1; dibujando=null; agregarMk=false; }
 function cargarPlano(){ $('plano').src=P().imagen; cambio(); }
 
 /* ---------- coordenadas ---------- */
 function pos(ev){ const r=$('svg').getBoundingClientRect(); return [r2(Math.min(100,Math.max(0,(ev.clientX-r.left)/r.width*100))), r2(Math.min(100,Math.max(0,(ev.clientY-r.top)/r.height*100)))]; }
 function ortho(prev,p){ if(!orto||!prev) return p; return Math.abs(p[0]-prev[0])>=Math.abs(p[1]-prev[1]) ? [p[0],prev[1]] : [prev[0],p[1]]; }
 function dpath(pts,z){ return pts.map((q,i)=>(i?'L':'M')+q[0].toFixed(2)+','+q[1].toFixed(2)).join(' ')+(z?' Z':''); }
+const TOL = 0.05;
+function oblicuo(a,b){ return Math.abs(a[0]-b[0])>TOL && Math.abs(a[1]-b[1])>TOL; }
+function tieneOblicuos(pts){ for(let j=0;j<pts.length-1;j++) if(oblicuo(pts[j],pts[j+1])) return true; return false; }
+// endereza: cada tramo oblicuo se reemplaza por dos tramos a 90° (codo)
+function enderezar(pts){ const o=[pts[0]]; for(let j=1;j<pts.length;j++){ const a=o[o.length-1], b=pts[j]; if(oblicuo(a,b)) o.push([b[0],a[1]]); o.push(b); } return o; }
+// saca puntos repetidos y los que están en medio de un tramo recto (menos el índice que se conserva)
+function simplificar(pts, keep){ const o=[]; let nk=-1;
+  pts.forEach((q,j)=>{ const a=o[o.length-1]; if(a && Math.abs(a[0]-q[0])<=TOL && Math.abs(a[1]-q[1])<=TOL && j!==keep) return; if(j===keep) nk=o.length; o.push(q); });
+  for(let j=o.length-2;j>0;j--){ if(j===nk) continue; const a=o[j-1], b=o[j], c=o[j+1]; if((Math.abs(a[0]-b[0])<=TOL&&Math.abs(b[0]-c[0])<=TOL)||(Math.abs(a[1]-b[1])<=TOL&&Math.abs(b[1]-c[1])<=TOL)){ o.splice(j,1); if(nk>j) nk--; } }
+  return {pts:o, keep:nk}; }
+function listaActiva(){ const p=P();
+  if(modo==='rutas' && rutaSel>-1) return p.rutas[rutaSel];
+  if(modo==='exterior' && extSel>-1) return p.exteriores[extSel];
+  if(modo==='horizontal' && hzSel>-1) return p.horizontales[hzSel];
+  return null; }
+function defsFlechas(){ let h='<defs>'; Object.keys(NIVELES).forEach(k=>{ h+='<marker id="ar-'+k+'" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="2.2" markerHeight="2.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="'+NIVELES[k].color+'"/></marker>'; });
+  return h+'<marker id="arG" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="2.2" markerHeight="2.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9a9a9a"/></marker><marker id="arH" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="2.2" markerHeight="2.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0E7C7B"/></marker></defs>'; }
+function asistNombre(id){ if(!id) return 'Todas las asistencias'; const a=(D.asistencias||[]).find(x=>x.id===id); return a?a.nombre:'s/d (revisar)'; }
+function nivelExt(p, e){ // color del tramo exterior: el mejor nivel de las rutas que llegan a esa salida
+  const rs=p.rutas.filter(r=>String(r.salida)===String(e.salida) && nv(r)!=='no-recomendada' && (!servSel || r.servicio===servSel));
+  return rs.some(r=>nv(r)==='preferente') ? 'preferente' : rs.length ? 'alternativa' : ''; }
+function asaLinea(lista){ let h=''; lista.puntos.forEach((q,j)=>{ h+='<circle class="h'+(j===ptoSel?' sel':'')+'" data-pt="'+j+'" cx="'+q[0]+'" cy="'+q[1]+'" r="1.1"/>'; }); return h; }
 
 /* ---------- dibujo ---------- */
 function dibujar(){
   if(!D) return;
-  const p=P(), svg=$('svg'); let h='';
-  h+='<defs><marker id="ar" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="2.2" markerHeight="2.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0E8F4F"/></marker><marker id="arS" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="2.2" markerHeight="2.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#E8A200"/></marker><marker id="arH" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="2.2" markerHeight="2.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0E7C7B"/></marker></defs>';
+  const p=P(), svg=$('svg'); let h=defsFlechas();
   if(modo==='refugios' || modo==='horizontal') (p.zonas||[]).forEach(z=>{ h+='<path class="zona" d="'+dpath(z.puntos,true)+'" fill="'+esc(z.color)+'" stroke="'+esc(z.color)+'"/>'; });
-  if(modo==='rutas'){
-    if(verAnt) (p.rutasAnteriores||[]).filter(r=>r.servicio===servSel).forEach(r=>{ h+='<path class="r ant" d="'+dpath(r.puntos)+'"/>'; });
+  if(modo==='rutas' || modo==='exterior'){
+    if(modo==='rutas' && verAnt) (p.rutasAnteriores||[]).filter(r=>r.servicio===servSel).forEach(r=>{ h+='<path class="r ant" d="'+dpath(r.puntos)+'"/>'; });
     p.rutas.forEach((r,i)=>{
-      const mine=r.servicio===servSel; if(!mine && !verOtras) return;
-      const cls='r'+(mine?'':' other')+(i===rutaSel?' sel':'');
-      h+='<path class="'+cls+'" d="'+dpath(r.puntos)+'"'+(mine?' marker-end="url(#'+(i===rutaSel?'arS':'ar')+')"':'')+'/>';
+      const mine = modo==='rutas' && r.servicio===servSel; if(modo==='rutas' && !mine && !verOtras) return;
+      if(modo==='exterior' && servSel && r.servicio!==servSel) return;
+      const k=nv(r), col = (mine || modo==='exterior') ? NIVELES[k].color : '#9a9a9a';
+      h+='<path class="r'+(mine||modo==='exterior'?'':' other')+(mine&&i===rutaSel?' sel':'')+'" style="stroke:'+col+(modo==='exterior'?';opacity:.35':'')+'" d="'+dpath(r.puntos)+'"'+(mine?' marker-end="url(#ar-'+k+')"':'')+'/>';
       if(mine) h+='<path class="hit" data-ruta="'+i+'" d="'+dpath(r.puntos)+'"/>';
     });
-    if(rutaSel>-1) p.rutas[rutaSel].puntos.forEach((q,j)=>{ h+='<circle class="h'+(j===ptoSel?' sel':'')+'" data-pt="'+j+'" cx="'+q[0]+'" cy="'+q[1]+'" r="1.1"/>'; });
+    (p.exteriores||[]).forEach((e,i)=>{
+      const k = nivelExt(p,e); if(modo==='rutas' && (!servSel || !k)) return;
+      const col = k ? NIVELES[k].color : '#5B6472';
+      h+='<path class="r ext'+(modo==='exterior'&&i===extSel?' sel':'')+'" style="stroke:'+col+'" d="'+dpath(e.puntos)+'" marker-end="url(#'+(k?'ar-'+k:'arG')+')"/>';
+      if(modo==='exterior') h+='<path class="hit" data-ext="'+i+'" d="'+dpath(e.puntos)+'"/>';
+    });
+    if(modo==='rutas' && rutaSel>-1) h+=asaLinea(p.rutas[rutaSel]);
+    if(modo==='exterior' && extSel>-1) h+=asaLinea(p.exteriores[extSel]);
   }
   if(modo==='horizontal'){
-    (p.horizontales||[]).forEach((r,i)=>{ h+='<path class="r hz'+(i===hzSel?' sel':'')+'" d="'+dpath(r.puntos)+'" marker-end="url(#'+(i===hzSel?'arS':'arH')+')"/><path class="hit" data-hz="'+i+'" d="'+dpath(r.puntos)+'"/>'; });
-    if(hzSel>-1) p.horizontales[hzSel].puntos.forEach((q,j)=>{ h+='<circle class="h'+(j===ptoSel?' sel':'')+'" data-pt="'+j+'" cx="'+q[0]+'" cy="'+q[1]+'" r="1.1"/>'; });
+    (p.horizontales||[]).forEach((r,i)=>{ h+='<path class="r hz'+(i===hzSel?' sel':'')+'" d="'+dpath(r.puntos)+'" marker-end="url(#arH)"/><path class="hit" data-hz="'+i+'" d="'+dpath(r.puntos)+'"/>'; });
+    if(hzSel>-1) h+=asaLinea(p.horizontales[hzSel]);
   }
   if(dibujando && dibujando.puntos.length){ h+='<path class="r draft" d="'+dpath(dibujando.puntos)+'"/>'; dibujando.puntos.forEach(q=>{ h+='<circle class="h sel" cx="'+q[0]+'" cy="'+q[1]+'" r="0.9"/>'; }); }
   svg.innerHTML=h;
@@ -227,40 +273,72 @@ function dibujar(){
 let arr=null; // arrastre {tipo:'pt'|'mk', i}
 function onDown(ev){
   const t=ev.target, p=P(), pt=pos(ev);
-  if(dibujando){ const prev=dibujando.puntos[dibujando.puntos.length-1]; dibujando.puntos.push(ortho(prev,pt)); dibujar(); panel(); return; }
+  if(dibujando){
+    if(dibujando.tipo==='ext' && !dibujando.puntos.length){ toast('Empezá tocando la salida de donde sale el tramo'); return; }
+    const prev=dibujando.puntos[dibujando.puntos.length-1]; dibujando.puntos.push(ortho(prev,pt)); dibujar(); panel(); return; }
   if(agregarMk){ snap(); const n=String(Math.max(0,...p.marcadores.map(m=>parseInt(m.num)||0))+1); p.marcadores.push({num:n,tipo:'salida',x:pt[0],y:pt[1],nombre:''}); mkSel=p.marcadores.length-1; agregarMk=false; cambio(); toast('Marcador '+n+' agregado: revisá número y tipo'); return; }
-  if(t.dataset.pt!==undefined){ ptoSel=+t.dataset.pt; snap(); arr={tipo:'pt'}; t.setPointerCapture&&t.setPointerCapture(ev.pointerId); dibujar(); panel(); return; }
+  if(t.dataset.pt!==undefined){
+    const L=listaActiva(); if(!L) return; snap();
+    const sp=simplificar(L.puntos, +t.dataset.pt); L.puntos=sp.pts; ptoSel=sp.keep;
+    arr={tipo:'pt'}; t.setPointerCapture&&t.setPointerCapture(ev.pointerId); dibujar(); panel(); return; }
   if(t.dataset.ruta!==undefined){ rutaSel=+t.dataset.ruta; ptoSel=-1; cambio(); return; }
+  if(t.dataset.ext!==undefined){ extSel=+t.dataset.ext; ptoSel=-1; cambio(); return; }
   if(t.dataset.hz!==undefined){ hzSel=+t.dataset.hz; ptoSel=-1; cambio(); return; }
   if(modo==='rutas' && rutaSel>-1){ rutaSel=-1; ptoSel=-1; cambio(); }
+  if(modo==='exterior' && extSel>-1){ extSel=-1; ptoSel=-1; cambio(); }
   if(modo==='horizontal' && hzSel>-1){ hzSel=-1; ptoSel=-1; cambio(); }
   if(modo==='marcadores' && mkSel>-1){ mkSel=-1; cambio(); }
 }
+// mover un punto sin romper los ángulos rectos: los puntos vecinos acompañan el movimiento
+function moverPunto(L, j, q){
+  const a=L[j-1], b=L[j], c=L[j+1];
+  if(a){ if(Math.abs(a[1]-b[1])<=Math.abs(a[0]-b[0])) a[1]=q[1]; else a[0]=q[0]; }
+  if(c){ if(Math.abs(c[1]-b[1])<=Math.abs(c[0]-b[0])) c[1]=q[1]; else c[0]=q[0]; }
+  L[j]=q;
+}
 function onMove(ev){
   if(!arr) return; const p=P(), q=pos(ev);
-  if(arr.tipo==='pt'){ const lista = modo==='horizontal' ? p.horizontales[hzSel].puntos : p.rutas[rutaSel].puntos; lista[ptoSel]=q; }
+  if(arr.tipo==='pt'){ const L=listaActiva(); if(L) moverPunto(L.puntos, ptoSel, q); }
   if(arr.tipo==='mk'){ const m=p.marcadores[arr.i]; m.x=q[0]; m.y=q[1]; }
   dibujar();
 }
+function soltar(){ if(!arr) return; if(arr.tipo==='pt'){ const L=listaActiva(); if(L) L.puntos=enderezar(L.puntos); } arr=null; cambio(); }
 function onDbl(ev){
   const t=ev.target; const p=P();
-  const lista = t.dataset.ruta!==undefined ? p.rutas[+t.dataset.ruta].puntos : t.dataset.hz!==undefined ? p.horizontales[+t.dataset.hz].puntos : null;
-  if(!lista) return; const q=pos(ev);
+  const L = t.dataset.ruta!==undefined ? p.rutas[+t.dataset.ruta] : t.dataset.ext!==undefined ? p.exteriores[+t.dataset.ext] : t.dataset.hz!==undefined ? p.horizontales[+t.dataset.hz] : null;
+  if(!L) return; const lista=L.puntos, q=pos(ev);
   let best=0,bd=1e9; for(let j=0;j<lista.length-1;j++){ const d=distSeg(q,lista[j],lista[j+1]); if(d<bd){bd=d;best=j;} }
-  snap(); lista.splice(best+1,0,q); ptoSel=best+1; cambio(); toast('Punto agregado');
+  const a=lista[best], b=lista[best+1]; const nq = Math.abs(a[1]-b[1])<=TOL ? [q[0],a[1]] : [a[0],q[1]];   // el punto nuevo queda sobre el tramo
+  snap(); lista.splice(best+1,0,[r2(nq[0]),r2(nq[1])]); ptoSel=best+1; cambio(); toast('Punto agregado: arrastralo para mover ese tramo');
 }
 function distSeg(p,a,b){ const dx=b[0]-a[0],dy=b[1]-a[1],l=dx*dx+dy*dy; let t=l?((p[0]-a[0])*dx+(p[1]-a[1])*dy)/l:0; t=Math.max(0,Math.min(1,t)); return Math.hypot(p[0]-a[0]-t*dx,p[1]-a[1]-t*dy); }
+// llegar a un marcador con un codo a 90° y frenar un poco antes (para que se vea la flecha)
+function llegarA(pts, m, frenar){
+  let prev=pts[pts.length-1];
+  if(Math.abs(m.x-prev[0])>1 && Math.abs(m.y-prev[1])>1){ prev=[prev[0], m.y]; pts.push(prev); }
+  const horiz = Math.abs(m.x-prev[0]) >= Math.abs(m.y-prev[1]);
+  const fin = horiz ? [m.x, prev[1]] : [prev[0], m.y];
+  const L = horiz ? m.x-prev[0] : m.y-prev[1];
+  if(Math.abs(L) > frenar+0.5){ if(horiz) fin[0]=r2(m.x-Math.sign(L)*frenar); else fin[1]=r2(m.y-Math.sign(L)*frenar); pts.push(fin); }
+  else if(Math.abs(L) > 0.3) pts.push([r2(fin[0]),r2(fin[1])]);
+}
 function clickMarcador(i, ev){
   const p=P(), m=p.marcadores[i];
   if(dibujando && dibujando.tipo==='ruta'){
     if(!(m.tipo==='salida'||m.tipo==='escalera-pb')){ toast('Las rutas terminan en una salida (roja) o en la escalera a Planta Baja (violeta)'); return; }
     const pts=dibujando.puntos; if(!pts.length){ toast('Primero tocá el plano donde empieza la ruta'); return; }
-    let prev=pts[pts.length-1];
-    if(orto && Math.abs(m.x-prev[0])>1 && Math.abs(m.y-prev[1])>1){ prev=[prev[0], m.y]; pts.push(prev); }   // codo para llegar derecho a la salida
-    const dx=m.x-prev[0], dy=m.y-prev[1], L=Math.hypot(dx,dy);
-    if(L>3) pts.push([r2(m.x-dx/L*2.5), r2(m.y-dy/L*2.5)]);
+    llegarA(pts, m, 2.5);
     if(pts.length<2){ toast('La ruta necesita al menos dos puntos'); return; }
-    snap(); p.rutas.push({servicio:servSel, salida:String(m.num), puntos:pts}); rutaSel=p.rutas.length-1; dibujando=null; cambio(); toast('Ruta a la salida '+m.num+' guardada'); return;
+    snap(); p.rutas.push({servicio:servSel, salida:String(m.num), nivel:dibujando.nivel, asistencia:dibujando.asistencia, puntos:enderezar(pts)}); rutaSel=p.rutas.length-1; dibujando=null; cambio();
+    toast('Ruta '+NIVELES[p.rutas[rutaSel].nivel].nombre.split(' ·')[0].toLowerCase()+' a la salida '+m.num+' guardada'); return;
+  }
+  if(dibujando && dibujando.tipo==='ext'){
+    const pts=dibujando.puntos;
+    if(!pts.length){ if(m.tipo!=='salida'){ toast('El tramo exterior empieza en una salida al exterior (roja)'); return; } dibujando.salida=String(m.num); pts.push([m.x,m.y]); cambio(); return; }
+    if(m.tipo!=='encuentro'){ toast('El tramo exterior termina en un punto de encuentro (verde con banderita)'); return; }
+    llegarA(pts, m, 2.5); if(pts.length<2){ toast('El tramo necesita al menos dos puntos'); return; }
+    snap(); p.exteriores.push({salida:dibujando.salida, encuentro:String(m.num), asistencia:dibujando.asistencia, puntos:enderezar(pts)}); extSel=p.exteriores.length-1; dibujando=null; cambio();
+    toast('Tramo salida '+p.exteriores[extSel].salida+' → punto de encuentro '+m.num+' guardado'); return;
   }
   if(modo==='marcadores'){ mkSel=i; snap(); arr={tipo:'mk', i}; dibujar(); panel(); return; }
 }
@@ -268,8 +346,9 @@ function clickMarcador(i, ev){
 /* ---------- panel ---------- */
 function panel(){
   const el=$('panel'); if(!D) return; const p=P();
-  let h='<h2>'+esc(p.nombre)+' · '+({rutas:'Rutas de salida',marcadores:'Salidas y escaleras',refugios:'Sector de refugio',horizontal:'Evacuación horizontal'})[modo]+'</h2>';
+  let h='<h2>'+esc(p.nombre)+' · '+({rutas:'Rutas de salida',exterior:'Tramos exteriores',marcadores:'Salidas y escaleras',refugios:'Sector de refugio',horizontal:'Evacuación horizontal'})[modo]+'</h2>';
   if(modo==='rutas') h+=panelRutas(p);
+  if(modo==='exterior') h+=panelExterior(p);
   if(modo==='marcadores') h+=panelMarcadores(p);
   if(modo==='refugios') h+=panelRefugios(p);
   if(modo==='horizontal') h+=panelHorizontal(p);
@@ -278,22 +357,46 @@ function panel(){
 }
 function servOpts(p, sel, vacio){ return (vacio?'<option value="">'+vacio+'</option>':'')+p.servicios.slice().sort((a,b)=>a.nombre.localeCompare(b.nombre,'es')).map(s=>'<option value="'+esc(s.id)+'"'+(s.id===sel?' selected':'')+'>'+esc(s.nombre)+'</option>').join(''); }
 function salidaOpts(p, sel){ return p.marcadores.filter(m=>m.tipo==='salida'||m.tipo==='escalera-pb').map(m=>'<option value="'+esc(m.num)+'"'+(String(m.num)===String(sel)?' selected':'')+'>'+esc(m.num)+(m.nombre?' · '+esc(m.nombre):'')+(m.tipo==='escalera-pb'?' (escalera a PB)':'')+'</option>').join(''); }
+function nivelOpts(sel){ return Object.keys(NIVELES).map(k=>'<option value="'+k+'"'+(k===sel?' selected':'')+'>'+NIVELES[k].nombre+'</option>').join(''); }
+function asistOpts(sel){ return '<option value="">Todas las asistencias</option>'+(D.asistencias||[]).map(a=>'<option value="'+esc(a.id)+'"'+(a.id===sel?' selected':'')+'>'+esc(a.nombre)+'</option>').join(''); }
+function chip(k){ return '<span class="chip" style="background:'+NIVELES[k].color+'"></span>'; }
+function leyenda(){ return '<div class="hint">'+Object.keys(NIVELES).map(k=>chip(k)+'<b>'+NIVELES[k].nombre+'</b>: '+NIVELES[k].ayuda).join('<br>')+'<br><b>Todas las líneas son horizontales o verticales (ángulos de 90°).</b></div>'; }
 function panelRutas(p){
   let h='<div class="row"><select data-act="serv">'+servOpts(p,servSel,'— Elegí un servicio —')+'</select></div>';
   h+='<div class="row"><button class="btn dark" data-act="nuevoServ">+ Nuevo servicio</button>'+(servSel?'<button class="btn" data-act="renServ">Renombrar</button><button class="btn" data-act="borServ">Borrar</button>':'')+'</div>';
   h+='<label class="ck"><input type="checkbox" data-act="verOtras"'+(verOtras?' checked':'')+'> Ver en gris las rutas de los demás servicios</label>';
-  h+='<label class="ck"><input type="checkbox" data-act="orto"'+(orto?' checked':'')+'> Ángulos rectos al dibujar</label>';
   if((p.rutasAnteriores||[]).length) h+='<label class="ck"><input type="checkbox" data-act="verAnt"'+(verAnt?' checked':'')+'> Ver las rutas anteriores de este servicio como guía (naranja punteado; no se publican)</label>';
   h+='<div class="row"><button class="btn" data-act="borTodas">Empezar de cero en esta planta</button>'+((p.rutasAnteriores||[]).length?'<button class="btn" data-act="quitarGuia">Quitar la guía</button>':'')+'</div>';
-  if(!servSel) return h+'<div class="hint">Elegí un servicio para ver y editar sus rutas, o creá uno nuevo.</div>';
+  if(!servSel) return h+leyenda()+'<div class="hint">Elegí un servicio para ver y editar sus rutas, o creá uno nuevo.</div>';
   const rs=p.rutas.map((r,i)=>[r,i]).filter(x=>x[0].servicio===servSel);
-  if(dibujando) return h+'<div class="hint live"><b>Dibujando ruta nueva.</b> Tocá el plano donde empieza (dentro del servicio) y en cada esquina. Para terminar, tocá la <b>salida</b> a la que llega. Puntos: '+dibujando.puntos.length+'.</div><div class="row"><button class="btn" data-act="quitarUlt"'+(dibujando.puntos.length?'':' disabled')+'>Quitar último punto</button><button class="btn red" data-act="cancelar">Cancelar</button></div>';
+  if(dibujando) return h+'<div class="hint live">'+chip(dibujando.nivel)+'<b>Dibujando ruta '+NIVELES[dibujando.nivel].nombre.split(' ·')[0].toLowerCase()+'</b> · '+esc(asistNombre(dibujando.asistencia))+'.<br>Tocá el plano donde empieza (dentro del servicio) y en cada esquina: cada tramo sale horizontal o vertical. Para terminar, tocá la <b>salida</b> a la que llega. Puntos: '+dibujando.puntos.length+'.</div><div class="row"><button class="btn" data-act="quitarUlt"'+(dibujando.puntos.length?'':' disabled')+'>Quitar último punto</button><button class="btn red" data-act="cancelar">Cancelar</button></div>';
+  h+='<h3>Ruta nueva</h3><div class="row">Color <select data-act="nuevoNivel">'+nivelOpts(nuevoNivel)+'</select></div>';
+  h+='<div class="row">Asistencia <select data-act="nuevaAsist">'+asistOpts(nuevaAsist)+'</select></div>';
   h+='<div class="row"><button class="btn green" data-act="nuevaRuta">+ Nueva ruta</button></div>';
-  h+='<h3>Rutas de este servicio ('+rs.length+')</h3><div class="list">'+(rs.length?rs.map(([r,i])=>'<div class="item'+(i===rutaSel?' sel':'')+'" data-ruta-sel="'+i+'"><span>Salida <b>'+esc(r.salida)+'</b> <small>· '+r.puntos.length+' puntos</small></span><span class="tag">editar</span></div>').join(''):'<div class="hint">Sin rutas todavía (s/d).</div>')+'</div>';
+  h+='<h3>Rutas de este servicio ('+rs.length+')</h3><div class="list">'+(rs.length?rs.sort((a,b)=>Object.keys(NIVELES).indexOf(nv(a[0]))-Object.keys(NIVELES).indexOf(nv(b[0]))).map(([r,i])=>'<div class="item'+(i===rutaSel?' sel':'')+'" data-ruta-sel="'+i+'"><span>'+chip(nv(r))+'Salida <b>'+esc(r.salida)+'</b> <small>· '+esc(asistNombre(r.asistencia))+'</small></span><span class="tag">editar</span></div>').join(''):'<div class="hint">Sin rutas todavía (s/d).</div>')+'</div>';
   if(rutaSel>-1 && p.rutas[rutaSel]){ const r=p.rutas[rutaSel];
     h+='<h3>Ruta seleccionada</h3><div class="row">Llega a <select data-act="rutaSalida">'+salidaOpts(p,r.salida)+'</select></div>';
-    h+='<div class="hint">Arrastrá los puntos amarillos. Doble toque sobre la ruta agrega un punto.</div>';
+    h+='<div class="row">Color <select data-act="rutaNivel">'+nivelOpts(nv(r))+'</select></div>';
+    h+='<div class="row">Asistencia <select data-act="rutaAsist">'+asistOpts(r.asistencia||'')+'</select></div>';
+    h+='<div class="hint">Arrastrá los puntos: los vecinos acompañan para que los ángulos sigan rectos. Doble toque sobre un tramo agrega un punto.</div>';
     h+='<div class="row"><button class="btn" data-act="borPto"'+(ptoSel>-1&&r.puntos.length>2?'':' disabled')+'>Borrar punto</button><button class="btn" data-act="invertir">Invertir sentido</button><button class="btn red" data-act="borRuta">Borrar ruta</button></div>';
+  }
+  h+=leyenda();
+  h+='<details><summary style="cursor:pointer;font-size:12.5px;font-weight:700;color:var(--steel-dark);margin-top:8px">Categorías de asistencia ('+(D.asistencias||[]).length+')</summary>'+(D.asistencias||[]).map(a=>'<div class="row"><input data-asist-nom="'+esc(a.id)+'" value="'+esc(a.nombre)+'"></div>').join('')+'<div class="hint">Se pueden renombrar. Para agregar o quitar una categoría, avisá: cambia lo que ve el personal en la app.</div></details>';
+  return h;
+}
+function panelExterior(p){
+  let h='<div class="hint">Tramo exterior = recorrido desde una <b>salida al exterior</b> hasta el <b>punto de encuentro</b>, en el margen del plano. Lo comparten todos los servicios que salen por esa salida; en la app toma el color de la ruta del servicio (verde o azul). Las rutas amarillas no tienen tramo exterior.</div>';
+  h+='<div class="row"><select data-act="serv">'+servOpts(p,servSel,'Ver rutas de todos los servicios')+'</select></div>';
+  if(dibujando) return h+'<div class="hint live"><b>Dibujando tramo exterior</b> · '+esc(asistNombre(dibujando.asistencia))+'.<br>'+(dibujando.puntos.length?'Salida '+esc(dibujando.salida)+'. Tocá cada esquina del recorrido y terminá tocando el <b>punto de encuentro</b>.':'Tocá la <b>salida</b> de donde parte.')+' Puntos: '+dibujando.puntos.length+'.</div><div class="row"><button class="btn" data-act="quitarUlt"'+(dibujando.puntos.length>1?'':' disabled')+'>Quitar último punto</button><button class="btn red" data-act="cancelar">Cancelar</button></div>';
+  const enc=p.marcadores.filter(m=>m.tipo==='encuentro');
+  if(!enc.length) h+='<div class="hint live">Todavía no hay puntos de encuentro en esta planta. Agregalos en «Salidas y escaleras» › «+ Agregar marcador» › tipo «Punto de encuentro», en el margen del plano.</div>';
+  h+='<h3>Tramo nuevo</h3><div class="row">Asistencia <select data-act="nuevaAsist">'+asistOpts(nuevaAsist)+'</select></div><div class="row"><button class="btn green" data-act="nuevoExt"'+(enc.length?'':' disabled')+'>+ Nuevo tramo exterior</button></div>';
+  h+='<h3>Tramos ('+p.exteriores.length+')</h3><div class="list">'+(p.exteriores.length?p.exteriores.map((e,i)=>'<div class="item'+(i===extSel?' sel':'')+'" data-ext-sel="'+i+'"><span>Salida <b>'+esc(e.salida)+'</b> → encuentro <b>'+esc(e.encuentro)+'</b> <small>· '+esc(asistNombre(e.asistencia))+'</small></span><span class="tag">editar</span></div>').join(''):'<div class="hint">Sin tramos exteriores (s/d).</div>')+'</div>';
+  if(extSel>-1 && p.exteriores[extSel]){ const e=p.exteriores[extSel];
+    h+='<h3>Tramo seleccionado</h3><div class="row">Asistencia <select data-act="extAsist">'+asistOpts(e.asistencia||'')+'</select></div>';
+    h+='<div class="row">Llega al punto de encuentro <select data-act="extEnc">'+enc.map(m=>'<option value="'+esc(m.num)+'"'+(String(m.num)===String(e.encuentro)?' selected':'')+'>'+esc(m.num)+(m.nombre?' · '+esc(m.nombre):'')+'</option>').join('')+'</select></div>';
+    h+='<div class="row"><button class="btn" data-act="borPtoExt"'+(ptoSel>-1&&e.puntos.length>2?'':' disabled')+'>Borrar punto</button><button class="btn red" data-act="borExt">Borrar tramo</button></div>';
   }
   return h;
 }
@@ -326,6 +429,7 @@ function panelHorizontal(p){
   if(hzSel>-1 && p.horizontales[hzSel]) h+='<div class="row">Nombre <input data-act="hzNom" value="'+esc(p.horizontales[hzSel].nombre)+'"></div><div class="row"><button class="btn" data-act="borPtoHz"'+(ptoSel>-1&&p.horizontales[hzSel].puntos.length>2?'':' disabled')+'>Borrar punto</button><button class="btn red" data-act="borHz">Borrar recorrido</button></div>';
   return h;
 }
+function tipoDe(p,num){ const m=p.marcadores.find(m=>String(m.num)===String(num)); return m?m.tipo:''; }
 function revision(p){
   const nums=new Set(p.marcadores.map(m=>String(m.num)));
   const sinRuta=p.servicios.filter(s=>!p.rutas.some(r=>r.servicio===s.id));
@@ -338,6 +442,16 @@ function revision(p){
   if(sinRuta.length) h+='<div class="hint">'+sinRuta.map(s=>esc(s.nombre)).join(', ')+'</div>';
   h+='<div class="item"><span>Rutas a salidas que no existen</span><span class="tag'+(rotas.length?' warn':'')+'">'+rotas.length+'</span></div>';
   h+='<div class="item"><span>Números de marcador repetidos</span><span class="tag'+(dup.length?' warn':'')+'">'+(dup.length?dup.join(', '):0)+'</span></div>';
+  const obl=p.rutas.filter(r=>tieneOblicuos(r.puntos)).length+(p.exteriores||[]).filter(e=>tieneOblicuos(e.puntos)).length+(p.horizontales||[]).filter(e=>tieneOblicuos(e.puntos)).length;
+  h+='<div class="item"><span>Líneas con tramos oblicuos</span><span class="tag'+(obl?' warn':'')+'">'+obl+'</span></div>';
+  if(obl) h+='<div class="row"><button class="btn" data-act="enderezarTodo">Enderezar (pasar a 90°)</button></div>';
+  const sinVerde=p.servicios.filter(s=>p.rutas.some(r=>r.servicio===s.id) && !p.rutas.some(r=>r.servicio===s.id&&nv(r)==='preferente'));
+  h+='<div class="item"><span>Servicios sin ruta verde</span><span class="tag'+(sinVerde.length?' warn':'')+'">'+sinVerde.length+'</span></div>';
+  if(sinVerde.length) h+='<div class="hint">'+sinVerde.map(s=>esc(s.nombre)).join(', ')+'</div>';
+  const salExt=new Set((p.exteriores||[]).map(e=>String(e.salida)));
+  const sinExt=[...new Set(p.rutas.filter(r=>nv(r)!=='no-recomendada' && tipoDe(p,r.salida)==='salida' && !salExt.has(String(r.salida))).map(r=>String(r.salida)))];
+  h+='<div class="item"><span>Salidas (verde o azul) sin tramo al punto de encuentro</span><span class="tag'+(sinExt.length?' warn':'')+'">'+(sinExt.length?sinExt.join(', '):0)+'</span></div>';
+  h+='<div class="item"><span>Puntos de encuentro marcados</span><span class="tag">'+p.marcadores.filter(m=>m.tipo==='encuentro').length+'</span></div>';
   h+='<div class="item"><span>Servicios sin refugio (s/d)</span><span class="tag">'+sinRef+' de '+p.servicios.length+'</span></div>';
   h+='<div class="item"><span>Punto de encuentro</span><span class="tag'+(/s\/d/.test(D.puntoEncuentro||'s/d')?' warn':'')+'">'+esc(D.puntoEncuentro||'s/d')+'</span></div>';
   return h+'</div><div class="hint">Borrador guardado en este navegador · '+esc(D.actualizado||'')+'. Para que se vea en la app: «Descargar mapas.json» y subirlo a GitHub (ver Ayuda).</div>';
@@ -352,6 +466,8 @@ function enlazar(el){
   });
   el.querySelectorAll('[data-ruta-sel]').forEach(n=>n.onclick=()=>{ rutaSel=+n.dataset.rutaSel; ptoSel=-1; cambio(); });
   el.querySelectorAll('[data-mk-sel]').forEach(n=>n.onclick=()=>{ mkSel=+n.dataset.mkSel; cambio(); });
+  el.querySelectorAll('[data-ext-sel]').forEach(n=>n.onclick=()=>{ extSel=+n.dataset.extSel; ptoSel=-1; cambio(); });
+  el.querySelectorAll('[data-asist-nom]').forEach(n=>n.onchange=()=>{ const v=n.value.trim(); if(!v) return; snap(); D.asistencias.find(a=>a.id===n.dataset.asistNom).nombre=v; cambio(); });
   el.querySelectorAll('[data-hz-sel]').forEach(n=>n.onclick=()=>{ hzSel=+n.dataset.hzSel; ptoSel=-1; cambio(); });
   el.querySelectorAll('[data-refugio]').forEach(n=>n.onchange=()=>{ snap(); p.servicios.find(s=>s.id===n.dataset.refugio).refugio=n.value; cambio(); });
 }
@@ -360,30 +476,39 @@ function accion(a,n){
   switch(a){
     case 'serv': servSel=n.value; rutaSel=-1; ptoSel=-1; cambio(); break;
     case 'verOtras': verOtras=n.checked; dibujar(); break;
-    case 'orto': orto=n.checked; break;
     case 'verAnt': verAnt=n.checked; dibujar(); break;
     case 'borTodas': { if(!p.rutas.length){ toast('No hay rutas en esta planta'); return; } if(!confirm('Se van a sacar las '+p.rutas.length+' rutas de '+p.nombre+' para dibujarlas de nuevo.\n\nQuedan como guía en naranja punteado (no se ven en la app). Se puede deshacer.\n\n¿Seguir?')) return; snap(); p.rutasAnteriores=(p.rutasAnteriores||[]).concat(p.rutas); p.rutas=[]; rutaSel=-1; verAnt=true; cambio(); toast('Listo: dibujá las rutas nuevas servicio por servicio'); break; }
     case 'quitarGuia': if(!confirm('¿Quitar la guía de rutas anteriores de esta planta?')) return; snap(); delete p.rutasAnteriores; cambio(); break;
     case 'nuevoServ': { const nom=prompt('Nombre del servicio nuevo en '+p.nombre+' (como lo conoce el personal):'); if(!nom||!nom.trim()) return; let id=slug(nom); if(!id) return; if(p.servicios.some(s=>s.id===id)){ toast('Ya existe un servicio con ese nombre'); return; } snap(); p.servicios.push({id,nombre:nom.trim(),refugio:''}); servSel=id; cambio(); toast('Servicio creado: ahora dibujá sus rutas'); break; }
     case 'renServ': { const s=p.servicios.find(s=>s.id===servSel); const nom=prompt('Nuevo nombre:', s.nombre); if(!nom||!nom.trim()) return; snap(); s.nombre=nom.trim(); cambio(); break; }
     case 'borServ': { const s=p.servicios.find(s=>s.id===servSel); const n2=p.rutas.filter(r=>r.servicio===servSel).length; if(!confirm('¿Borrar «'+s.nombre+'» y sus '+n2+' ruta(s)?')) return; snap(); p.servicios=p.servicios.filter(x=>x.id!==servSel); p.rutas=p.rutas.filter(r=>r.servicio!==servSel); p.servicios.forEach(x=>{ if(x.refugio===servSel) x.refugio=''; }); servSel=''; rutaSel=-1; cambio(); break; }
-    case 'nuevaRuta': dibujando={tipo:'ruta',puntos:[]}; rutaSel=-1; cambio(); break;
-    case 'quitarUlt': dibujando.puntos.pop(); cambio(); break;
+    case 'nuevaRuta': dibujando={tipo:'ruta',puntos:[],nivel:nuevoNivel,asistencia:nuevaAsist}; rutaSel=-1; cambio(); break;
+    case 'nuevoNivel': nuevoNivel=n.value; break;
+    case 'nuevaAsist': nuevaAsist=n.value; break;
+    case 'rutaNivel': snap(); p.rutas[rutaSel].nivel=n.value; cambio(); break;
+    case 'rutaAsist': snap(); p.rutas[rutaSel].asistencia=n.value; cambio(); break;
+    case 'nuevoExt': dibujando={tipo:'ext',puntos:[],asistencia:nuevaAsist}; extSel=-1; cambio(); break;
+    case 'extAsist': snap(); p.exteriores[extSel].asistencia=n.value; cambio(); break;
+    case 'extEnc': snap(); p.exteriores[extSel].encuentro=n.value; cambio(); break;
+    case 'borPtoExt': snap(); p.exteriores[extSel].puntos.splice(ptoSel,1); p.exteriores[extSel].puntos=enderezar(p.exteriores[extSel].puntos); ptoSel=-1; cambio(); break;
+    case 'borExt': if(!confirm('¿Borrar este tramo exterior?')) return; snap(); p.exteriores.splice(extSel,1); extSel=-1; ptoSel=-1; cambio(); break;
+    case 'enderezarTodo': snap(); p.rutas.forEach(r=>r.puntos=enderezar(r.puntos)); (p.exteriores||[]).forEach(e=>e.puntos=enderezar(e.puntos)); (p.horizontales||[]).forEach(e=>e.puntos=enderezar(e.puntos)); cambio(); toast('Listo: todas las líneas quedaron a 90°'); break;
+    case 'quitarUlt': if(dibujando.tipo==='ext' && dibujando.puntos.length<=1) return; dibujando.puntos.pop(); cambio(); break;
     case 'cancelar': dibujando=null; cambio(); break;
     case 'rutaSalida': snap(); p.rutas[rutaSel].salida=n.value; cambio(); break;
-    case 'borPto': snap(); p.rutas[rutaSel].puntos.splice(ptoSel,1); ptoSel=-1; cambio(); break;
+    case 'borPto': snap(); p.rutas[rutaSel].puntos.splice(ptoSel,1); p.rutas[rutaSel].puntos=enderezar(p.rutas[rutaSel].puntos); ptoSel=-1; cambio(); break;
     case 'invertir': snap(); p.rutas[rutaSel].puntos.reverse(); cambio(); break;
     case 'borRuta': if(!confirm('¿Borrar esta ruta?')) return; snap(); p.rutas.splice(rutaSel,1); rutaSel=-1; ptoSel=-1; cambio(); break;
     case 'addMk': agregarMk=!agregarMk; mkSel=-1; cambio(); break;
-    case 'mkNum': { const m=p.marcadores[mkSel]; const v=n.value.trim(); if(!v||v===String(m.num)) return; if(p.marcadores.some(x=>x!==m&&String(x.num)===v)){ toast('Ya hay un marcador con el número '+v); n.value=m.num; return; } snap(); p.rutas.forEach(r=>{ if(String(r.salida)===String(m.num)) r.salida=v; }); m.num=v; cambio(); break; }
+    case 'mkNum': { const m=p.marcadores[mkSel]; const v=n.value.trim(); if(!v||v===String(m.num)) return; if(p.marcadores.some(x=>x!==m&&String(x.num)===v)){ toast('Ya hay un marcador con el número '+v); n.value=m.num; return; } snap(); p.rutas.forEach(r=>{ if(String(r.salida)===String(m.num)) r.salida=v; }); (p.exteriores||[]).forEach(e=>{ if(String(e.salida)===String(m.num)) e.salida=v; if(String(e.encuentro)===String(m.num)) e.encuentro=v; }); m.num=v; cambio(); break; }
     case 'mkTipo': snap(); p.marcadores[mkSel].tipo=n.value; cambio(); break;
     case 'mkNom': snap(); p.marcadores[mkSel].nombre=n.value.trim(); cambio(); break;
-    case 'borMk': { const m=p.marcadores[mkSel]; const usos=p.rutas.filter(r=>String(r.salida)===String(m.num)).length; if(!confirm('¿Borrar el marcador '+m.num+'?'+(usos?'\nTambién se borran las '+usos+' ruta(s) que llegan a él.':''))) return; snap(); p.rutas=p.rutas.filter(r=>String(r.salida)!==String(m.num)); p.marcadores.splice(mkSel,1); mkSel=-1; cambio(); break; }
+    case 'borMk': { const m=p.marcadores[mkSel]; const usos=p.rutas.filter(r=>String(r.salida)===String(m.num)).length; if(!confirm('¿Borrar el marcador '+m.num+'?'+(usos?'\nTambién se borran las '+usos+' ruta(s) que llegan a él.':''))) return; snap(); p.rutas=p.rutas.filter(r=>String(r.salida)!==String(m.num)); p.exteriores=(p.exteriores||[]).filter(e=>String(e.salida)!==String(m.num)&&String(e.encuentro)!==String(m.num)); p.marcadores.splice(mkSel,1); mkSel=-1; cambio(); break; }
     case 'encuentro': snap(); D.puntoEncuentro=n.value.trim()||'s/d (revisar)'; cambio(); break;
     case 'nuevoHz': { const o=$('hzO').value, d=$('hzD').value; if(!o||!d||o===d){ toast('Elegí origen y destino distintos'); return; } const no=p.servicios.find(s=>s.id===o).nombre, nd=p.servicios.find(s=>s.id===d).nombre; dibujando={tipo:'hz',puntos:[],id:o+'-a-'+d,nombre:no+' → '+nd}; hzSel=-1; cambio(); break; }
-    case 'terminarHz': snap(); p.horizontales.push({id:dibujando.id,nombre:dibujando.nombre,puntos:dibujando.puntos}); hzSel=p.horizontales.length-1; dibujando=null; cambio(); toast('Recorrido guardado'); break;
+    case 'terminarHz': snap(); p.horizontales.push({id:dibujando.id,nombre:dibujando.nombre,puntos:enderezar(dibujando.puntos)}); hzSel=p.horizontales.length-1; dibujando=null; cambio(); toast('Recorrido guardado'); break;
     case 'hzNom': snap(); p.horizontales[hzSel].nombre=n.value.trim(); cambio(); break;
-    case 'borPtoHz': snap(); p.horizontales[hzSel].puntos.splice(ptoSel,1); ptoSel=-1; cambio(); break;
+    case 'borPtoHz': snap(); p.horizontales[hzSel].puntos.splice(ptoSel,1); p.horizontales[hzSel].puntos=enderezar(p.horizontales[hzSel].puntos); ptoSel=-1; cambio(); break;
     case 'borHz': if(!confirm('¿Borrar este recorrido?')) return; snap(); p.horizontales.splice(hzSel,1); hzSel=-1; cambio(); break;
   }
 }
