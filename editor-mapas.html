@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Editor de mapas · HMH Contraincendios (v0)</title>
+<style>
+:root{--navy:#0D313F;--steel:#5894A7;--steel-dark:#3D6E80;--tint:#E4EEF1;--red:#D62828;--green:#1E7B4B;--amber:#E8A200;--paper:#F6F5F1;--line:#E4E1D8;--ink:#0D313F;--soft:#5B6472;}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--paper);color:var(--ink);font-size:14px}
+header{background:var(--navy);color:#fff;padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;position:sticky;top:0;z-index:20}
+header h1{font-size:15px;margin:0 12px 0 0;font-weight:800}
+header .sp{flex:1}
+button,select,input{font-family:inherit;font-size:13.5px}
+.btn{border:none;border-radius:999px;padding:8px 14px;font-weight:700;cursor:pointer;background:var(--tint);color:var(--navy)}
+.btn.dark{background:var(--steel-dark);color:#fff}
+.btn.red{background:var(--red);color:#fff}
+.btn.green{background:var(--green);color:#fff}
+.btn.on{background:#fff;color:var(--navy);box-shadow:inset 0 0 0 2px var(--amber)}
+.btn:disabled{opacity:.45;cursor:default}
+header .btn{background:rgba(255,255,255,.14);color:#fff}
+header .btn.on{background:#fff;color:var(--navy)}
+header .btn.green{background:var(--green)}
+main{display:grid;grid-template-columns:330px 1fr;gap:12px;padding:12px;align-items:start}
+@media(max-width:900px){main{grid-template-columns:1fr}}
+.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;position:sticky;top:64px;max-height:calc(100vh - 80px);overflow:auto}
+@media(max-width:900px){.panel{position:static;max-height:none}}
+.panel h2{font-size:14px;margin:4px 0 8px}
+.panel h3{font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--steel-dark);margin:14px 0 6px}
+.row{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:6px 0}
+.row>select,.row>input{flex:1;min-width:0;padding:8px;border:1.5px solid var(--line);border-radius:10px;background:#fff}
+label.ck{display:flex;gap:6px;align-items:center;font-size:13px;margin:6px 0}
+.list{display:flex;flex-direction:column;gap:4px;margin:6px 0}
+.item{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:7px 9px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:#fff}
+.item.sel{border-color:var(--amber);box-shadow:inset 0 0 0 1px var(--amber);background:#FFF8E6}
+.item small{color:var(--soft)}
+.tag{font-size:11px;font-weight:800;padding:2px 7px;border-radius:999px;background:var(--tint);color:var(--steel-dark);white-space:nowrap}
+.tag.warn{background:#FDEDED;color:var(--red)}
+.hint{font-size:12.5px;color:var(--soft);line-height:1.45;background:var(--tint);border-radius:10px;padding:8px 10px;margin:8px 0}
+.hint.live{background:#FFF8E6;color:var(--navy);border:1px solid var(--amber)}
+.stage{background:#fff;border:1px solid var(--line);border-radius:14px;padding:8px}
+.zoomrow{display:flex;gap:8px;align-items:center;margin-bottom:6px;font-size:12.5px;color:var(--soft)}
+.scroller{overflow:auto;max-height:calc(100vh - 140px);border-radius:10px}
+.mapbox{position:relative;width:100%;user-select:none;-webkit-user-select:none;touch-action:none}
+.mapbox img{width:100%;display:block;pointer-events:none}
+.mapbox svg{position:absolute;inset:0;width:100%;height:100%}
+.mk{position:absolute;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:3}
+.mk.salida{background:var(--red)}.mk.escalera{background:var(--steel)}.mk.escalera-pb{background:#7C3AED}.mk.encuentro{background:var(--green)}
+.mk::after{content:attr(data-num);position:absolute;top:-11px;left:50%;transform:translateX(-50%);min-width:17px;height:17px;padding:0 3px;border-radius:999px;background:var(--navy);color:#fff;font-size:10px;font-weight:800;line-height:17px;text-align:center}
+.mk.sel{box-shadow:0 0 0 4px var(--amber),0 1px 4px rgba(0,0,0,.3)}
+.mk.dim{opacity:.55}
+path.r{fill:none;stroke:#0E8F4F;stroke-width:.9;stroke-linejoin:round}
+path.r.other{stroke:#9a9a9a;stroke-width:.5;opacity:.55}
+path.r.hz{stroke:#0E7C7B;stroke-dasharray:2.6,1.4}
+path.r.sel{stroke:#E8A200;stroke-width:1.2}
+path.r.draft{stroke:#E8A200;stroke-dasharray:1.2,.8}
+path.hit{fill:none;stroke:transparent;stroke-width:3;cursor:pointer}
+circle.h{fill:#fff;stroke:#E8A200;stroke-width:.45;cursor:grab}
+circle.h.sel{fill:#E8A200}
+path.zona{fill-opacity:.18;stroke-width:.3;pointer-events:none}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 16px;border-radius:999px;font-size:13px;opacity:0;transition:opacity .2s;z-index:50;pointer-events:none}
+.toast.show{opacity:1}
+dialog{border:none;border-radius:16px;max-width:620px;width:92vw;padding:18px;color:var(--ink)}
+dialog h2{margin-top:0;font-size:16px}
+dialog li{margin:5px 0;line-height:1.45}
+.foot{text-align:center;padding:14px;font-size:11.5px;color:var(--soft)}
+table.ref{width:100%;border-collapse:collapse;font-size:12.5px}
+table.ref td{padding:4px 2px;border-bottom:1px solid var(--line);vertical-align:middle}
+table.ref select{width:100%;padding:5px;border:1px solid var(--line);border-radius:8px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Editor de mapas · HMH</h1>
+  <button class="btn" data-planta="pa">Planta Alta</button>
+  <button class="btn" data-planta="pb">Planta Baja</button>
+  <span class="sp"></span>
+  <button class="btn" data-modo="rutas">Rutas</button>
+  <button class="btn" data-modo="marcadores">Salidas y escaleras</button>
+  <button class="btn" data-modo="refugios">Refugios</button>
+  <button class="btn" data-modo="horizontal">Evac. horizontal</button>
+  <span class="sp"></span>
+  <button class="btn" id="bDeshacer" title="Deshacer el último cambio">↶ Deshacer</button>
+  <button class="btn green" id="bDescargar">Descargar mapas.json</button>
+  <button class="btn" id="bAyuda">? Ayuda</button>
+</header>
+
+<main>
+  <aside class="panel" id="panel"></aside>
+  <section class="stage">
+    <div class="zoomrow">Tamaño del plano
+      <input type="range" id="zoom" min="100" max="300" step="10" value="100" style="flex:1">
+      <span id="zoomTxt">100 %</span>
+    </div>
+    <div class="scroller" id="scroller">
+      <div class="mapbox" id="mapbox">
+        <img id="plano" alt="Plano">
+        <svg id="svg" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
+      </div>
+    </div>
+  </section>
+</main>
+<div class="foot">Versión 0 · Herramienta de la administradora · Servicio de Higiene y Seguridad Laboral</div>
+<div class="toast" id="toast"></div>
+
+<dialog id="dlgAyuda">
+  <h2>Ayuda · Editor de mapas</h2>
+  <p><b>Para qué sirve.</b> Acá se corrigen los mapas de la app HMH Contraincendios sin tocar código: rutas de salida de cada servicio, salidas y escaleras, sector de refugio y evacuación horizontal. Todo lo que hacés se guarda solo en este navegador (borrador) hasta que publiques.</p>
+  <h3 style="font-size:13px">Cómo se trabaja</h3>
+  <ol>
+    <li>Elegí la planta (arriba) y lo que querés editar: <b>Rutas</b>, <b>Salidas y escaleras</b>, <b>Refugios</b> o <b>Evac. horizontal</b>.</li>
+    <li><b>Rutas:</b> elegí el servicio, tocá «+ Nueva ruta», tocá el plano donde empieza (dentro del servicio) y en cada esquina del recorrido. Para terminar, tocá la salida a la que llega. Con «Ángulos rectos» cada tramo sale horizontal o vertical.</li>
+    <li>Para corregir una ruta: tocala (queda amarilla), arrastrá sus puntos. Doble toque sobre un tramo agrega un punto; tocá un punto y «Borrar punto» lo saca.</li>
+    <li><b>Salidas y escaleras:</b> tocá un marcador para cambiar número, tipo o nombre, o arrastralo. «+ Agregar» y después tocá el plano.</li>
+    <li>Usá «↶ Deshacer» si algo salió mal.</li>
+  </ol>
+  <h3 style="font-size:13px">Cómo se publica (para que se vea en la app)</h3>
+  <ol>
+    <li>Tocá <b>Descargar mapas.json</b>.</li>
+    <li>Entrá a <a href="https://github.com/hyslhmh-sudo/hmh-contraincendios/upload/main" target="_blank" rel="noopener">GitHub › subir archivos</a> (cuenta hyslhmh-sudo), arrastrá el <b>mapas.json</b> descargado y tocá «Commit changes». Reemplaza al anterior.</li>
+    <li>En 1 o 2 minutos la app muestra los mapas nuevos (la app busca siempre la versión más nueva de los mapas cuando hay internet).</li>
+  </ol>
+  <p class="hint">Para la administradora: los datos están en <code>mapas.json</code> (servicios, marcadores, rutas, zonas protegidas y evacuación horizontal; coordenadas en % del plano). Los planos son <code>mapa-pa.jpeg</code> y <code>mapa-pb.jpeg</code>. Si GitHub no está disponible, se puede enviar el archivo descargado para que lo suba otra persona. Las zonas protegidas contra humo no se editan acá (se conservan como están).</p>
+  <div style="text-align:right"><button class="btn dark" onclick="document.getElementById('dlgAyuda').close()">Cerrar</button></div>
+</dialog>
+
+<script>
+const ICON = {
+  salida:'<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="10" height="18" rx="1"/><path d="M13 12h8M17 8l4 4-4 4"/></svg>',
+  escalera:'<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="white" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h6v-6h6v-6h6"/></svg>',
+  'escalera-pb':'<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="white" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h6v-6h6v-6h6"/><path d="M21 3v4h-4"/></svg>',
+  encuentro:'<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="white" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg>'
+};
+const TIPOS = {salida:'Salida al exterior', escalera:'Escalera protegida (refugio)', 'escalera-pb':'Escalera que baja a Planta Baja', encuentro:'Punto de encuentro'};
+const LS = 'hmh_editor_mapas_borrador';
+let D = null;                 // datos (mapas.json)
+let planta = 'pa', modo = 'rutas';
+let servSel = '', rutaSel = -1, ptoSel = -1, mkSel = -1, hzSel = -1;
+let dibujando = null;         // {tipo:'ruta'|'hz', puntos:[]}
+let agregarMk = false, orto = true, verOtras = true;
+const undo = [];
+const $ = id => document.getElementById(id);
+const esc = t => String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+const P = () => D.plantas[planta];
+const r2 = v => Math.round(v*100)/100;
+function toast(m){ const t=$('toast'); t.textContent=m; t.classList.add('show'); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),2400); }
+function slug(t){ return t.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''); }
+function snap(){ undo.push(JSON.stringify(D)); if(undo.length>60) undo.shift(); }
+function guardar(){ D.actualizado = new Date().toISOString().slice(0,10); try{ localStorage.setItem(LS, JSON.stringify(D)); }catch(e){} }
+function cambio(){ guardar(); dibujar(); panel(); }
+
+/* ---------- carga ---------- */
+fetch('mapas.json',{cache:'no-cache'}).then(r=>r.json()).then(pub=>{
+  let b=null; try{ b=JSON.parse(localStorage.getItem(LS)||'null'); }catch(e){}
+  if(b && JSON.stringify(b)!==JSON.stringify(pub) && confirm('Hay un borrador guardado en este navegador (última edición: '+(b.actualizado||'s/d')+').\n\nAceptar = seguir con el borrador.\nCancelar = empezar desde los mapas publicados (el borrador se descarta).')) D=b;
+  else { D=pub; localStorage.removeItem(LS); }
+  iniciar();
+}).catch(()=>{ document.getElementById('panel').innerHTML='<p>No se pudo leer <b>mapas.json</b>. Abrí el editor con internet, desde la dirección de la app.</p>'; });
+
+function iniciar(){
+  document.querySelectorAll('[data-planta]').forEach(b=>b.onclick=()=>{ planta=b.dataset.planta; limpiarSel(); actualizarBotones(); cargarPlano(); });
+  document.querySelectorAll('[data-modo]').forEach(b=>b.onclick=()=>{ modo=b.dataset.modo; limpiarSel(); actualizarBotones(); cambio(); });
+  $('bDeshacer').onclick=()=>{ if(!undo.length){ toast('No hay nada para deshacer'); return; } D=JSON.parse(undo.pop()); limpiarSel(); cambio(); };
+  $('bDescargar').onclick=descargar;
+  $('bAyuda').onclick=()=>$('dlgAyuda').showModal();
+  $('zoom').oninput=e=>{ $('mapbox').style.width=e.target.value+'%'; $('zoomTxt').textContent=e.target.value+' %'; };
+  const svg=$('svg');
+  svg.addEventListener('pointerdown', onDown);
+  svg.addEventListener('dblclick', onDbl);
+  window.addEventListener('pointermove', onMove);
+  window.addEventListener('pointerup', ()=>{ if(arr){ arr=null; cambio(); } });
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape'){ dibujando=null; agregarMk=false; cambio(); } if((e.ctrlKey||e.metaKey)&&e.key==='z'){ e.preventDefault(); $('bDeshacer').click(); } });
+  actualizarBotones(); cargarPlano();
+}
+function actualizarBotones(){
+  document.querySelectorAll('[data-planta]').forEach(b=>b.classList.toggle('on',b.dataset.planta===planta));
+  document.querySelectorAll('[data-modo]').forEach(b=>b.classList.toggle('on',b.dataset.modo===modo));
+}
+function limpiarSel(){ servSel=''; rutaSel=-1; ptoSel=-1; mkSel=-1; hzSel=-1; dibujando=null; agregarMk=false; }
+function cargarPlano(){ $('plano').src=P().imagen; cambio(); }
+
+/* ---------- coordenadas ---------- */
+function pos(ev){ const r=$('svg').getBoundingClientRect(); return [r2(Math.min(100,Math.max(0,(ev.clientX-r.left)/r.width*100))), r2(Math.min(100,Math.max(0,(ev.clientY-r.top)/r.height*100)))]; }
+function ortho(prev,p){ if(!orto||!prev) return p; return Math.abs(p[0]-prev[0])>=Math.abs(p[1]-prev[1]) ? [p[0],prev[1]] : [prev[0],p[1]]; }
+function dpath(pts,z){ return pts.map((q,i)=>(i?'L':'M')+q[0].toFixed(2)+','+q[1].toFixed(2)).join(' ')+(z?' Z':''); }
+
+/* ---------- dibujo ---------- */
+function dibujar(){
+  if(!D) return;
+  const p=P(), svg=$('svg'); let h='';
+  h+='<defs><marker id="ar" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="2.2" markerHeight="2.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0E8F4F"/></marker><marker id="arS" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="2.2" markerHeight="2.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#E8A200"/></marker><marker id="arH" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="2.2" markerHeight="2.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0E7C7B"/></marker></defs>';
+  if(modo==='refugios' || modo==='horizontal') (p.zonas||[]).forEach(z=>{ h+='<path class="zona" d="'+dpath(z.puntos,true)+'" fill="'+esc(z.color)+'" stroke="'+esc(z.color)+'"/>'; });
+  if(modo==='rutas'){
+    p.rutas.forEach((r,i)=>{
+      const mine=r.servicio===servSel; if(!mine && !verOtras) return;
+      const cls='r'+(mine?'':' other')+(i===rutaSel?' sel':'');
+      h+='<path class="'+cls+'" d="'+dpath(r.puntos)+'"'+(mine?' marker-end="url(#'+(i===rutaSel?'arS':'ar')+')"':'')+'/>';
+      if(mine) h+='<path class="hit" data-ruta="'+i+'" d="'+dpath(r.puntos)+'"/>';
+    });
+    if(rutaSel>-1) p.rutas[rutaSel].puntos.forEach((q,j)=>{ h+='<circle class="h'+(j===ptoSel?' sel':'')+'" data-pt="'+j+'" cx="'+q[0]+'" cy="'+q[1]+'" r="1.1"/>'; });
+  }
+  if(modo==='horizontal'){
+    (p.horizontales||[]).forEach((r,i)=>{ h+='<path class="r hz'+(i===hzSel?' sel':'')+'" d="'+dpath(r.puntos)+'" marker-end="url(#'+(i===hzSel?'arS':'arH')+')"/><path class="hit" data-hz="'+i+'" d="'+dpath(r.puntos)+'"/>'; });
+    if(hzSel>-1) p.horizontales[hzSel].puntos.forEach((q,j)=>{ h+='<circle class="h'+(j===ptoSel?' sel':'')+'" data-pt="'+j+'" cx="'+q[0]+'" cy="'+q[1]+'" r="1.1"/>'; });
+  }
+  if(dibujando && dibujando.puntos.length){ h+='<path class="r draft" d="'+dpath(dibujando.puntos)+'"/>'; dibujando.puntos.forEach(q=>{ h+='<circle class="h sel" cx="'+q[0]+'" cy="'+q[1]+'" r="0.9"/>'; }); }
+  svg.innerHTML=h;
+  // marcadores (HTML, para que tengan tamaño fijo)
+  const box=$('mapbox'); box.querySelectorAll('.mk').forEach(e=>e.remove());
+  const usadas = new Set(p.rutas.filter(r=>r.servicio===servSel).map(r=>String(r.salida)));
+  p.marcadores.forEach((m,i)=>{
+    const d=document.createElement('div');
+    d.className='mk '+m.tipo+(i===mkSel?' sel':'')+(modo==='rutas'&&servSel&&!usadas.has(String(m.num))&&!dibujando?' dim':'');
+    d.dataset.num=m.num; d.dataset.i=i; d.title=(TIPOS[m.tipo]||'')+(m.nombre?' · '+m.nombre:'');
+    d.style.left=m.x+'%'; d.style.top=m.y+'%'; d.innerHTML=ICON[m.tipo]||ICON.escalera;
+    d.addEventListener('pointerdown', ev=>{ ev.stopPropagation(); clickMarcador(i, ev); });
+    box.appendChild(d);
+  });
+}
+
+/* ---------- interacción ---------- */
+let arr=null; // arrastre {tipo:'pt'|'mk', i}
+function onDown(ev){
+  const t=ev.target, p=P(), pt=pos(ev);
+  if(dibujando){ const prev=dibujando.puntos[dibujando.puntos.length-1]; dibujando.puntos.push(ortho(prev,pt)); dibujar(); panel(); return; }
+  if(agregarMk){ snap(); const n=String(Math.max(0,...p.marcadores.map(m=>parseInt(m.num)||0))+1); p.marcadores.push({num:n,tipo:'salida',x:pt[0],y:pt[1],nombre:''}); mkSel=p.marcadores.length-1; agregarMk=false; cambio(); toast('Marcador '+n+' agregado: revisá número y tipo'); return; }
+  if(t.dataset.pt!==undefined){ ptoSel=+t.dataset.pt; snap(); arr={tipo:'pt'}; t.setPointerCapture&&t.setPointerCapture(ev.pointerId); dibujar(); panel(); return; }
+  if(t.dataset.ruta!==undefined){ rutaSel=+t.dataset.ruta; ptoSel=-1; cambio(); return; }
+  if(t.dataset.hz!==undefined){ hzSel=+t.dataset.hz; ptoSel=-1; cambio(); return; }
+  if(modo==='rutas' && rutaSel>-1){ rutaSel=-1; ptoSel=-1; cambio(); }
+  if(modo==='horizontal' && hzSel>-1){ hzSel=-1; ptoSel=-1; cambio(); }
+  if(modo==='marcadores' && mkSel>-1){ mkSel=-1; cambio(); }
+}
+function onMove(ev){
+  if(!arr) return; const p=P(), q=pos(ev);
+  if(arr.tipo==='pt'){ const lista = modo==='horizontal' ? p.horizontales[hzSel].puntos : p.rutas[rutaSel].puntos; lista[ptoSel]=q; }
+  if(arr.tipo==='mk'){ const m=p.marcadores[arr.i]; m.x=q[0]; m.y=q[1]; }
+  dibujar();
+}
+function onDbl(ev){
+  const t=ev.target; const p=P();
+  const lista = t.dataset.ruta!==undefined ? p.rutas[+t.dataset.ruta].puntos : t.dataset.hz!==undefined ? p.horizontales[+t.dataset.hz].puntos : null;
+  if(!lista) return; const q=pos(ev);
+  let best=0,bd=1e9; for(let j=0;j<lista.length-1;j++){ const d=distSeg(q,lista[j],lista[j+1]); if(d<bd){bd=d;best=j;} }
+  snap(); lista.splice(best+1,0,q); ptoSel=best+1; cambio(); toast('Punto agregado');
+}
+function distSeg(p,a,b){ const dx=b[0]-a[0],dy=b[1]-a[1],l=dx*dx+dy*dy; let t=l?((p[0]-a[0])*dx+(p[1]-a[1])*dy)/l:0; t=Math.max(0,Math.min(1,t)); return Math.hypot(p[0]-a[0]-t*dx,p[1]-a[1]-t*dy); }
+function clickMarcador(i, ev){
+  const p=P(), m=p.marcadores[i];
+  if(dibujando && dibujando.tipo==='ruta'){
+    if(!(m.tipo==='salida'||m.tipo==='escalera-pb')){ toast('Las rutas terminan en una salida (roja) o en la escalera a Planta Baja (violeta)'); return; }
+    const pts=dibujando.puntos; if(!pts.length){ toast('Primero tocá el plano donde empieza la ruta'); return; }
+    let prev=pts[pts.length-1];
+    if(orto && Math.abs(m.x-prev[0])>1 && Math.abs(m.y-prev[1])>1){ prev=[prev[0], m.y]; pts.push(prev); }   // codo para llegar derecho a la salida
+    const dx=m.x-prev[0], dy=m.y-prev[1], L=Math.hypot(dx,dy);
+    if(L>3) pts.push([r2(m.x-dx/L*2.5), r2(m.y-dy/L*2.5)]);
+    if(pts.length<2){ toast('La ruta necesita al menos dos puntos'); return; }
+    snap(); p.rutas.push({servicio:servSel, salida:String(m.num), puntos:pts}); rutaSel=p.rutas.length-1; dibujando=null; cambio(); toast('Ruta a la salida '+m.num+' guardada'); return;
+  }
+  if(modo==='marcadores'){ mkSel=i; snap(); arr={tipo:'mk', i}; dibujar(); panel(); return; }
+}
+
+/* ---------- panel ---------- */
+function panel(){
+  const el=$('panel'); if(!D) return; const p=P();
+  let h='<h2>'+esc(p.nombre)+' · '+({rutas:'Rutas de salida',marcadores:'Salidas y escaleras',refugios:'Sector de refugio',horizontal:'Evacuación horizontal'})[modo]+'</h2>';
+  if(modo==='rutas') h+=panelRutas(p);
+  if(modo==='marcadores') h+=panelMarcadores(p);
+  if(modo==='refugios') h+=panelRefugios(p);
+  if(modo==='horizontal') h+=panelHorizontal(p);
+  h+='<h3>Revisión</h3>'+revision(p);
+  el.innerHTML=h; enlazar(el);
+}
+function servOpts(p, sel, vacio){ return (vacio?'<option value="">'+vacio+'</option>':'')+p.servicios.slice().sort((a,b)=>a.nombre.localeCompare(b.nombre,'es')).map(s=>'<option value="'+esc(s.id)+'"'+(s.id===sel?' selected':'')+'>'+esc(s.nombre)+'</option>').join(''); }
+function salidaOpts(p, sel){ return p.marcadores.filter(m=>m.tipo==='salida'||m.tipo==='escalera-pb').map(m=>'<option value="'+esc(m.num)+'"'+(String(m.num)===String(sel)?' selected':'')+'>'+esc(m.num)+(m.nombre?' · '+esc(m.nombre):'')+(m.tipo==='escalera-pb'?' (escalera a PB)':'')+'</option>').join(''); }
+function panelRutas(p){
+  let h='<div class="row"><select data-act="serv">'+servOpts(p,servSel,'— Elegí un servicio —')+'</select></div>';
+  h+='<div class="row"><button class="btn dark" data-act="nuevoServ">+ Nuevo servicio</button>'+(servSel?'<button class="btn" data-act="renServ">Renombrar</button><button class="btn" data-act="borServ">Borrar</button>':'')+'</div>';
+  h+='<label class="ck"><input type="checkbox" data-act="verOtras"'+(verOtras?' checked':'')+'> Ver en gris las rutas de los demás servicios</label>';
+  h+='<label class="ck"><input type="checkbox" data-act="orto"'+(orto?' checked':'')+'> Ángulos rectos al dibujar</label>';
+  if(!servSel) return h+'<div class="hint">Elegí un servicio para ver y editar sus rutas, o creá uno nuevo.</div>';
+  const rs=p.rutas.map((r,i)=>[r,i]).filter(x=>x[0].servicio===servSel);
+  if(dibujando) return h+'<div class="hint live"><b>Dibujando ruta nueva.</b> Tocá el plano donde empieza (dentro del servicio) y en cada esquina. Para terminar, tocá la <b>salida</b> a la que llega. Puntos: '+dibujando.puntos.length+'.</div><div class="row"><button class="btn" data-act="quitarUlt"'+(dibujando.puntos.length?'':' disabled')+'>Quitar último punto</button><button class="btn red" data-act="cancelar">Cancelar</button></div>';
+  h+='<div class="row"><button class="btn green" data-act="nuevaRuta">+ Nueva ruta</button></div>';
+  h+='<h3>Rutas de este servicio ('+rs.length+')</h3><div class="list">'+(rs.length?rs.map(([r,i])=>'<div class="item'+(i===rutaSel?' sel':'')+'" data-ruta-sel="'+i+'"><span>Salida <b>'+esc(r.salida)+'</b> <small>· '+r.puntos.length+' puntos</small></span><span class="tag">editar</span></div>').join(''):'<div class="hint">Sin rutas todavía (s/d).</div>')+'</div>';
+  if(rutaSel>-1 && p.rutas[rutaSel]){ const r=p.rutas[rutaSel];
+    h+='<h3>Ruta seleccionada</h3><div class="row">Llega a <select data-act="rutaSalida">'+salidaOpts(p,r.salida)+'</select></div>';
+    h+='<div class="hint">Arrastrá los puntos amarillos. Doble toque sobre la ruta agrega un punto.</div>';
+    h+='<div class="row"><button class="btn" data-act="borPto"'+(ptoSel>-1&&r.puntos.length>2?'':' disabled')+'>Borrar punto</button><button class="btn" data-act="invertir">Invertir sentido</button><button class="btn red" data-act="borRuta">Borrar ruta</button></div>';
+  }
+  return h;
+}
+function panelMarcadores(p){
+  let h='<div class="hint">Tocá un marcador para editarlo; arrastralo para moverlo.</div>';
+  h+='<div class="row"><button class="btn '+(agregarMk?'on':'green')+'" data-act="addMk">'+(agregarMk?'Tocá el plano…':'+ Agregar marcador')+'</button></div>';
+  if(mkSel>-1 && p.marcadores[mkSel]){ const m=p.marcadores[mkSel]; const usos=p.rutas.filter(r=>String(r.salida)===String(m.num)).length;
+    h+='<h3>Marcador seleccionado</h3>';
+    h+='<div class="row">Número <input data-act="mkNum" value="'+esc(m.num)+'" style="max-width:90px"></div>';
+    h+='<div class="row">Tipo <select data-act="mkTipo">'+Object.keys(TIPOS).filter(k=>planta==='pa'||k!=='escalera-pb').map(k=>'<option value="'+k+'"'+(k===m.tipo?' selected':'')+'>'+TIPOS[k]+'</option>').join('')+'</select></div>';
+    h+='<div class="row">Nombre <input data-act="mkNom" value="'+esc(m.nombre||'')+'" placeholder="Opcional (p. ej. Ingreso principal)"></div>';
+    h+='<div class="hint">Lo usan '+usos+' ruta(s). Si cambiás el número, las rutas se actualizan solas.</div>';
+    h+='<div class="row"><button class="btn red" data-act="borMk">Borrar marcador</button></div>';
+  }
+  h+='<h3>Marcadores ('+p.marcadores.length+')</h3><div class="list">'+p.marcadores.map((m,i)=>'<div class="item'+(i===mkSel?' sel':'')+'" data-mk-sel="'+i+'"><span><b>'+esc(m.num)+'</b> <small>· '+esc(TIPOS[m.tipo]||m.tipo)+(m.nombre?' · '+esc(m.nombre):'')+'</small></span></div>').join('')+'</div>';
+  return h;
+}
+function panelRefugios(p){
+  let h='<div class="hint">Sector de refugio = sector de incendio vecino al que se traslada a los pacientes en la evacuación horizontal (art. 171 inc. 4, Dto. 351/79). Cada par se valida en la recorrida y con el servicio. Si no está definido, queda «s/d (revisar)».</div>';
+  h+='<table class="ref">'+p.servicios.slice().sort((a,b)=>a.nombre.localeCompare(b.nombre,'es')).map(s=>'<tr><td style="width:45%"><b>'+esc(s.nombre)+'</b></td><td><select data-refugio="'+esc(s.id)+'"><option value="">s/d (revisar)</option>'+p.servicios.filter(o=>o.id!==s.id).sort((a,b)=>a.nombre.localeCompare(b.nombre,'es')).map(o=>'<option value="'+esc(o.id)+'"'+(o.id===s.refugio?' selected':'')+'>'+esc(o.nombre)+'</option>').join('')+'</select></td></tr>').join('')+'</table>';
+  h+='<h3>Punto de encuentro (exterior)</h3><div class="row"><input data-act="encuentro" value="'+esc(D.puntoEncuentro||'')+'" placeholder="s/d (revisar)"></div><div class="hint">Texto que describe el punto de encuentro. Para marcarlo en el plano, agregá un marcador de tipo «Punto de encuentro» en «Salidas y escaleras».</div>';
+  return h;
+}
+function panelHorizontal(p){
+  p.horizontales=p.horizontales||[];
+  let h='<div class="hint">Recorridos de traslado de protección al sector vecino (no son salidas). Se ven en la app en «Más opciones».</div>';
+  if(dibujando) return h+'<div class="hint live"><b>Dibujando recorrido.</b> Tocá el plano en el origen y en cada esquina. Cuando llegues al destino, tocá «Terminar».</div><div class="row"><button class="btn green" data-act="terminarHz"'+(dibujando.puntos.length>1?'':' disabled')+'>Terminar</button><button class="btn" data-act="quitarUlt">Quitar último punto</button><button class="btn red" data-act="cancelar">Cancelar</button></div>';
+  h+='<div class="row"><select id="hzO">'+servOpts(p,'','Desde…')+'</select><select id="hzD">'+servOpts(p,'','Hacia…')+'</select></div><div class="row"><button class="btn green" data-act="nuevoHz">+ Nuevo recorrido</button></div>';
+  h+='<h3>Recorridos ('+p.horizontales.length+')</h3><div class="list">'+(p.horizontales.length?p.horizontales.map((r,i)=>'<div class="item'+(i===hzSel?' sel':'')+'" data-hz-sel="'+i+'"><span>'+esc(r.nombre)+'</span></div>').join(''):'<div class="hint">No hay recorridos en esta planta.</div>')+'</div>';
+  if(hzSel>-1 && p.horizontales[hzSel]) h+='<div class="row">Nombre <input data-act="hzNom" value="'+esc(p.horizontales[hzSel].nombre)+'"></div><div class="row"><button class="btn" data-act="borPtoHz"'+(ptoSel>-1&&p.horizontales[hzSel].puntos.length>2?'':' disabled')+'>Borrar punto</button><button class="btn red" data-act="borHz">Borrar recorrido</button></div>';
+  return h;
+}
+function revision(p){
+  const nums=new Set(p.marcadores.map(m=>String(m.num)));
+  const sinRuta=p.servicios.filter(s=>!p.rutas.some(r=>r.servicio===s.id));
+  const rotas=p.rutas.filter(r=>!nums.has(String(r.salida)));
+  const dup=p.marcadores.map(m=>String(m.num)).filter((n,i,a)=>a.indexOf(n)!==i);
+  const sinRef=p.servicios.filter(s=>!s.refugio).length;
+  let h='<div class="list">';
+  h+='<div class="item"><span>Servicios sin rutas</span><span class="tag'+(sinRuta.length?' warn':'')+'">'+sinRuta.length+'</span></div>';
+  if(sinRuta.length) h+='<div class="hint">'+sinRuta.map(s=>esc(s.nombre)).join(', ')+'</div>';
+  h+='<div class="item"><span>Rutas a salidas que no existen</span><span class="tag'+(rotas.length?' warn':'')+'">'+rotas.length+'</span></div>';
+  h+='<div class="item"><span>Números de marcador repetidos</span><span class="tag'+(dup.length?' warn':'')+'">'+(dup.length?dup.join(', '):0)+'</span></div>';
+  h+='<div class="item"><span>Servicios sin refugio (s/d)</span><span class="tag">'+sinRef+' de '+p.servicios.length+'</span></div>';
+  h+='<div class="item"><span>Punto de encuentro</span><span class="tag'+(/s\/d/.test(D.puntoEncuentro||'s/d')?' warn':'')+'">'+esc(D.puntoEncuentro||'s/d')+'</span></div>';
+  return h+'</div><div class="hint">Borrador guardado en este navegador · '+esc(D.actualizado||'')+'. Para que se vea en la app: «Descargar mapas.json» y subirlo a GitHub (ver Ayuda).</div>';
+}
+function enlazar(el){
+  const p=P();
+  const q=(s)=>el.querySelector(s);
+  el.querySelectorAll('[data-act]').forEach(n=>{
+    const a=n.dataset.act;
+    const ev = (n.tagName==='SELECT'||n.type==='checkbox') ? 'change' : (n.tagName==='INPUT' ? 'change' : 'click');
+    n.addEventListener(ev, ()=>accion(a,n));
+  });
+  el.querySelectorAll('[data-ruta-sel]').forEach(n=>n.onclick=()=>{ rutaSel=+n.dataset.rutaSel; ptoSel=-1; cambio(); });
+  el.querySelectorAll('[data-mk-sel]').forEach(n=>n.onclick=()=>{ mkSel=+n.dataset.mkSel; cambio(); });
+  el.querySelectorAll('[data-hz-sel]').forEach(n=>n.onclick=()=>{ hzSel=+n.dataset.hzSel; ptoSel=-1; cambio(); });
+  el.querySelectorAll('[data-refugio]').forEach(n=>n.onchange=()=>{ snap(); p.servicios.find(s=>s.id===n.dataset.refugio).refugio=n.value; cambio(); });
+}
+function accion(a,n){
+  const p=P();
+  switch(a){
+    case 'serv': servSel=n.value; rutaSel=-1; ptoSel=-1; cambio(); break;
+    case 'verOtras': verOtras=n.checked; dibujar(); break;
+    case 'orto': orto=n.checked; break;
+    case 'nuevoServ': { const nom=prompt('Nombre del servicio nuevo en '+p.nombre+' (como lo conoce el personal):'); if(!nom||!nom.trim()) return; let id=slug(nom); if(!id) return; if(p.servicios.some(s=>s.id===id)){ toast('Ya existe un servicio con ese nombre'); return; } snap(); p.servicios.push({id,nombre:nom.trim(),refugio:''}); servSel=id; cambio(); toast('Servicio creado: ahora dibujá sus rutas'); break; }
+    case 'renServ': { const s=p.servicios.find(s=>s.id===servSel); const nom=prompt('Nuevo nombre:', s.nombre); if(!nom||!nom.trim()) return; snap(); s.nombre=nom.trim(); cambio(); break; }
+    case 'borServ': { const s=p.servicios.find(s=>s.id===servSel); const n2=p.rutas.filter(r=>r.servicio===servSel).length; if(!confirm('¿Borrar «'+s.nombre+'» y sus '+n2+' ruta(s)?')) return; snap(); p.servicios=p.servicios.filter(x=>x.id!==servSel); p.rutas=p.rutas.filter(r=>r.servicio!==servSel); p.servicios.forEach(x=>{ if(x.refugio===servSel) x.refugio=''; }); servSel=''; rutaSel=-1; cambio(); break; }
+    case 'nuevaRuta': dibujando={tipo:'ruta',puntos:[]}; rutaSel=-1; cambio(); break;
+    case 'quitarUlt': dibujando.puntos.pop(); cambio(); break;
+    case 'cancelar': dibujando=null; cambio(); break;
+    case 'rutaSalida': snap(); p.rutas[rutaSel].salida=n.value; cambio(); break;
+    case 'borPto': snap(); p.rutas[rutaSel].puntos.splice(ptoSel,1); ptoSel=-1; cambio(); break;
+    case 'invertir': snap(); p.rutas[rutaSel].puntos.reverse(); cambio(); break;
+    case 'borRuta': if(!confirm('¿Borrar esta ruta?')) return; snap(); p.rutas.splice(rutaSel,1); rutaSel=-1; ptoSel=-1; cambio(); break;
+    case 'addMk': agregarMk=!agregarMk; mkSel=-1; cambio(); break;
+    case 'mkNum': { const m=p.marcadores[mkSel]; const v=n.value.trim(); if(!v||v===String(m.num)) return; if(p.marcadores.some(x=>x!==m&&String(x.num)===v)){ toast('Ya hay un marcador con el número '+v); n.value=m.num; return; } snap(); p.rutas.forEach(r=>{ if(String(r.salida)===String(m.num)) r.salida=v; }); m.num=v; cambio(); break; }
+    case 'mkTipo': snap(); p.marcadores[mkSel].tipo=n.value; cambio(); break;
+    case 'mkNom': snap(); p.marcadores[mkSel].nombre=n.value.trim(); cambio(); break;
+    case 'borMk': { const m=p.marcadores[mkSel]; const usos=p.rutas.filter(r=>String(r.salida)===String(m.num)).length; if(!confirm('¿Borrar el marcador '+m.num+'?'+(usos?'\nTambién se borran las '+usos+' ruta(s) que llegan a él.':''))) return; snap(); p.rutas=p.rutas.filter(r=>String(r.salida)!==String(m.num)); p.marcadores.splice(mkSel,1); mkSel=-1; cambio(); break; }
+    case 'encuentro': snap(); D.puntoEncuentro=n.value.trim()||'s/d (revisar)'; cambio(); break;
+    case 'nuevoHz': { const o=$('hzO').value, d=$('hzD').value; if(!o||!d||o===d){ toast('Elegí origen y destino distintos'); return; } const no=p.servicios.find(s=>s.id===o).nombre, nd=p.servicios.find(s=>s.id===d).nombre; dibujando={tipo:'hz',puntos:[],id:o+'-a-'+d,nombre:no+' → '+nd}; hzSel=-1; cambio(); break; }
+    case 'terminarHz': snap(); p.horizontales.push({id:dibujando.id,nombre:dibujando.nombre,puntos:dibujando.puntos}); hzSel=p.horizontales.length-1; dibujando=null; cambio(); toast('Recorrido guardado'); break;
+    case 'hzNom': snap(); p.horizontales[hzSel].nombre=n.value.trim(); cambio(); break;
+    case 'borPtoHz': snap(); p.horizontales[hzSel].puntos.splice(ptoSel,1); ptoSel=-1; cambio(); break;
+    case 'borHz': if(!confirm('¿Borrar este recorrido?')) return; snap(); p.horizontales.splice(hzSel,1); hzSel=-1; cambio(); break;
+  }
+}
+function descargar(){
+  guardar();
+  const blob=new Blob([JSON.stringify(D,null,1)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='mapas.json'; document.body.appendChild(a); a.click(); a.remove();
+  toast('Descargado. Ahora subilo a GitHub (ver Ayuda)');
+}
+</script>
+</body>
+</html>

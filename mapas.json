@@ -1,0 +1,2780 @@
+{
+ "version": 1,
+ "actualizado": "2026-11-01",
+ "puntoEncuentro": "s/d (revisar)",
+ "plantas": {
+  "pa": {
+   "nombre": "Planta Alta",
+   "imagen": "mapa-pa.jpeg",
+   "servicios": [
+    {
+     "id": "administracion",
+     "nombre": "Administración",
+     "refugio": ""
+    },
+    {
+     "id": "confiteria",
+     "nombre": "Confitería",
+     "refugio": ""
+    },
+    {
+     "id": "esterilizacion",
+     "nombre": "Esterilización",
+     "refugio": ""
+    },
+    {
+     "id": "guardia-obstetrica",
+     "nombre": "Guardia Obstétrica",
+     "refugio": ""
+    },
+    {
+     "id": "laboratorio-central",
+     "nombre": "Laboratorio Central",
+     "refugio": ""
+    },
+    {
+     "id": "neonatologia",
+     "nombre": "Neonatología",
+     "refugio": ""
+    },
+    {
+     "id": "oncologia",
+     "nombre": "Oncología",
+     "refugio": ""
+    },
+    {
+     "id": "pediatria",
+     "nombre": "Pediatría",
+     "refugio": ""
+    },
+    {
+     "id": "quirofano",
+     "nombre": "Quirófano",
+     "refugio": ""
+    },
+    {
+     "id": "residencia-medica",
+     "nombre": "Residencia Médica",
+     "refugio": ""
+    },
+    {
+     "id": "sala-de-espera-quirofano",
+     "nombre": "Sala de Espera - Quirófano",
+     "refugio": ""
+    },
+    {
+     "id": "ucip",
+     "nombre": "UCIP",
+     "refugio": ""
+    },
+    {
+     "id": "utpr",
+     "nombre": "UTPR",
+     "refugio": ""
+    }
+   ],
+   "marcadores": [
+    {
+     "num": "1",
+     "tipo": "escalera",
+     "x": 11.1,
+     "y": 22.2,
+     "nombre": ""
+    },
+    {
+     "num": "2",
+     "tipo": "escalera",
+     "x": 41.9,
+     "y": 21.5,
+     "nombre": ""
+    },
+    {
+     "num": "3",
+     "tipo": "escalera",
+     "x": 73.4,
+     "y": 21.0,
+     "nombre": ""
+    },
+    {
+     "num": "4",
+     "tipo": "salida",
+     "x": 95.5,
+     "y": 17.5,
+     "nombre": ""
+    },
+    {
+     "num": "5",
+     "tipo": "escalera",
+     "x": 11.6,
+     "y": 78.6,
+     "nombre": ""
+    },
+    {
+     "num": "7",
+     "tipo": "salida",
+     "x": 96.0,
+     "y": 83.1,
+     "nombre": ""
+    },
+    {
+     "num": "8",
+     "tipo": "salida",
+     "x": 4.4,
+     "y": 48.3,
+     "nombre": ""
+    },
+    {
+     "num": "9",
+     "tipo": "escalera-pb",
+     "x": 29.3,
+     "y": 86.8,
+     "nombre": ""
+    },
+    {
+     "num": "10",
+     "tipo": "escalera",
+     "x": 73.5,
+     "y": 80.3,
+     "nombre": ""
+    }
+   ],
+   "rutas": [
+    {
+     "servicio": "neonatologia",
+     "salida": "4",
+     "puntos": [
+      [
+       86.03,
+       38.75
+      ],
+      [
+       86.03,
+       34.45
+      ],
+      [
+       83.35,
+       34.45
+      ],
+      [
+       80.1,
+       34.45
+      ],
+      [
+       80.1,
+       17.9
+      ],
+      [
+       93.97,
+       17.9
+      ]
+     ]
+    },
+    {
+     "servicio": "neonatologia",
+     "salida": "7",
+     "puntos": [
+      [
+       86.03,
+       34.45
+      ],
+      [
+       80.1,
+       34.45
+      ],
+      [
+       80.1,
+       82.9
+      ],
+      [
+       93.97,
+       82.9
+      ]
+     ]
+    },
+    {
+     "servicio": "neonatologia",
+     "salida": "4",
+     "puntos": [
+      [
+       91.0,
+       28.9
+      ],
+      [
+       91.0,
+       17.9
+      ],
+      [
+       93.97,
+       17.9
+      ]
+     ]
+    },
+    {
+     "servicio": "neonatologia",
+     "salida": "8",
+     "puntos": [
+      [
+       86.03,
+       34.45
+      ],
+      [
+       80.1,
+       34.45
+      ],
+      [
+       80.1,
+       17.9
+      ],
+      [
+       7.4,
+       17.9
+      ],
+      [
+       7.4,
+       48.73
+      ]
+     ]
+    },
+    {
+     "servicio": "utpr",
+     "salida": "7",
+     "puntos": [
+      [
+       86.03,
+       45.8
+      ],
+      [
+       86.03,
+       82.9
+      ],
+      [
+       93.97,
+       82.9
+      ]
+     ]
+    },
+    {
+     "servicio": "utpr",
+     "salida": "8",
+     "puntos": [
+      [
+       86.03,
+       45.8
+      ],
+      [
+       86.03,
+       82.9
+      ],
+      [
+       7.4,
+       82.9
+      ],
+      [
+       7.4,
+       48.73
+      ]
+     ]
+    },
+    {
+     "servicio": "utpr",
+     "salida": "4",
+     "puntos": [
+      [
+       86.03,
+       45.8
+      ],
+      [
+       86.03,
+       82.9
+      ],
+      [
+       80.1,
+       82.9
+      ],
+      [
+       80.1,
+       17.9
+      ],
+      [
+       93.97,
+       17.9
+      ]
+     ]
+    },
+    {
+     "servicio": "residencia-medica",
+     "salida": "4",
+     "puntos": [
+      [
+       86.03,
+       4.52
+      ],
+      [
+       86.03,
+       17.9
+      ],
+      [
+       93.97,
+       17.9
+      ]
+     ]
+    },
+    {
+     "servicio": "residencia-medica",
+     "salida": "8",
+     "puntos": [
+      [
+       86.03,
+       4.52
+      ],
+      [
+       86.03,
+       17.9
+      ],
+      [
+       7.4,
+       17.9
+      ],
+      [
+       7.4,
+       48.73
+      ]
+     ]
+    },
+    {
+     "servicio": "residencia-medica",
+     "salida": "7",
+     "puntos": [
+      [
+       86.03,
+       4.52
+      ],
+      [
+       86.03,
+       17.9
+      ],
+      [
+       80.1,
+       17.9
+      ],
+      [
+       80.1,
+       82.9
+      ],
+      [
+       93.97,
+       82.9
+      ]
+     ]
+    },
+    {
+     "servicio": "ucip",
+     "salida": "4",
+     "puntos": [
+      [
+       63.92,
+       55.2
+      ],
+      [
+       63.92,
+       17.9
+      ],
+      [
+       93.97,
+       17.9
+      ]
+     ]
+    },
+    {
+     "servicio": "ucip",
+     "salida": "8",
+     "puntos": [
+      [
+       63.92,
+       55.2
+      ],
+      [
+       63.92,
+       17.9
+      ],
+      [
+       7.4,
+       17.9
+      ],
+      [
+       7.4,
+       48.73
+      ]
+     ]
+    },
+    {
+     "servicio": "ucip",
+     "salida": "7",
+     "puntos": [
+      [
+       63.92,
+       55.2
+      ],
+      [
+       63.92,
+       82.9
+      ],
+      [
+       93.97,
+       82.9
+      ]
+     ]
+    },
+    {
+     "servicio": "pediatria",
+     "salida": "4",
+     "puntos": [
+      [
+       57.3,
+       75.6
+      ],
+      [
+       57.3,
+       17.9
+      ],
+      [
+       93.97,
+       17.9
+      ]
+     ]
+    },
+    {
+     "servicio": "pediatria",
+     "salida": "7",
+     "puntos": [
+      [
+       57.3,
+       22.75
+      ],
+      [
+       57.3,
+       82.9
+      ],
+      [
+       93.97,
+       82.9
+      ]
+     ]
+    },
+    {
+     "servicio": "pediatria",
+     "salida": "8",
+     "puntos": [
+      [
+       57.3,
+       75.6
+      ],
+      [
+       57.3,
+       17.9
+      ],
+      [
+       7.4,
+       17.9
+      ],
+      [
+       7.4,
+       48.73
+      ]
+     ]
+    },
+    {
+     "servicio": "esterilizacion",
+     "salida": "4",
+     "puntos": [
+      [
+       80.1,
+       12.6
+      ],
+      [
+       80.1,
+       15.4
+      ],
+      [
+       83.35,
+       15.4
+      ],
+      [
+       83.35,
+       17.9
+      ],
+      [
+       93.97,
+       17.9
+      ]
+     ]
+    },
+    {
+     "servicio": "esterilizacion",
+     "salida": "4",
+     "puntos": [
+      [
+       63.92,
+       4.52
+      ],
+      [
+       63.92,
+       17.9
+      ],
+      [
+       93.97,
+       17.9
+      ]
+     ]
+    },
+    {
+     "servicio": "esterilizacion",
+     "salida": "7",
+     "puntos": [
+      [
+       80.1,
+       12.6
+      ],
+      [
+       80.1,
+       15.4
+      ],
+      [
+       83.35,
+       15.4
+      ],
+      [
+       83.35,
+       17.9
+      ],
+      [
+       80.1,
+       17.9
+      ],
+      [
+       80.1,
+       82.9
+      ],
+      [
+       93.97,
+       82.9
+      ]
+     ]
+    },
+    {
+     "servicio": "esterilizacion",
+     "salida": "7",
+     "puntos": [
+      [
+       63.92,
+       4.52
+      ],
+      [
+       63.92,
+       17.9
+      ],
+      [
+       80.1,
+       17.9
+      ],
+      [
+       80.1,
+       82.9
+      ],
+      [
+       93.97,
+       82.9
+      ]
+     ]
+    },
+    {
+     "servicio": "esterilizacion",
+     "salida": "8",
+     "puntos": [
+      [
+       80.1,
+       12.6
+      ],
+      [
+       80.1,
+       15.4
+      ],
+      [
+       83.35,
+       15.4
+      ],
+      [
+       83.35,
+       17.9
+      ],
+      [
+       7.4,
+       17.9
+      ],
+      [
+       7.4,
+       48.73
+      ]
+     ]
+    },
+    {
+     "servicio": "esterilizacion",
+     "salida": "8",
+     "puntos": [
+      [
+       63.92,
+       4.52
+      ],
+      [
+       63.92,
+       17.9
+      ],
+      [
+       7.4,
+       17.9
+      ],
+      [
+       7.4,
+       48.73
+      ]
+     ]
+    },
+    {
+     "servicio": "quirofano",
+     "salida": "4",
+     "puntos": [
+      [
+       28.68,
+       9.34
+      ],
+      [
+       63.92,
+       9.34
+      ],
+      [
+       63.92,
+       17.9
+      ],
+      [
+       93.97,
+       17.9
+      ]
+     ]
+    },
+    {
+     "servicio": "quirofano",
+     "salida": "7",
+     "puntos": [
+      [
+       28.68,
+       9.34
+      ],
+      [
+       63.92,
+       9.34
+      ],
+      [
+       63.92,
+       17.9
+      ],
+      [
+       80.1,
+       17.9
+      ],
+      [
+       80.1,
+       82.9
+      ],
+      [
+       93.97,
+       82.9
+      ]
+     ]
+    },
+    {
+     "servicio": "quirofano",
+     "salida": "8",
+     "puntos": [
+      [
+       28.68,
+       9.34
+      ],
+      [
+       63.92,
+       9.34
+      ],
+      [
+       63.92,
+       17.9
+      ],
+      [
+       7.4,
+       17.9
+      ],
+      [
+       7.4,
+       48.73
+      ]
+     ]
+    },
+    {
+     "servicio": "quirofano",
+     "salida": "4",
+     "puntos": [
+      [
+       60.1,
+       9.34
+      ],
+      [
+       40.45,
+       9.34
+      ],
+      [
+       40.45,
+       17.9
+      ],
+      [
+       93.97,
+       17.9
+      ]
+     ]
+    },
+    {
+     "servicio": "quirofano",
+     "salida": "7",
+     "puntos": [
+      [
+       60.1,
+       9.34
+      ],
+      [
+       40.45,
+       9.34
+      ],
+      [
+       40.45,
+       17.9
+      ],
+      [
+       80.1,
+       17.9
+      ],
+      [
+       80.1,
+       82.9
+      ],
+      [
+       93.97,
+       82.9
+      ]
+     ]
+    },
+    {
+     "servicio": "quirofano",
+     "salida": "8",
+     "puntos": [
+      [
+       60.1,
+       9.34
+      ],
+      [
+       40.45,
+       9.34
+      ],
+      [
+       40.45,
+       17.9
+      ],
+      [
+       7.4,
+       17.9
+      ],
+      [
+       7.4,
+       48.73
+      ]
+     ]
+    },
+    {
+     "servicio": "sala-de-espera-quirofano",
+     "salida": "8",
+     "puntos": [
+      [
+       14.4,
+       4.52
+      ],
+      [
+       7.4,
+       4.52
+      ],
+      [
+       7.4,
+       48.73
+      ]
+     ]
+    },
+    {
+     "servicio": "laboratorio-central",
+     "salida": "7",
+     "puntos": [
+      [
+       34.9,
+       92.7
+      ],
+      [
+       51.6,
+       92.7
+      ],
+      [
+       51.6,
+       82.9
+      ],
+      [
+       93.97,
+       82.9
+      ]
+     ]
+    },
+    {
+     "servicio": "laboratorio-central",
+     "salida": "8",
+     "puntos": [
+      [
+       34.9,
+       92.7
+      ],
+      [
+       51.6,
+       92.7
+      ],
+      [
+       51.6,
+       82.9
+      ],
+      [
+       7.4,
+       82.9
+      ],
+      [
+       7.4,
+       48.73
+      ]
+     ]
+    },
+    {
+     "servicio": "laboratorio-central",
+     "salida": "4",
+     "puntos": [
+      [
+       34.9,
+       92.7
+      ],
+      [
+       51.6,
+       92.7
+      ],
+      [
+       51.6,
+       82.9
+      ],
+      [
+       80.1,
+       82.9
+      ],
+      [
+       80.1,
+       17.9
+      ],
+      [
+       93.97,
+       17.9
+      ]
+     ]
+    },
+    {
+     "servicio": "guardia-obstetrica",
+     "salida": "7",
+     "puntos": [
+      [
+       86.03,
+       97.1
+      ],
+      [
+       86.03,
+       82.9
+      ],
+      [
+       93.97,
+       82.9
+      ]
+     ]
+    },
+    {
+     "servicio": "guardia-obstetrica",
+     "salida": "4",
+     "puntos": [
+      [
+       86.03,
+       97.1
+      ],
+      [
+       86.03,
+       82.9
+      ],
+      [
+       80.1,
+       82.9
+      ],
+      [
+       80.1,
+       17.9
+      ],
+      [
+       93.97,
+       17.9
+      ]
+     ]
+    },
+    {
+     "servicio": "guardia-obstetrica",
+     "salida": "8",
+     "puntos": [
+      [
+       86.03,
+       97.1
+      ],
+      [
+       86.03,
+       82.9
+      ],
+      [
+       7.4,
+       82.9
+      ],
+      [
+       7.4,
+       48.73
+      ]
+     ]
+    },
+    {
+     "servicio": "oncologia",
+     "salida": "7",
+     "puntos": [
+      [
+       60.1,
+       97.1
+      ],
+      [
+       57.3,
+       97.1
+      ],
+      [
+       57.3,
+       82.9
+      ],
+      [
+       93.97,
+       82.9
+      ]
+     ]
+    },
+    {
+     "servicio": "oncologia",
+     "salida": "4",
+     "puntos": [
+      [
+       60.1,
+       97.1
+      ],
+      [
+       57.3,
+       97.1
+      ],
+      [
+       57.3,
+       82.9
+      ],
+      [
+       80.1,
+       82.9
+      ],
+      [
+       80.1,
+       17.9
+      ],
+      [
+       93.97,
+       17.9
+      ]
+     ]
+    },
+    {
+     "servicio": "oncologia",
+     "salida": "8",
+     "puntos": [
+      [
+       60.1,
+       97.1
+      ],
+      [
+       57.3,
+       97.1
+      ],
+      [
+       57.3,
+       82.9
+      ],
+      [
+       7.4,
+       82.9
+      ],
+      [
+       7.4,
+       48.73
+      ]
+     ]
+    },
+    {
+     "servicio": "confiteria",
+     "salida": "8",
+     "puntos": [
+      [
+       18.6,
+       97.1
+      ],
+      [
+       7.4,
+       97.1
+      ],
+      [
+       7.4,
+       48.73
+      ]
+     ]
+    },
+    {
+     "servicio": "confiteria",
+     "salida": "7",
+     "puntos": [
+      [
+       18.6,
+       97.1
+      ],
+      [
+       18.6,
+       82.9
+      ],
+      [
+       93.97,
+       82.9
+      ]
+     ]
+    },
+    {
+     "servicio": "administracion",
+     "salida": "8",
+     "puntos": [
+      [
+       18.6,
+       71.6
+      ],
+      [
+       18.6,
+       38.75
+      ],
+      [
+       7.4,
+       38.75
+      ],
+      [
+       7.4,
+       48.73
+      ]
+     ]
+    },
+    {
+     "servicio": "confiteria",
+     "salida": "9",
+     "puntos": [
+      [
+       7.4,
+       97.1
+      ],
+      [
+       18.6,
+       97.1
+      ],
+      [
+       18.6,
+       82.9
+      ],
+      [
+       28.68,
+       82.9
+      ],
+      [
+       28.68,
+       97.1
+      ]
+     ]
+    },
+    {
+     "servicio": "laboratorio-central",
+     "salida": "9",
+     "puntos": [
+      [
+       34.9,
+       92.7
+      ],
+      [
+       51.6,
+       92.7
+      ],
+      [
+       51.6,
+       82.9
+      ],
+      [
+       28.68,
+       82.9
+      ],
+      [
+       28.68,
+       97.1
+      ]
+     ]
+    },
+    {
+     "servicio": "administracion",
+     "salida": "9",
+     "puntos": [
+      [
+       18.6,
+       51.8
+      ],
+      [
+       18.6,
+       82.9
+      ],
+      [
+       28.68,
+       82.9
+      ],
+      [
+       28.68,
+       97.1
+      ]
+     ]
+    },
+    {
+     "servicio": "neonatologia",
+     "salida": "7",
+     "puntos": [
+      [
+       86.1,
+       34.45
+      ],
+      [
+       86.1,
+       82.9
+      ],
+      [
+       93.97,
+       82.9
+      ]
+     ]
+    }
+   ],
+   "zonas": [
+    {
+     "id": "zona-1",
+     "color": "#0E8F4F",
+     "puntos": [
+      [
+       78.4,
+       20.1
+      ],
+      [
+       94.6,
+       20.3
+      ],
+      [
+       94.8,
+       81.0
+      ],
+      [
+       78.6,
+       81.0
+      ],
+      [
+       78.6,
+       20.0
+      ]
+     ],
+     "caja": [
+      82.3,
+      42.0,
+      9.6,
+      7.4
+     ],
+     "lineas": [
+      {
+       "x": 87.1,
+       "y": 44.55,
+       "texto": "NEO"
+      },
+      {
+       "x": 87.1,
+       "y": 47.95,
+       "texto": "UTPR"
+      }
+     ]
+    },
+    {
+     "id": "zona-2",
+     "color": "#1B5FA8",
+     "puntos": [
+      [
+       52.4,
+       20.0
+      ],
+      [
+       68.7,
+       20.1
+      ],
+      [
+       68.5,
+       80.5
+      ],
+      [
+       52.4,
+       80.6
+      ],
+      [
+       52.1,
+       20.3
+      ]
+     ],
+     "caja": [
+      50.8,
+      42.0,
+      19.6,
+      7.4
+     ],
+     "lineas": [
+      {
+       "x": 60.6,
+       "y": 44.55,
+       "texto": "PEDIATRÍA"
+      },
+      {
+       "x": 60.6,
+       "y": 47.95,
+       "texto": "UCIP"
+      }
+     ]
+    },
+    {
+     "id": "zona-3",
+     "color": "#C97200",
+     "puntos": [
+      [
+       10.4,
+       79.3
+      ],
+      [
+       8.5,
+       79.3
+      ],
+      [
+       8.7,
+       73.7
+      ],
+      [
+       13.7,
+       73.8
+      ],
+      [
+       13.9,
+       76.5
+      ],
+      [
+       10.6,
+       76.5
+      ],
+      [
+       10.4,
+       78.9
+      ]
+     ],
+     "caja": [
+      3.3,
+      67.2,
+      17.6,
+      7.4
+     ],
+     "lineas": [
+      {
+       "x": 12.1,
+       "y": 69.75,
+       "texto": "ESCALERA"
+      },
+      {
+       "x": 12.1,
+       "y": 73.15,
+       "texto": "1"
+      }
+     ]
+    },
+    {
+     "id": "zona-4",
+     "color": "#9B2226",
+     "puntos": [
+      [
+       74.7,
+       79.9
+      ],
+      [
+       74.0,
+       77.2
+      ],
+      [
+       71.0,
+       77.3
+      ],
+      [
+       71.2,
+       74.5
+      ],
+      [
+       76.2,
+       74.4
+      ],
+      [
+       76.4,
+       79.9
+      ],
+      [
+       74.9,
+       79.9
+      ]
+     ],
+     "caja": [
+      65.2,
+      68.0,
+      17.6,
+      7.4
+     ],
+     "lineas": [
+      {
+       "x": 74.0,
+       "y": 70.55,
+       "texto": "ESCALERA"
+      },
+      {
+       "x": 74.0,
+       "y": 73.95,
+       "texto": "2"
+      }
+     ]
+    },
+    {
+     "id": "zona-5",
+     "color": "#7C3AED",
+     "puntos": [
+      [
+       14.2,
+       21.4
+      ],
+      [
+       14.2,
+       27.0
+      ],
+      [
+       9.0,
+       27.0
+      ],
+      [
+       8.9,
+       23.8
+      ],
+      [
+       12.9,
+       24.0
+      ],
+      [
+       12.4,
+       21.4
+      ],
+      [
+       14.1,
+       21.4
+      ]
+     ],
+     "caja": [
+      3.3,
+      26.2,
+      17.6,
+      7.4
+     ],
+     "lineas": [
+      {
+       "x": 12.1,
+       "y": 28.75,
+       "texto": "ESCALERA"
+      },
+      {
+       "x": 12.1,
+       "y": 32.15,
+       "texto": "3"
+      }
+     ]
+    },
+    {
+     "id": "zona-6",
+     "color": "#0E7C7B",
+     "puntos": [
+      [
+       42.9,
+       20.7
+      ],
+      [
+       44.9,
+       20.7
+      ],
+      [
+       44.6,
+       26.3
+      ],
+      [
+       39.4,
+       26.1
+      ],
+      [
+       39.5,
+       23.3
+      ],
+      [
+       43.0,
+       23.5
+      ],
+      [
+       43.0,
+       21.0
+      ]
+     ],
+     "caja": [
+      33.6,
+      25.5,
+      17.6,
+      7.4
+     ],
+     "lineas": [
+      {
+       "x": 42.4,
+       "y": 28.05,
+       "texto": "ESCALERA"
+      },
+      {
+       "x": 42.4,
+       "y": 31.45,
+       "texto": "4"
+      }
+     ]
+    },
+    {
+     "id": "zona-7",
+     "color": "#B85C00",
+     "puntos": [
+      [
+       76.0,
+       20.8
+      ],
+      [
+       76.2,
+       26.1
+      ],
+      [
+       71.0,
+       26.1
+      ],
+      [
+       71.2,
+       23.1
+      ],
+      [
+       74.5,
+       23.5
+      ],
+      [
+       74.9,
+       20.7
+      ],
+      [
+       75.9,
+       20.7
+      ]
+     ],
+     "caja": [
+      65.4,
+      25.2,
+      17.6,
+      7.4
+     ],
+     "lineas": [
+      {
+       "x": 74.2,
+       "y": 27.75,
+       "texto": "ESCALERA"
+      },
+      {
+       "x": 74.2,
+       "y": 31.15,
+       "texto": "5"
+      }
+     ]
+    }
+   ],
+   "horizontales": [
+    {
+     "id": "quirofano-a-ucip",
+     "nombre": "Quirófano → UCIP",
+     "puntos": [
+      [
+       40.7,
+       12.6
+      ],
+      [
+       40.7,
+       17.9
+      ],
+      [
+       63.92,
+       17.9
+      ],
+      [
+       63.92,
+       44.1
+      ]
+     ]
+    },
+    {
+     "id": "quirofano-a-neonatologia",
+     "nombre": "Quirófano → Neonatología",
+     "puntos": [
+      [
+       40.7,
+       12.6
+      ],
+      [
+       40.7,
+       17.9
+      ],
+      [
+       80.1,
+       17.9
+      ],
+      [
+       80.1,
+       34.45
+      ],
+      [
+       85.9,
+       34.45
+      ]
+     ]
+    },
+    {
+     "id": "ucip-a-neonatologia",
+     "nombre": "UCIP → Neonatología",
+     "puntos": [
+      [
+       63.92,
+       44.1
+      ],
+      [
+       63.92,
+       17.9
+      ],
+      [
+       80.1,
+       17.9
+      ],
+      [
+       80.1,
+       34.45
+      ],
+      [
+       85.9,
+       34.45
+      ]
+     ]
+    },
+    {
+     "id": "neonatologia-a-ucip",
+     "nombre": "Neonatología → UCIP",
+     "puntos": [
+      [
+       85.9,
+       34.45
+      ],
+      [
+       80.1,
+       34.45
+      ],
+      [
+       80.1,
+       17.9
+      ],
+      [
+       63.92,
+       17.9
+      ],
+      [
+       63.92,
+       44.1
+      ]
+     ]
+    }
+   ]
+  },
+  "pb": {
+   "nombre": "Planta Baja",
+   "imagen": "mapa-pb.jpeg",
+   "servicios": [
+    {
+     "id": "admision",
+     "nombre": "Admisión",
+     "refugio": ""
+    },
+    {
+     "id": "anatomia-patologica-y-morgue",
+     "nombre": "Anatomía Patológica y Morgue",
+     "refugio": ""
+    },
+    {
+     "id": "cocina",
+     "nombre": "Cocina",
+     "refugio": ""
+    },
+    {
+     "id": "consultorios",
+     "nombre": "Consultorios",
+     "refugio": ""
+    },
+    {
+     "id": "consultorios-umu",
+     "nombre": "Consultorios UMU",
+     "refugio": ""
+    },
+    {
+     "id": "cuidados-progresivos",
+     "nombre": "Cuidados Progresivos",
+     "refugio": ""
+    },
+    {
+     "id": "diagnostico-por-imagenes",
+     "nombre": "Diagnóstico por Imágenes",
+     "refugio": ""
+    },
+    {
+     "id": "guardia-pediatrica",
+     "nombre": "Guardia Pediátrica",
+     "refugio": ""
+    },
+    {
+     "id": "mamografo",
+     "nombre": "Mamógrafo",
+     "refugio": ""
+    },
+    {
+     "id": "observacion-umu",
+     "nombre": "Observación UMU",
+     "refugio": ""
+    },
+    {
+     "id": "pasillo-lavadero",
+     "nombre": "Pasillo Lavadero",
+     "refugio": ""
+    },
+    {
+     "id": "residencia-madres",
+     "nombre": "Residencia Madres",
+     "refugio": ""
+    },
+    {
+     "id": "residencia-medica",
+     "nombre": "Residencia Médica",
+     "refugio": ""
+    },
+    {
+     "id": "residencias",
+     "nombre": "Residencias",
+     "refugio": ""
+    },
+    {
+     "id": "sala-de-espera-admision",
+     "nombre": "Sala de Espera Admisión",
+     "refugio": ""
+    },
+    {
+     "id": "sala-de-espera-consultorio",
+     "nombre": "Sala de Espera Consultorios",
+     "refugio": ""
+    },
+    {
+     "id": "sala-de-espera-uti",
+     "nombre": "Sala de Espera UTI",
+     "refugio": ""
+    },
+    {
+     "id": "servicios-generales",
+     "nombre": "Servicios Generales",
+     "refugio": ""
+    },
+    {
+     "id": "supervision-de-enfermeria",
+     "nombre": "Supervisión de Enfermería",
+     "refugio": ""
+    },
+    {
+     "id": "umu",
+     "nombre": "UMU",
+     "refugio": ""
+    },
+    {
+     "id": "uti",
+     "nombre": "UTI",
+     "refugio": ""
+    }
+   ],
+   "marcadores": [
+    {
+     "num": "1",
+     "tipo": "salida",
+     "x": 38.2,
+     "y": 12.6,
+     "nombre": ""
+    },
+    {
+     "num": "2",
+     "tipo": "salida",
+     "x": 53.1,
+     "y": 29.3,
+     "nombre": ""
+    },
+    {
+     "num": "3",
+     "tipo": "salida",
+     "x": 63.1,
+     "y": 28.17,
+     "nombre": ""
+    },
+    {
+     "num": "4",
+     "tipo": "salida",
+     "x": 72.7,
+     "y": 28.17,
+     "nombre": ""
+    },
+    {
+     "num": "5",
+     "tipo": "salida",
+     "x": 88.9,
+     "y": 28.17,
+     "nombre": ""
+    },
+    {
+     "num": "6",
+     "tipo": "salida",
+     "x": 89.3,
+     "y": 12.6,
+     "nombre": ""
+    },
+    {
+     "num": "7",
+     "tipo": "salida",
+     "x": 27.1,
+     "y": 30.0,
+     "nombre": ""
+    },
+    {
+     "num": "8",
+     "tipo": "salida",
+     "x": 35.3,
+     "y": 30.1,
+     "nombre": ""
+    },
+    {
+     "num": "9",
+     "tipo": "salida",
+     "x": 72.7,
+     "y": 41.3,
+     "nombre": ""
+    },
+    {
+     "num": "10",
+     "tipo": "salida",
+     "x": 1.3,
+     "y": 41.1,
+     "nombre": ""
+    },
+    {
+     "num": "11",
+     "tipo": "salida",
+     "x": 73.5,
+     "y": 77.4,
+     "nombre": ""
+    },
+    {
+     "num": "12",
+     "tipo": "salida",
+     "x": 7.9,
+     "y": 89.1,
+     "nombre": "Ingreso principal"
+    },
+    {
+     "num": "14",
+     "tipo": "escalera",
+     "x": 6.2,
+     "y": 44.57,
+     "nombre": ""
+    },
+    {
+     "num": "17",
+     "tipo": "escalera",
+     "x": 28.3,
+     "y": 44.57,
+     "nombre": ""
+    },
+    {
+     "num": "18",
+     "tipo": "escalera",
+     "x": 53.4,
+     "y": 44.57,
+     "nombre": ""
+    },
+    {
+     "num": "19",
+     "tipo": "escalera",
+     "x": 53.3,
+     "y": 73.8,
+     "nombre": ""
+    },
+    {
+     "num": "20",
+     "tipo": "escalera",
+     "x": 5.7,
+     "y": 73.8,
+     "nombre": ""
+    },
+    {
+     "num": "21",
+     "tipo": "salida",
+     "x": 72.7,
+     "y": 12.6,
+     "nombre": ""
+    },
+    {
+     "num": "22",
+     "tipo": "salida",
+     "x": 42.7,
+     "y": 29.2,
+     "nombre": ""
+    },
+    {
+     "num": "23",
+     "tipo": "salida",
+     "x": 58.0,
+     "y": 30.5,
+     "nombre": ""
+    }
+   ],
+   "rutas": [
+    {
+     "servicio": "cuidados-progresivos",
+     "salida": "9",
+     "puntos": [
+      [
+       62.64,
+       74.65
+      ],
+      [
+       62.64,
+       41.6
+      ],
+      [
+       68.7,
+       41.6
+      ]
+     ]
+    },
+    {
+     "servicio": "cuidados-progresivos",
+     "salida": "11",
+     "puntos": [
+      [
+       62.64,
+       42.7
+      ],
+      [
+       62.64,
+       77.3
+      ],
+      [
+       68.7,
+       77.3
+      ]
+     ]
+    },
+    {
+     "servicio": "supervision-de-enfermeria",
+     "salida": "9",
+     "puntos": [
+      [
+       62.64,
+       34.13
+      ],
+      [
+       62.64,
+       41.6
+      ],
+      [
+       68.7,
+       41.6
+      ]
+     ]
+    },
+    {
+     "servicio": "supervision-de-enfermeria",
+     "salida": "2",
+     "puntos": [
+      [
+       62.64,
+       34.13
+      ],
+      [
+       62.64,
+       41.6
+      ],
+      [
+       46.02,
+       41.6
+      ],
+      [
+       46.02,
+       29.8
+      ],
+      [
+       50.0,
+       29.8
+      ]
+     ]
+    },
+    {
+     "servicio": "anatomia-patologica-y-morgue",
+     "salida": "9",
+     "puntos": [
+      [
+       53.9,
+       34.13
+      ],
+      [
+       53.9,
+       41.6
+      ],
+      [
+       68.7,
+       41.6
+      ]
+     ]
+    },
+    {
+     "servicio": "anatomia-patologica-y-morgue",
+     "salida": "23",
+     "puntos": [
+      [
+       53.9,
+       39.07
+      ],
+      [
+       53.9,
+       34.13
+      ],
+      [
+       57.95,
+       34.13
+      ],
+      [
+       57.95,
+       31.47
+      ]
+     ]
+    },
+    {
+     "servicio": "uti",
+     "salida": "9",
+     "puntos": [
+      [
+       46.02,
+       62.8
+      ],
+      [
+       46.02,
+       41.6
+      ],
+      [
+       68.7,
+       41.6
+      ]
+     ]
+    },
+    {
+     "servicio": "uti",
+     "salida": "2",
+     "puntos": [
+      [
+       46.02,
+       62.8
+      ],
+      [
+       46.02,
+       29.8
+      ],
+      [
+       50.0,
+       29.8
+      ]
+     ]
+    },
+    {
+     "servicio": "uti",
+     "salida": "7",
+     "puntos": [
+      [
+       46.02,
+       62.8
+      ],
+      [
+       46.02,
+       41.6
+      ],
+      [
+       27.3,
+       41.6
+      ],
+      [
+       27.3,
+       34.13
+      ]
+     ]
+    },
+    {
+     "servicio": "guardia-pediatrica",
+     "salida": "11",
+     "puntos": [
+      [
+       62.64,
+       85.53
+      ],
+      [
+       62.64,
+       77.3
+      ],
+      [
+       68.7,
+       77.3
+      ]
+     ]
+    },
+    {
+     "servicio": "consultorios",
+     "salida": "12",
+     "puntos": [
+      [
+       22.4,
+       85.53
+      ],
+      [
+       46.02,
+       85.53
+      ],
+      [
+       46.02,
+       77.3
+      ],
+      [
+       68.7,
+       77.3
+      ]
+     ]
+    },
+    {
+     "servicio": "sala-de-espera-uti",
+     "salida": "11",
+     "puntos": [
+      [
+       46.02,
+       81.1
+      ],
+      [
+       46.02,
+       77.3
+      ],
+      [
+       68.7,
+       77.3
+      ]
+     ]
+    },
+    {
+     "servicio": "sala-de-espera-uti",
+     "salida": "12",
+     "puntos": [
+      [
+       46.02,
+       81.1
+      ],
+      [
+       46.02,
+       77.3
+      ],
+      [
+       17.43,
+       77.3
+      ],
+      [
+       17.43,
+       85.53
+      ],
+      [
+       8.34,
+       85.53
+      ]
+     ]
+    },
+    {
+     "servicio": "sala-de-espera-consultorio",
+     "salida": "12",
+     "puntos": [
+      [
+       30.8,
+       77.3
+      ],
+      [
+       17.43,
+       77.3
+      ],
+      [
+       17.43,
+       85.53
+      ],
+      [
+       8.34,
+       85.53
+      ]
+     ]
+    },
+    {
+     "servicio": "diagnostico-por-imagenes",
+     "salida": "10",
+     "puntos": [
+      [
+       11.4,
+       34.13
+      ],
+      [
+       11.4,
+       41.6
+      ],
+      [
+       0.75,
+       41.6
+      ]
+     ]
+    },
+    {
+     "servicio": "mamografo",
+     "salida": "10",
+     "puntos": [
+      [
+       11.4,
+       54.5
+      ],
+      [
+       11.4,
+       41.6
+      ],
+      [
+       0.75,
+       41.6
+      ]
+     ]
+    },
+    {
+     "servicio": "observacion-umu",
+     "salida": "9",
+     "puntos": [
+      [
+       17.43,
+       34.13
+      ],
+      [
+       17.43,
+       41.6
+      ],
+      [
+       68.7,
+       41.6
+      ]
+     ]
+    },
+    {
+     "servicio": "observacion-umu",
+     "salida": "7",
+     "puntos": [
+      [
+       17.43,
+       39.07
+      ],
+      [
+       17.43,
+       34.13
+      ],
+      [
+       27.3,
+       34.13
+      ],
+      [
+       27.3,
+       31.47
+      ]
+     ]
+    },
+    {
+     "servicio": "umu",
+     "salida": "7",
+     "puntos": [
+      [
+       27.3,
+       39.07
+      ],
+      [
+       27.3,
+       34.13
+      ]
+     ]
+    },
+    {
+     "servicio": "umu",
+     "salida": "9",
+     "puntos": [
+      [
+       27.3,
+       34.13
+      ],
+      [
+       27.3,
+       41.6
+      ],
+      [
+       68.7,
+       41.6
+      ]
+     ]
+    },
+    {
+     "servicio": "consultorios-umu",
+     "salida": "9",
+     "puntos": [
+      [
+       37.0,
+       34.13
+      ],
+      [
+       37.0,
+       39.07
+      ],
+      [
+       37.0,
+       41.6
+      ],
+      [
+       68.7,
+       41.6
+      ]
+     ]
+    },
+    {
+     "servicio": "consultorios-umu",
+     "salida": "2",
+     "puntos": [
+      [
+       41.2,
+       39.07
+      ],
+      [
+       41.2,
+       34.13
+      ],
+      [
+       46.02,
+       34.13
+      ],
+      [
+       46.02,
+       29.8
+      ],
+      [
+       50.0,
+       29.8
+      ]
+     ]
+    },
+    {
+     "servicio": "admision",
+     "salida": "12",
+     "puntos": [
+      [
+       5.4,
+       64.5
+      ],
+      [
+       8.34,
+       64.5
+      ],
+      [
+       8.34,
+       68.5
+      ],
+      [
+       2.7,
+       68.5
+      ],
+      [
+       2.7,
+       85.53
+      ]
+     ]
+    },
+    {
+     "servicio": "admision",
+     "salida": "10",
+     "puntos": [
+      [
+       8.34,
+       68.5
+      ],
+      [
+       2.7,
+       68.5
+      ],
+      [
+       2.7,
+       41.6
+      ]
+     ]
+    },
+    {
+     "servicio": "sala-de-espera-admision",
+     "salida": "12",
+     "puntos": [
+      [
+       11.4,
+       57.75
+      ],
+      [
+       11.4,
+       85.53
+      ],
+      [
+       8.34,
+       85.53
+      ]
+     ]
+    },
+    {
+     "servicio": "sala-de-espera-admision",
+     "salida": "10",
+     "puntos": [
+      [
+       11.4,
+       70.7
+      ],
+      [
+       11.4,
+       57.75
+      ],
+      [
+       2.7,
+       57.75
+      ],
+      [
+       2.7,
+       41.6
+      ]
+     ]
+    },
+    {
+     "servicio": "guardia-pediatrica",
+     "salida": "12",
+     "puntos": [
+      [
+       62.64,
+       85.53
+      ],
+      [
+       62.64,
+       77.3
+      ],
+      [
+       17.43,
+       77.3
+      ],
+      [
+       17.43,
+       85.53
+      ],
+      [
+       8.34,
+       85.53
+      ]
+     ]
+    },
+    {
+     "servicio": "residencia-madres",
+     "salida": "1",
+     "puntos": [
+      [
+       53.9,
+       15.3
+      ],
+      [
+       38.4,
+       15.3
+      ],
+      [
+       38.4,
+       14.8
+      ]
+     ]
+    },
+    {
+     "servicio": "residencia-medica",
+     "salida": "21",
+     "puntos": [
+      [
+       62.64,
+       15.3
+      ],
+      [
+       73.1,
+       15.3
+      ],
+      [
+       73.1,
+       14.8
+      ]
+     ]
+    },
+    {
+     "servicio": "residencias",
+     "salida": "2",
+     "puntos": [
+      [
+       57.95,
+       15.3
+      ],
+      [
+       46.02,
+       15.3
+      ],
+      [
+       46.02,
+       29.8
+      ],
+      [
+       50.0,
+       29.8
+      ]
+     ]
+    },
+    {
+     "servicio": "cocina",
+     "salida": "2",
+     "puntos": [
+      [
+       53.9,
+       20.35
+      ],
+      [
+       46.02,
+       20.35
+      ],
+      [
+       46.02,
+       29.8
+      ],
+      [
+       50.0,
+       29.8
+      ]
+     ]
+    },
+    {
+     "servicio": "cocina",
+     "salida": "3",
+     "puntos": [
+      [
+       46.02,
+       20.35
+      ],
+      [
+       62.64,
+       20.35
+      ],
+      [
+       62.64,
+       25.8
+      ]
+     ]
+    },
+    {
+     "servicio": "pasillo-lavadero",
+     "salida": "5",
+     "puntos": [
+      [
+       88.8,
+       14.8
+      ],
+      [
+       88.8,
+       25.8
+      ]
+     ]
+    },
+    {
+     "servicio": "pasillo-lavadero",
+     "salida": "6",
+     "puntos": [
+      [
+       88.8,
+       25.8
+      ],
+      [
+       88.8,
+       14.8
+      ]
+     ]
+    },
+    {
+     "servicio": "servicios-generales",
+     "salida": "2",
+     "puntos": [
+      [
+       88.8,
+       24.05
+      ],
+      [
+       46.02,
+       24.05
+      ],
+      [
+       46.02,
+       29.8
+      ],
+      [
+       50.0,
+       29.8
+      ]
+     ]
+    },
+    {
+     "servicio": "servicios-generales",
+     "salida": "6",
+     "puntos": [
+      [
+       46.02,
+       24.05
+      ],
+      [
+       88.8,
+       24.05
+      ],
+      [
+       88.8,
+       25.8
+      ]
+     ]
+    },
+    {
+     "servicio": "servicios-generales",
+     "salida": "3",
+     "puntos": [
+      [
+       46.02,
+       24.05
+      ],
+      [
+       62.64,
+       24.05
+      ],
+      [
+       62.64,
+       25.8
+      ]
+     ]
+    },
+    {
+     "servicio": "servicios-generales",
+     "salida": "4",
+     "puntos": [
+      [
+       68.7,
+       24.05
+      ],
+      [
+       80.6,
+       24.05
+      ],
+      [
+       73.1,
+       24.05
+      ]
+     ]
+    }
+   ],
+   "zonas": [
+    {
+     "id": "zona-13",
+     "color": "#0E8F4F",
+     "puntos": [
+      [
+       57.1,
+       42.4
+      ],
+      [
+       69.0,
+       42.4
+      ],
+      [
+       69.0,
+       76.4
+      ],
+      [
+       57.0,
+       76.4
+      ],
+      [
+       57.0,
+       42.4
+      ]
+     ],
+     "caja": [
+      50.02,
+      52.3,
+      23.6,
+      7.4
+     ],
+     "lineas": [
+      {
+       "x": 61.82,
+       "y": 54.85,
+       "texto": "Cuidados"
+      },
+      {
+       "x": 61.82,
+       "y": 58.25,
+       "texto": "Progresivos"
+      }
+     ]
+    },
+    {
+     "id": "zona-16",
+     "color": "#1B5FA8",
+     "puntos": [
+      [
+       37.4,
+       42.5
+      ],
+      [
+       49.1,
+       42.5
+      ],
+      [
+       49.1,
+       75.9
+      ],
+      [
+       37.4,
+       75.9
+      ],
+      [
+       37.4,
+       42.6
+      ]
+     ],
+     "caja": [
+      38.28,
+      53.88,
+      7.6,
+      4.0
+     ],
+     "lineas": [
+      {
+       "x": 42.08,
+       "y": 56.43,
+       "texto": "UTI"
+      }
+     ]
+    },
+    {
+     "id": "zona-15",
+     "color": "#C97200",
+     "puntos": [
+      [
+       57.1,
+       78.2
+      ],
+      [
+       69.0,
+       78.2
+      ],
+      [
+       69.0,
+       86.3
+      ],
+      [
+       57.5,
+       86.3
+      ],
+      [
+       57.5,
+       78.6
+      ]
+     ],
+     "caja": [
+      51.22,
+      77.82,
+      21.6,
+      7.4
+     ],
+     "lineas": [
+      {
+       "x": 62.02,
+       "y": 80.37,
+       "texto": "Guardia"
+      },
+      {
+       "x": 62.02,
+       "y": 83.77,
+       "texto": "Pediátrica"
+      }
+     ]
+    }
+   ],
+   "horizontales": []
+  }
+ }
+}

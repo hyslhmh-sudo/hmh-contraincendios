@@ -1,8 +1,8 @@
 /* HMH Contraincendios — funcionamiento sin conexión.
    Cada vez que publiques cambios en index.html, subí también este archivo
    cambiando el número de VERSION (v1 → v2 → v3...). */
-const VERSION = 'hmh-v5';
-const ARCHIVOS = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
+const VERSION = 'hmh-v6';
+const ARCHIVOS = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './mapas.json', './mapa-pa.jpeg', './mapa-pb.jpeg'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(VERSION)
@@ -24,6 +24,13 @@ self.addEventListener('fetch', e => {
     e.respondWith(fetch(req)
       .then(r => { const copia = r.clone(); caches.open(VERSION).then(c => c.put('./index.html', copia)); return r; })
       .catch(() => caches.match('./index.html').then(r => r || caches.match('./'))));
+    return;
+  }
+  if (new URL(req.url).pathname.endsWith('/mapas.json')) {
+    // Los mapas se editan seguido: primero la versión más nueva; sin señal, la guardada.
+    e.respondWith(fetch(req)
+      .then(r => { const copia = r.clone(); caches.open(VERSION).then(c => c.put('./mapas.json', copia)); return r; })
+      .catch(() => caches.match('./mapas.json')));
     return;
   }
   e.respondWith(caches.match(req).then(r => r || fetch(req)));
