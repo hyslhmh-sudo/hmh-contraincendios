@@ -1,7 +1,7 @@
 /* HMH Contraincendios — funcionamiento sin conexión.
    Cada vez que publiques cambios en index.html, subí también este archivo
    cambiando el número de VERSION (v1 → v2 → v3...). */
-const VERSION = 'hmh-v9';
+const VERSION = 'hmh-v10';
 const ARCHIVOS = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './mapas.json', './mapa-pa-2.jpeg', './mapa-pb-3.jpeg'];
 
 self.addEventListener('install', e => {
@@ -21,14 +21,18 @@ self.addEventListener('fetch', e => {
   if (req.method !== 'GET' || new URL(req.url).origin !== location.origin) return; // videos, formulario y Buzón van directo a internet
   if (req.mode === 'navigate') {
     // Primero intenta la versión más nueva; sin señal, usa la guardada.
-    e.respondWith(fetch(req)
-      .then(r => { const copia = r.clone(); caches.open(VERSION).then(c => c.put('./index.html', copia)); return r; })
-      .catch(() => caches.match('./index.html').then(r => r || caches.match('./'))));
+    // Cada página se guarda con su propio nombre (antes el editor de mapas se guardaba como si fuera la app).
+    const url = new URL(req.url); url.search = '';
+    const esApp = /\/(index\.html)?$/.test(url.pathname);
+    const clave = esApp ? './index.html' : url.href;
+    e.respondWith(fetch(new Request(req.url, {cache: 'no-cache'}))
+      .then(r => { if (r.ok) { const copia = r.clone(); caches.open(VERSION).then(c => c.put(clave, copia)); } return r; })
+      .catch(() => caches.match(clave).then(r => r || caches.match('./'))));
     return;
   }
   if (new URL(req.url).pathname.endsWith('/mapas.json')) {
     // Los mapas se editan seguido: primero la versión más nueva; sin señal, la guardada.
-    e.respondWith(fetch(req)
+    e.respondWith(fetch(new Request(req.url, {cache: 'no-cache'}))
       .then(r => { const copia = r.clone(); caches.open(VERSION).then(c => c.put('./mapas.json', copia)); return r; })
       .catch(() => caches.match('./mapas.json')));
     return;
