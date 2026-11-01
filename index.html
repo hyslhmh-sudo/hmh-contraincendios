@@ -332,6 +332,36 @@
 .map-mk.encuentro, .map-mk-pb.encuentro{background:#1E7B4B; cursor:default;}
 .map-mk.encuentro::after, .map-mk-pb.encuentro::after{content:attr(data-num); position:absolute; top:-11px; left:50%; transform:translateX(-50%); min-width:17px; height:17px; padding:0 4px; border-radius:999px; background:#1E7B4B; color:#fff; font-size:10px; font-weight:800; line-height:17px; text-align:center; white-space:nowrap; box-sizing:border-box;}
 .map-mk-pb.escalera-pb{background:#7C3AED;}
+/* Códigos y Practicar (hmh-v16) */
+.cod-yo{padding:14px;margin-bottom:12px}
+.cod-yo label{font-size:13px;font-weight:800;color:var(--navy);display:block;margin-bottom:8px}
+.cod-yo select{width:100%;padding:12px;border-radius:10px;border:1.5px solid var(--line);font-size:14px;background:#fff;color:var(--navy)}
+.cod-practicar{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:0;border-radius:14px;background:var(--navy);color:#fff;padding:14px 16px;margin-bottom:14px;cursor:pointer;font:inherit}
+.cod-practicar .cp-ic{flex:none;width:38px;height:38px;border-radius:999px;background:#FFD166;color:var(--navy);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800}
+.cod-practicar b{display:block;font-size:15px}
+.cod-practicar span span{display:block;font-size:12.5px;opacity:.9;margin-top:2px}
+.cod-q{background:var(--tint);border-left:4px solid var(--acc,var(--navy));border-radius:8px;padding:10px 12px;font-size:14px;font-weight:700;color:var(--navy);margin:4px 0 8px}
+.cod-m{font-size:12.5px;color:var(--ink-soft);margin:0 0 4px;line-height:1.45}
+.cod-f{margin-top:8px;font-size:13px;color:var(--navy);background:#FFF8E1;border-radius:8px;padding:8px 10px}
+.cod-mapa{margin-top:10px;border:1.5px solid var(--navy);background:#fff;color:var(--navy);border-radius:10px;padding:10px 12px;font:inherit;font-size:13px;font-weight:800;cursor:pointer;width:100%}
+.cod-banner{display:none;gap:10px;align-items:flex-start;background:#E7F5EE;border-left:5px solid #0E8F4F;border-radius:10px;padding:10px 12px;margin-bottom:12px;font-size:13px;color:var(--navy);line-height:1.45}
+.cod-banner .cb-t{flex:1}
+.cod-banner button{flex:none;border:0;background:transparent;font-size:18px;line-height:1;color:var(--ink-soft);cursor:pointer;padding:0 2px}
+.pr-card{padding:16px}
+.pr-score{float:right;font-size:12px;font-weight:800;color:var(--steel-dark)}
+.pr-sim{font-size:11.5px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--red)}
+.pr-anuncio{font-size:18px;font-weight:800;color:var(--navy);margin:8px 0 10px;line-height:1.35}
+.pr-oir{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:7px 12px;font:inherit;font-size:13px;font-weight:700;color:var(--navy);cursor:pointer}
+.pr-rol{margin:14px 0 8px;font-size:14px;color:var(--ink)}
+.pr-ops{display:flex;flex-direction:column;gap:8px}
+.pr-op{text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:11px 12px;font:inherit;font-size:13.5px;color:var(--navy);cursor:pointer}
+.pr-op.ok{border-color:#1E7B4B;background:#E7F5EE;font-weight:700}
+.pr-op.mal{border-color:#B42318;background:#FDEDED}
+.pr-fb{margin-top:12px;border-radius:10px;padding:10px 12px;font-size:13px;line-height:1.45}
+.pr-fb.ok{background:#E7F5EE;color:#14532D}
+.pr-fb.mal{background:#FDEDED;color:#7A1A12}
+.pr-fr{margin-top:6px;font-weight:700}
+.pr-next{margin-top:12px;width:100%;border:0;border-radius:10px;background:var(--green);color:#fff;padding:12px;font:inherit;font-size:14px;font-weight:800;cursor:pointer}
 </style>
 </head>
 <body>
@@ -640,42 +670,146 @@
 
   <!-- ===================== CÓDIGOS ===================== -->
   <section class="view" id="view-codigos">
-    <div class="section-head"><h2>Códigos de emergencia</h2><p>Se anuncian por audio-evacuación para no generar pánico. Tocá cada código para ver qué hacer.</p></div>
+    <div class="section-head"><h2>Códigos de emergencia</h2><p>Por altoparlante solo se anuncian <b>códigos de color</b>, nunca palabras que asusten. Cada sector escucha solo lo que es para él. Después, tu <b>Líder de Sector</b> te dice de viva voz qué hacer.</p></div>
+    <div class="card cod-yo">
+      <label for="codServicio">Tu servicio (para ver tu ruta en el mapa)</label>
+      <select id="codServicio" onchange="codGuardarServicio(this.value)"><option value="">— Elegí tu servicio —</option></select>
+    </div>
+    <button type="button" class="cod-practicar" onclick="abrirPracticar()"><span class="cp-ic">▶</span><span><b>Practicar</b><span>Escuchá un anuncio de simulacro y elegí qué hace tu sector</span></span></button>
+
     <details class="acc" name="cod" style="--acc:var(--red)">
-      <summary><span class="acc-ic txt">R</span><span class="acc-t"><b>Código Rojo + lugar</b><span>Incendio confirmado en ese lugar</span></span><span class="acc-chev">▾</span></summary>
+      <summary><span class="acc-ic txt">R</span><span class="acc-t"><b>Código Rojo, [lugar]</b><span>Incendio confirmado en ese lugar</span></span><span class="acc-chev">▾</span></summary>
       <div class="acc-body">
+        <div class="cod-q">«Atención, por favor. Código Rojo, Neonatología, Planta Alta.»</div>
+        <p class="cod-m">Lo escuchan: el sector afectado, su sector de refugio y los sectores vecinos. Lo pide el Conmutador al confirmar el fuego.</p>
         <ul class="checklist">
           <li><span class="dot"></span><div><b>Si es tu sector:</b> seguí el protocolo de incendio (botón rojo <b>Emergencia</b> → <b>Veo fuego</b>) y las indicaciones del Líder de Sector.</div></li>
-          <li><span class="dot"></span><div><b>Si es otro sector:</b> no evacúes ni confines. Cerrá puertas, seguí atendiendo y esperá instrucciones.</div></li>
-          <li><span class="dot"></span><div>Si tu sector es el <b>refugio</b> del sector afectado: liberá pasillos y prepará camas o sillas para recibir pacientes.</div></li>
+          <li><span class="dot"></span><div><b>Si tu sector es el refugio:</b> liberá pasillos y prepará camas o sillas para recibir pacientes.</div></li>
+          <li><span class="dot"></span><div><b>Si sos vecino:</b> cerrá puertas, seguí atendiendo y esperá indicaciones.</div></li>
+          <li><span class="dot"></span><div><b>Un Código Rojo no es una orden de evacuar.</b> Nadie sale hasta escuchar un Código Verde para su sector.</div></li>
         </ul>
+        <div class="cod-f">Tu Líder dice: «Hay una emergencia en [lugar]. Nos preparamos y esperamos indicaciones.»</div>
       </div>
     </details>
+
     <details class="acc" name="cod" style="--acc:var(--green)">
-      <summary><span class="acc-ic txt">V</span><span class="acc-t"><b>Código Verde + sector</b><span>Evacuación horizontal de ese sector</span></span><span class="acc-chev">▾</span></summary>
+      <summary><span class="acc-ic txt">V</span><span class="acc-t"><b>Código Verde, [sector], al refugio</b><span>Etapa 2 · Pasar al sector de refugio</span></span><span class="acc-chev">▾</span></summary>
       <div class="acc-body">
+        <div class="cod-q">«Atención, por favor. Código Verde, Quirófano, al refugio.»</div>
+        <p class="cod-m">Lo escuchan: el sector nombrado y su sector de refugio. Lo ordena el Líder de Sector, con aviso al Director de la Emergencia.</p>
         <ul class="checklist">
-          <li><span class="dot"></span><div><b>Si es tu sector:</b> salen primero las visitas; después, los pacientes, según indique el Líder de Sector, hacia el sector de refugio.</div></li>
+          <li><span class="dot"></span><div><b>Si es tu sector:</b> salen primero las visitas; después, los pacientes, hacia el sector de refugio. Los que no caminan, por la <b>ruta rosa</b>.</div></li>
           <li><span class="dot"></span><div>Es un <b>traslado de protección</b> al sector vecino, del otro lado de las puertas cortafuego. No es una salida.</div></li>
-          <li><span class="dot"></span><div>Cerrá las puertas al pasar. <b>Nunca uses los ascensores.</b></div></li>
+          <li><span class="dot"></span><div>Cerrá las puertas al pasar. <b>Nunca uses los ascensores.</b> El Líder cuenta a las personas.</div></li>
           <li><span class="dot"></span><div><b>Si tu sector es el refugio:</b> recibí a los pacientes y ayudá a ubicarlos.</div></li>
         </ul>
+        <div class="cod-f">Tu Líder dice: «Pasamos a [sector de refugio].»</div>
+        <button type="button" class="cod-mapa" onclick="verCodigoEnMapa('refugio')">Ver mi traslado en el mapa ›</button>
       </div>
     </details>
+
+    <details class="acc" name="cod" style="--acc:var(--green)">
+      <summary><span class="acc-ic txt">V</span><span class="acc-t"><b>Código Verde, [sector], al exterior</b><span>Salir de un sector al punto de encuentro</span></span><span class="acc-chev">▾</span></summary>
+      <div class="acc-body">
+        <div class="cod-q">«Atención, por favor. Código Verde, Laboratorio, al exterior.»</div>
+        <p class="cod-m">Lo escucha: el sector nombrado. Quién lo ordena: s/d (en revisión).</p>
+        <ul class="checklist">
+          <li><span class="dot"></span><div>Salí por la <b>ruta verde</b> de tu servicio. Si la verde está bloqueada, por la <b>azul</b>.</div></li>
+          <li><span class="dot"></span><div>Andá al <b>punto de encuentro</b> y quedate con tu Líder para el recuento.</div></li>
+          <li><span class="dot"></span><div><b>Nunca uses los ascensores.</b> No vuelvas a buscar objetos.</div></li>
+        </ul>
+        <div class="cod-f">Tu Líder dice: «Salimos por la salida [N] al punto de encuentro.»</div>
+        <button type="button" class="cod-mapa" onclick="verCodigoEnMapa('exterior')">Ver mi salida en el mapa ›</button>
+      </div>
+    </details>
+
+    <details class="acc" name="cod" style="--acc:var(--green)">
+      <summary><span class="acc-ic txt">V</span><span class="acc-t"><b>Código Verde, [sectores], a Planta Baja</b><span>Etapa 3 · Bajar de Planta Alta</span></span><span class="acc-chev">▾</span></summary>
+      <div class="acc-body">
+        <div class="cod-q">«Atención, por favor. Código Verde, Pediatría y UCIP, a Planta Baja.»</div>
+        <p class="cod-m">Lo escuchan: los sectores de Planta Alta nombrados y los de Planta Baja que reciben. Lo ordena el Director de la Emergencia.</p>
+        <ul class="checklist">
+          <li><span class="dot"></span><div><b>Si tu sector está en Planta Alta y lo nombran:</b> bajá por la <b>caja de escalera</b> que indica tu ruta verde. <b>Nunca por ascensor.</b></div></li>
+          <li><span class="dot"></span><div><b>Si tu sector está en Planta Baja:</b> prepará el lugar para recibir a los que bajan.</div></li>
+          <li><span class="dot"></span><div>El Líder cuenta a las personas al llegar.</div></li>
+        </ul>
+        <div class="cod-f">Tu Líder dice: «Bajamos a Planta Baja por la escalera [N].»</div>
+        <button type="button" class="cod-mapa" onclick="verCodigoEnMapa('pb')">Ver mi escalera en el mapa ›</button>
+      </div>
+    </details>
+
+    <details class="acc" name="cod" style="--acc:var(--green)">
+      <summary><span class="acc-ic txt">V</span><span class="acc-t"><b>Código Verde general</b><span>Etapa 4 · Salen todos</span></span><span class="acc-chev">▾</span></summary>
+      <div class="acc-body">
+        <div class="cod-q">«Atención, por favor. Código Verde general.»</div>
+        <p class="cod-m">Lo escuchan: todos los sectores. Lo ordena el Director de la Emergencia o el jefe de Bomberos.</p>
+        <ul class="checklist">
+          <li><span class="dot"></span><div>Salí por la <b>ruta verde</b> de tu servicio (azul si la verde está bloqueada) al <b>punto de encuentro</b>.</div></li>
+          <li><span class="dot"></span><div>En el punto de encuentro, quedate con tu Líder: informa el recuento al Director.</div></li>
+          <li><span class="dot"></span><div><b>Nunca uses los ascensores.</b> Nadie vuelve a entrar sin autorización.</div></li>
+        </ul>
+        <div class="cod-f">Tu Líder dice: «Salimos todos al punto de encuentro.»</div>
+        <button type="button" class="cod-mapa" onclick="verCodigoEnMapa('general')">Ver mi salida en el mapa ›</button>
+      </div>
+    </details>
+
     <details class="acc" name="cod" style="--acc:#1F2937">
       <summary><span class="acc-ic txt">N</span><span class="acc-t"><b>Código Negro</b><span>Amenaza de bomba</span></span><span class="acc-chev">▾</span></summary>
       <div class="acc-body">
+        <div class="cod-q">«Atención, por favor. Código Negro.»</div>
+        <p class="cod-m">Lo escuchan: los sectores que indique el Director de la Emergencia, que es el único que lo ordena.</p>
         <ul class="checklist">
           <li><span class="dot"></span><div>Siempre se toma como real. Seguí las indicaciones del Director de la Emergencia y de la Policía.</div></li>
           <li><span class="dot"></span><div>El Líder de Sector revisa el sector sin tocar nada y avisa al Conmutador: «sin novedad» o «hallazgo en [lugar]».</div></li>
           <li><span class="dot"></span><div>Un bolso olvidado no es sospechoso por sí mismo. Si un objeto está escondido, tiene cables o líquidos, o no es habitual: no lo toques, alejate fuera de su vista y avisá desde lejos.</div></li>
           <li><span class="dot"></span><div>No uses celular ni radio cerca de un objeto sospechoso.</div></li>
-          <li><span class="dot"></span><div>Si se ordena salir: llevate tus cosas y usá solo la ruta indicada, nunca cerca del objeto.</div></li>
+          <li><span class="dot"></span><div>Se sale <b>solo con un Código Verde</b>: llevate tus cosas y usá solo la ruta indicada, nunca cerca del objeto.</div></li>
           <li><span class="dot"></span><div>Si recibís la amenaza: botón rojo <b>Emergencia</b> → <b>Amenaza de bomba</b>.</div></li>
+        </ul>
+        <div class="cod-f">Tu Líder dice: «Revisamos el sector sin tocar nada.»</div>
+      </div>
+    </details>
+
+    <details class="acc" name="cod" style="--acc:var(--steel)">
+      <summary><span class="acc-ic txt">✓</span><span class="acc-t"><b>Código [color], fin</b><span>Terminó la emergencia</span></span><span class="acc-chev">▾</span></summary>
+      <div class="acc-body">
+        <div class="cod-q">«Atención, por favor. Código Rojo, fin.»</div>
+        <p class="cod-m">Lo escuchan los mismos sectores que escucharon el código. Lo autoriza el Director de la Emergencia, con el visto bueno de Bomberos si intervinieron.</p>
+        <ul class="checklist">
+          <li><span class="dot"></span><div>Volvé a tu actividad. Se reingresa solo a los sectores habilitados.</div></li>
+        </ul>
+        <div class="cod-f">Tu Líder dice: «Terminado, volvemos a [sector].»</div>
+      </div>
+    </details>
+
+    <details class="acc" name="cod" style="--acc:var(--navy)">
+      <summary><span class="acc-ic txt">i</span><span class="acc-t"><b>Cómo se anuncia</b><span>Fórmula, simulacros y etapa 1</span></span><span class="acc-chev">▾</span></summary>
+      <div class="acc-body">
+        <ul class="checklist">
+          <li><span class="dot"></span><div>Siempre igual, con voz calma, <b>tres veces</b>: «Atención, por favor. Código [color], [lugar o sector], [destino].»</div></li>
+          <li><span class="dot"></span><div>En los simulacros empieza y termina con <b>«Esto es un simulacro»</b>.</div></li>
+          <li><span class="dot"></span><div>Si falla el altoparlante, el Conmutador llama por teléfono al Líder de cada sector con el mismo anuncio.</div></li>
+          <li><span class="dot"></span><div>La etapa 1 (sacar a las personas del local con fuego y cerrar la puerta) <b>no se anuncia</b>: se ordena de viva voz en el lugar.</div></li>
         </ul>
       </div>
     </details>
-    <p style="font-size:12.5px; color:var(--ink-soft); margin-top:12px; line-height:1.45">Los códigos los define el Plan de Evacuación y Autoprotección del HMH (versión en revisión).</p>
+    <p style="font-size:12.5px; color:var(--ink-soft); margin-top:12px; line-height:1.45">Según el Protocolo de códigos de emergencia y anuncios por altoparlante del HMH y el Plan de Evacuación y Autoprotección (versión en revisión).</p>
+  </section>
+
+  <!-- ===================== PRACTICAR ===================== -->
+  <section class="view" id="view-practicar">
+    <div style="margin-bottom:12px"><span style="font-size:12.5px; color:var(--steel-dark); font-weight:700; cursor:pointer" onclick="goTo('codigos')">← Códigos</span></div>
+    <div class="section-head"><h2>Practicar los códigos</h2><p>Escuchá el anuncio de simulacro y elegí qué hace tu sector. No se guarda nada: es solo para aprender.</p></div>
+    <div class="card pr-card">
+      <div class="pr-score" id="prScore">0 de 0</div>
+      <div class="pr-sim">Esto es un simulacro</div>
+      <div class="pr-anuncio" id="prAnuncio"></div>
+      <button type="button" class="pr-oir" id="prOir" onclick="prEscuchar()">🔊 Escuchar el anuncio</button>
+      <div class="pr-rol" id="prRol"></div>
+      <div class="pr-ops" id="prOps"></div>
+      <div class="pr-fb" id="prFb" style="display:none"></div>
+      <button type="button" class="pr-next" id="prNext" style="display:none" onclick="prNuevo()">Otro anuncio ›</button>
+    </div>
   </section>
 
   <!-- ===================== AYUDA ===================== -->
@@ -698,7 +832,7 @@
         <ul class="checklist">
           <li><span class="dot"></span><div>Tocá el botón rojo <b>Emergencia</b> y elegí lo que está pasando. Cada pantalla tiene los pasos en orden.</div></li>
           <li><span class="dot"></span><div>Primero avisá: <b>Conmutador, interno 1000</b>. Desde celular: 280 4468-400.</div></li>
-          <li><span class="dot"></span><div>Para entender un anuncio por audio, entrá a <b>Códigos</b>.</div></li>
+          <li><span class="dot"></span><div>Para entender un anuncio por altoparlante, entrá a <b>Códigos</b>. Ahí podés <b>Practicar</b> con anuncios de simulacro.</div></li>
         </ul>
       </div>
     </details>
@@ -753,7 +887,7 @@
         </ul>
       </div>
     </details>
-    <p style="font-size:12px; color:var(--ink-soft); margin-top:14px; text-align:center">Versión hmh-v15 · 01/11/2026 · Servicio de Higiene y Seguridad Laboral</p>
+    <p style="font-size:12px; color:var(--ink-soft); margin-top:14px; text-align:center">Versión hmh-v16 · 01/11/2026 · Servicio de Higiene y Seguridad Laboral</p>
   </section>
 
   <!-- ===================== EXTINTORES ===================== -->
@@ -819,10 +953,10 @@
       <summary><span class="acc-ic txt">1–4</span><span class="acc-t"><b>Las cuatro etapas</b><span>Quién ordena cada una</span></span><span class="acc-chev">▾</span></summary>
       <div class="acc-body">
         <ul class="checklist">
-          <li><span class="dot"></span><div><b>1 · Confinamiento del local.</b> Se saca a las personas del local afectado y se cierra la puerta. Ordena: Líder de Sector.</div></li>
-          <li><span class="dot"></span><div><b>2 · Evacuación horizontal.</b> Todo el sector pasa al sector vecino (refugio), del otro lado de las puertas cortafuego. Ordena: Líder de Sector, con aviso al Director.</div></li>
-          <li><span class="dot"></span><div><b>3 · Evacuación vertical.</b> De Planta Alta a Planta Baja por las escaleras protegidas. Ordena: Director de la Emergencia.</div></li>
-          <li><span class="dot"></span><div><b>4 · Evacuación total.</b> Todos salen al punto de encuentro. Ordena: Director de la Emergencia o jefe de Bomberos.</div></li>
+          <li><span class="dot"></span><div><b>1 · Confinamiento del local.</b> Se saca a las personas del local afectado y se cierra la puerta. Ordena: Líder de Sector. No se anuncia: se dice de viva voz.</div></li>
+          <li><span class="dot"></span><div><b>2 · Evacuación horizontal.</b> Todo el sector pasa al sector vecino (refugio), del otro lado de las puertas cortafuego. Ordena: Líder de Sector, con aviso al Director. Se anuncia «Código Verde, [sector], al refugio».</div></li>
+          <li><span class="dot"></span><div><b>3 · Evacuación vertical.</b> De Planta Alta a Planta Baja por las escaleras protegidas. Ordena: Director de la Emergencia. Se anuncia «Código Verde, [sectores], a Planta Baja».</div></li>
+          <li><span class="dot"></span><div><b>4 · Evacuación total.</b> Todos salen al punto de encuentro. Ordena: Director de la Emergencia o jefe de Bomberos. Se anuncia «Código Verde general».</div></li>
           <li><span class="dot"></span><div>Cada etapa se activa solo si la anterior no alcanza. <b>Nunca se usan los ascensores.</b></div></li>
         </ul>
       </div>
@@ -834,6 +968,7 @@
           <li><span class="dot"></span><div>El hospital <b>no se evacúa por decisión individual</b>. El Director de la Emergencia decide la estrategia.</div></li>
           <li><span class="dot"></span><div>Cerrá puertas, liberá pasillos y prepará a los pacientes para un posible traslado.</div></li>
           <li><span class="dot"></span><div>Esperá la orden del <b>Líder de Sector</b>.</div></li>
+          <li><span class="dot"></span><div>Nadie sale hasta escuchar un <b>Código Verde</b> para su sector.</div></li>
         </ul>
       </div>
     </details>
@@ -926,6 +1061,7 @@
         <ul class="checklist">
           <li><span class="dot"></span><div>Verifica la alarma de su sector (máx. 2 min) e informa al Conmutador.</div></li>
           <li><span class="dot"></span><div>Ordena el confinamiento del local y la evacuación horizontal de su sector (etapas 1 y 2), con aviso al Director. En las etapas 3 y 4 transmite la orden del Director y conduce la evacuación del sector.</div></li>
+          <li><span class="dot"></span><div>Con cada código, dice en su sector, de viva voz, qué hacer (ver <b>Códigos</b>).</div></li>
           <li><span class="dot"></span><div>Reporta el conteo del personal y pacientes a su cargo.</div></li>
         </ul>
       </div>
@@ -935,7 +1071,7 @@
       <div class="acc-body">
         <ul class="checklist">
           <li><span class="dot"></span><div>Recibe los avisos y las verificaciones de alarma.</div></li>
-          <li><span class="dot"></span><div>Activa el Código Rojo por audio-evacuación.</div></li>
+          <li><span class="dot"></span><div>Activa los códigos: pide el anuncio por altoparlante a los sectores que corresponden y lo confirma por teléfono al Líder de cada sector.</div></li>
           <li><span class="dot"></span><div>Avisa a Seguridad, Mantenimiento y al Director de la Emergencia.</div></li>
           <li><span class="dot"></span><div>Ante incendio, llama siempre a Bomberos (100) y a Policía (101), aunque el fuego ya esté apagado, y avisa al personal policial que está en el hospital.</div></li>
         </ul>
@@ -1082,6 +1218,7 @@
   <section class="view" id="view-mapa-pa">
     <div style="margin-bottom:12px"><span style="font-size:12.5px; color:var(--steel-dark); font-weight:700; cursor:pointer" onclick="goTo('planos-menu')">← Mapas interactivos</span></div>
     <div class="section-head"><h2>Planta Alta</h2><p>Elegí tu servicio para ver sus rutas. Tocá una salida para simular que está bloqueada.</p></div>
+    <div class="cod-banner" id="codBannerPa"><span class="cb-t"></span><button type="button" aria-label="Cerrar" onclick="cerrarBannerCodigo(this)">×</button></div>
     <div class="card" style="margin-bottom:12px; padding:14px">
       <label style="font-size:13px; font-weight:800; color:var(--navy); display:block; margin-bottom:8px">Tu servicio</label>
       <select id="servicioSelect" onchange="mostrarRutasServicio(this.value)" style="width:100%; padding:12px; border-radius:10px; border:1.5px solid var(--line); font-size:14px; background:#fff; color:var(--navy)">
@@ -1162,6 +1299,7 @@
   <section class="view" id="view-mapa-pb">
     <div style="margin-bottom:12px"><span style="font-size:12.5px; color:var(--steel-dark); font-weight:700; cursor:pointer" onclick="goTo('planos-menu')">← Mapas interactivos</span></div>
     <div class="section-head"><h2>Planta Baja</h2><p>Elegí tu servicio para ver sus rutas. Tocá una salida para simular que está bloqueada.</p></div>
+    <div class="cod-banner" id="codBannerPb"><span class="cb-t"></span><button type="button" aria-label="Cerrar" onclick="cerrarBannerCodigo(this)">×</button></div>
     <div class="card" style="margin-bottom:12px; padding:14px">
       <label style="font-size:13px; font-weight:800; color:var(--navy); display:block; margin-bottom:8px">Tu servicio</label>
       <select id="servicioSelectPB" onchange="mostrarRutasServicioPB(this.value)" style="width:100%; padding:12px; border-radius:10px; border:1.5px solid var(--line); font-size:14px; background:#fff; color:var(--navy)">
@@ -1243,7 +1381,7 @@ const TILES = [
   {id:'extintores', title:'Uso del extintor', desc:'Cuándo y cómo usarlo.', icon:'<span class="gicon">&#xf1d8;</span>', accent:'var(--red-dark)', roles:['publico','admin']},
   {id:'roles', title:'Roles en emergencia', desc:'Quién hace qué.', icon:'<span class="gicon">&#xf233;</span>', accent:'var(--navy-2)', roles:['publico','admin']},
   {id:'telefonos', title:'Teléfonos', desc:'Conmutador y emergencias.', icon:'<span class="gicon">&#xf0d4;</span>', accent:'var(--green)', roles:['publico','admin']},
-  {id:'codigos', title:'Códigos', desc:'Rojo, Verde y Negro: qué hacer.', icon:'<span style="font-family:inherit; font-weight:800; font-size:22px; line-height:1">C</span>', accent:'var(--red)', roles:['publico','admin']},
+  {id:'codigos', title:'Códigos', desc:'Qué significa cada anuncio. Practicar.', icon:'<span style="font-family:inherit; font-weight:800; font-size:22px; line-height:1">C</span>', accent:'var(--red)', roles:['publico','admin']},
   {id:'recursos', title:'Recursos', desc:'Trivia y videos.', icon:'<span class="gicon">&#xe04b;</span>', accent:'var(--steel)', roles:['publico','admin']},
   {id:'ayuda', title:'Ayuda', desc:'Cómo usar y mantener la app.', icon:'<span style="font-family:inherit; font-weight:800; font-size:22px; line-height:1">?</span>', accent:'var(--navy)', roles:['publico','admin']},
 ];
@@ -1523,6 +1661,7 @@ function renderMapas(){
   document.querySelectorAll('.asist-select').forEach(function(s){ s.innerHTML = ops; s.value = asistActual; });
   if(servicioActual){ document.getElementById('servicioSelect').value = servicioActual; mostrarRutasServicio(servicioActual); }
   if(servicioActualPB){ document.getElementById('servicioSelectPB').value = servicioActualPB; mostrarRutasServicioPB(servicioActualPB); }
+  codLlenarServicios();
 }
 function cargarMapas(){
   return fetch('mapas.json', {cache:'no-cache'}).then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
@@ -1530,6 +1669,113 @@ function cargarMapas(){
     .catch(function(){ showToast('No se pudieron cargar los mapas. Abrí la app una vez con internet.'); });
 }
 window.addEventListener('load', cargarMapas);
+/* ============ CÓDIGOS: mi servicio, mapa por código y modo Practicar (hmh-v16) ============ */
+function codLeerServicio(){ try{ return localStorage.getItem('hmh_mi_servicio') || ''; }catch(e){ return ''; } }
+function codGuardarServicio(v){ try{ localStorage.setItem('hmh_mi_servicio', v); }catch(e){} }
+function codLlenarServicios(){
+  const sel = document.getElementById('codServicio'); if(!sel || !MAPAS) return;
+  let h = '<option value="">— Elegí tu servicio —</option>';
+  [['pa','Planta Alta'],['pb','Planta Baja']].forEach(function(p){
+    const P = MAPAS.plantas[p[0]]; if(!P) return;
+    h += '<optgroup label="'+p[1]+'">' + P.servicios.slice().sort(function(a,b){ return a.nombre.localeCompare(b.nombre,'es'); }).map(function(s){ return '<option value="'+p[0]+':'+escMapa(s.id)+'">'+escMapa(s.nombre)+'</option>'; }).join('') + '</optgroup>';
+  });
+  sel.innerHTML = h; sel.value = codLeerServicio();
+}
+const COD_MAPA = {
+  refugio: {niveles:{'preferente':false,'alternativa':false,'no-recomendada':false,'tr-recomendado':true,'tr-no-apto':true}, txt:'<b>Código Verde, al refugio.</b> Rosa: traslado recomendado al sector de refugio para los que no caminan. Gris: recorrido no apto para camilla o cama.'},
+  exterior: {niveles:{'preferente':true,'alternativa':true,'no-recomendada':false,'tr-recomendado':false,'tr-no-apto':false}, txt:'<b>Código Verde, al exterior.</b> Verde: tu salida de preferencia. Azul: la alternativa, si la verde está bloqueada.'},
+  pb:       {niveles:{'preferente':true,'alternativa':false,'no-recomendada':false,'tr-recomendado':false,'tr-no-apto':false}, txt:'<b>Código Verde, a Planta Baja.</b> Tu ruta verde lleva a la caja de escalera por la que bajás. Nunca por ascensor.'},
+  general:  {niveles:{'preferente':true,'alternativa':true,'no-recomendada':false,'tr-recomendado':false,'tr-no-apto':false}, txt:'<b>Código Verde general.</b> Verde: tu salida de preferencia al punto de encuentro. Azul: la alternativa, si la verde está bloqueada.'}
+};
+function verCodigoEnMapa(cod){
+  const v = (document.getElementById('codServicio')||{}).value || codLeerServicio();
+  if(!v){ showToast('Elegí primero tu servicio, arriba en esta pantalla'); document.getElementById('codServicio').focus(); return; }
+  const k = v.split(':')[0], id = v.slice(3);
+  const C = COD_MAPA[cod]; let txt = C.txt;
+  if(cod==='pb' && k==='pb') txt = '<b>Código Verde, a Planta Baja.</b> Tu servicio está en Planta Baja: preparate para recibir a los que bajan. Abajo ves tu propia salida, por si después se ordena salir.';
+  Object.keys(C.niveles).forEach(function(nv){
+    verNivel[nv] = C.niveles[nv];
+    document.querySelectorAll('.tg-nv[data-nv="'+nv+'"]').forEach(function(b){ b.setAttribute('aria-pressed', verNivel[nv] ? 'true' : 'false'); });
+  });
+  const ban = document.getElementById(k==='pa' ? 'codBannerPa' : 'codBannerPb');
+  ban.querySelector('.cb-t').innerHTML = txt; ban.style.display = 'flex';
+  goTo(k==='pa' ? 'mapa-pa' : 'mapa-pb');
+  const sel = document.getElementById(k==='pa' ? 'servicioSelect' : 'servicioSelectPB'); sel.value = id;
+  if(k==='pa') mostrarRutasServicio(id); else mostrarRutasServicioPB(id);
+}
+function cerrarBannerCodigo(el){ el.closest('.cod-banner').style.display = 'none'; }
+
+/* Modo Practicar: anuncio de simulacro + lugar del sector que escucha → qué hace el sector */
+const PR_ACC = {
+  inc:  'Aplicar el protocolo de incendio en el lugar: confinar y avisar',
+  esp:  'Cerrar puertas, seguir atendiendo y esperar indicaciones',
+  rec:  'Prepararse para recibir pacientes',
+  ref:  'Trasladar a todos al sector de refugio y cerrar puertas cortafuego',
+  ext:  'Salir por la ruta verde al punto de encuentro',
+  baj:  'Bajar a Planta Baja por la caja de escalera, sin ascensor',
+  rev:  'Revisar el sector sin tocar nada e informar «sin novedad» o «hallazgo»',
+  vol:  'Volver a la actividad'
+};
+const PR_ESC = [
+  {cod:'Código Rojo, {A}', rol:'Tu sector es <b>{A}</b>, el lugar nombrado.', ok:'inc', fr:'Hay una emergencia en {A}. Nos preparamos y esperamos indicaciones.', exp:'En tu sector hay fuego: protocolo de incendio (rescatar si es seguro, avisar, cerrar la puerta). Para pasar al refugio hace falta un Código Verde.'},
+  {cod:'Código Rojo, {A}', rol:'Tu sector es el <b>sector de refugio</b> de {A}.', ok:'rec', fr:'Hay una emergencia en {A}. Nos preparamos y esperamos indicaciones.', exp:'El refugio libera pasillos y prepara camas o sillas. Todavía nadie se mueve: un Código Rojo no es una orden de evacuar.'},
+  {cod:'Código Rojo, {A}', rol:'Tu sector es <b>vecino</b> de {A}.', ok:'esp', fr:'Hay una emergencia en {A}. Nos preparamos y esperamos indicaciones.', exp:'Los vecinos cierran puertas y siguen atendiendo. Se sale solo con un Código Verde para tu sector.'},
+  {cod:'Código Verde, {A}, al refugio', rol:'Tu sector es <b>{A}</b>.', ok:'ref', fr:'Pasamos a [sector de refugio].', exp:'Etapa 2: todo el sector pasa al sector de refugio, del otro lado de las puertas cortafuego. Los que no caminan, por la ruta rosa.'},
+  {cod:'Código Verde, {A}, al refugio', rol:'Tu sector es el <b>sector de refugio</b> de {A}.', ok:'rec', fr:'Recibimos a los pacientes de {A}.', exp:'El refugio recibe a los pacientes y ayuda a ubicarlos.'},
+  {cod:'Código Verde, {A}, al exterior', rol:'Tu sector es <b>{A}</b>.', ok:'ext', fr:'Salimos por la salida [N] al punto de encuentro.', exp:'Se sale por la ruta verde (azul si la verde está bloqueada) y se hace el recuento en el punto de encuentro.'},
+  {cod:'Código Verde, {A} y {B}, a Planta Baja', rol:'Tu sector es <b>{A}</b>, en Planta Alta.', ok:'baj', fr:'Bajamos a Planta Baja por la escalera [N].', exp:'Etapa 3: se baja por la caja de escalera protegida que indica tu ruta. Nunca por ascensor.', pa:true},
+  {cod:'Código Verde, {A} y {B}, a Planta Baja', rol:'Tu sector está en <b>Planta Baja</b> y recibe a los que bajan.', ok:'rec', fr:'Recibimos a los que bajan de Planta Alta.', exp:'Los sectores de Planta Baja que reciben preparan el lugar.', pa:true},
+  {cod:'Código Verde general', rol:'Estás en <b>cualquier sector</b> del hospital.', ok:'ext', fr:'Salimos todos al punto de encuentro.', exp:'Etapa 4: todos salen por su ruta verde al punto de encuentro; el Líder informa el recuento al Director.'},
+  {cod:'Código Negro', rol:'Tu sector es uno de los que <b>nombró el Director</b>.', ok:'rev', fr:'Revisamos el sector sin tocar nada.', exp:'Se revisa sin tocar nada y se informa al Conmutador. Se sale solo si después se anuncia un Código Verde.'},
+  {cod:'Código Rojo, fin', rol:'Tu sector había escuchado el Código Rojo.', ok:'vol', fr:'Terminado, volvemos a [sector].', exp:'El fin lo autoriza el Director, con el visto bueno de Bomberos si intervinieron. Se vuelve solo a los sectores habilitados.'}
+];
+let prActual = null, prBien = 0, prTotal = 0;
+function prLugares(soloPa){
+  let L = [];
+  if(MAPAS){ ['pa','pb'].forEach(function(k){ if(soloPa && k!=='pa') return; const P = MAPAS.plantas[k]; if(P) P.servicios.forEach(function(s){ L.push(s.nombre); }); }); }
+  if(!L.length) L = soloPa ? ['Pediatría','Neonatología'] : ['Laboratorio','Pediatría','Neonatología'];
+  return L;
+}
+function prAzar(a){ return a[Math.floor(Math.random()*a.length)]; }
+function prMezclar(a){ a = a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function abrirPracticar(){ prBien = 0; prTotal = 0; goTo('practicar'); prNuevo(); }
+function prNuevo(){
+  let e; do { e = prAzar(PR_ESC); } while(prActual && e===prActual.e && PR_ESC.length>1);
+  const L = prLugares(!!e.pa); const A = prAzar(L); let B = prAzar(L); if(L.length>1) while(B===A) B = prAzar(L);
+  const r = function(t){ return t.replace(/\{A\}/g, A).replace(/\{B\}/g, B); };
+  const ops = prMezclar([e.ok].concat(prMezclar(Object.keys(PR_ACC).filter(function(x){ return x!==e.ok; })).slice(0,3)));
+  prActual = {e:e, anuncio:'Atención, por favor. ' + r(e.cod) + '.', fr:r(e.fr), exp:r(e.exp), ops:ops};
+  document.getElementById('prAnuncio').textContent = '«' + prActual.anuncio + '»';
+  document.getElementById('prRol').innerHTML = r(e.rol) + ' ¿Qué hace tu sector?';
+  document.getElementById('prOps').innerHTML = ops.map(function(o){ return '<button type="button" class="pr-op" data-o="'+o+'" onclick="prResponder(this)">'+PR_ACC[o]+'</button>'; }).join('');
+  document.getElementById('prFb').style.display = 'none';
+  document.getElementById('prNext').style.display = 'none';
+  document.getElementById('prScore').textContent = prBien + ' de ' + prTotal;
+  document.getElementById('prOir').style.display = ('speechSynthesis' in window) ? '' : 'none';
+}
+function prResponder(b){
+  if(!prActual || prActual.resp) return;
+  prActual.resp = true; prTotal++;
+  const ok = b.dataset.o === prActual.e.ok; if(ok) prBien++;
+  document.querySelectorAll('#prOps .pr-op').forEach(function(x){ x.disabled = true; if(x.dataset.o===prActual.e.ok) x.classList.add('ok'); else if(x===b) x.classList.add('mal'); });
+  const fb = document.getElementById('prFb');
+  fb.className = 'pr-fb ' + (ok ? 'ok' : 'mal');
+  fb.innerHTML = '<b>' + (ok ? '¡Bien!' : 'Casi.') + '</b> ' + escMapa(prActual.exp) + '<div class="pr-fr">Tu Líder dice: «' + escMapa(prActual.fr) + '»</div>';
+  fb.style.display = 'block';
+  document.getElementById('prNext').style.display = 'block';
+  document.getElementById('prScore').textContent = prBien + ' de ' + prTotal;
+}
+function prEscuchar(){
+  if(!('speechSynthesis' in window) || !prActual) return;
+  try{
+    speechSynthesis.cancel();
+    const t = 'Esto es un simulacro. ' + prActual.anuncio + ' ' + prActual.anuncio + ' ' + prActual.anuncio + ' Esto es un simulacro.';
+    const u = new SpeechSynthesisUtterance(t); u.lang = 'es-AR'; u.rate = 0.9;
+    const v = speechSynthesis.getVoices().find(function(x){ return /^es/i.test(x.lang); }); if(v) u.voice = v;
+    speechSynthesis.speak(u);
+  }catch(e){ showToast('Tu celular no puede leer el anuncio en voz alta'); }
+}
+
 
 let servicioActual = '';
 let asistActual = '';
