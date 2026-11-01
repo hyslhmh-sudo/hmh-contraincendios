@@ -119,6 +119,8 @@
   .map-mk.salida.available-highlight{box-shadow:0 0 0 4px var(--green), 0 1px 4px rgba(0,0,0,.25); animation:pulseGreen 1.2s ease-in-out infinite;}
   .map-mk.caja-estanca{background:var(--steel); font-size:14px; cursor:default;}
   .map-mk.salida.caja-estanca{background:var(--steel); cursor:pointer;}
+  .map-mk.salida.escalera-interna,.map-mk-pb.salida-pb.escalera-interna{background:#5B6472; cursor:pointer;}
+  .map-mk.salida.escalera-interna.blocked,.map-mk-pb.salida-pb.escalera-interna.blocked-pb{background:#9a9a9a;}
   .map-mk.salida.caja-estanca.blocked{background:#7a7a7a;}
   .map-mk-pb.salida-pb.estanco-pb{background:var(--steel); cursor:pointer;}
   .map-mk-pb.salida-pb.estanco-pb.blocked-pb{background:#7a7a7a;}
@@ -736,7 +738,7 @@
         </ul>
       </div>
     </details>
-    <p style="font-size:12px; color:var(--ink-soft); margin-top:14px; text-align:center">Versión hmh-v11 · 01/11/2026 · Servicio de Higiene y Seguridad Laboral</p>
+    <p style="font-size:12px; color:var(--ink-soft); margin-top:14px; text-align:center">Versión hmh-v12 · 01/11/2026 · Servicio de Higiene y Seguridad Laboral</p>
   </section>
 
   <!-- ===================== EXTINTORES ===================== -->
@@ -1427,8 +1429,8 @@ const MK_ICON = {
   encuentro:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="white" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg>'
 };
 const MAPA_CONF = {
-  pa:{wrap:'mapaPaWrap', svg:'routeSvg', sel:'servicioSelect', zg:'zonasGroup', hg:'horizontalGroup', hsel:'horizontalSelect', mk:'map-mk', cls:{salida:'salida', 'escalera-pb':'salida escalera-pb', escalera:'salida caja-estanca', encuentro:'encuentro'}, onclick:'toggleSalida(this)', route:'service-route', arrow:'arrow-fast', zona:'zona-estanca', zbg:'zona-label-bg', zlab:'zona-label'},
-  pb:{wrap:'mapaPbWrap', svg:'routeSvgPB', sel:'servicioSelectPB', zg:'zonasGroupPB', hg:null, hsel:null, mk:'map-mk-pb', cls:{salida:'salida-pb', 'escalera-pb':'salida-pb escalera-pb', escalera:'salida-pb estanco-pb', encuentro:'encuentro'}, onclick:'toggleSalidaPB(this)', route:'service-route-pb', arrow:'arrow-pb', zona:'zona-estanca-pb', zbg:'zona-label-bg-pb', zlab:'zona-label-pb'}
+  pa:{wrap:'mapaPaWrap', svg:'routeSvg', sel:'servicioSelect', zg:'zonasGroup', hg:'horizontalGroup', hsel:'horizontalSelect', mk:'map-mk', cls:{salida:'salida', 'escalera-pb':'salida escalera-pb', escalera:'salida caja-estanca', 'escalera-interna':'salida escalera-interna', encuentro:'encuentro'}, onclick:'toggleSalida(this)', route:'service-route', arrow:'arrow-fast', zona:'zona-estanca', zbg:'zona-label-bg', zlab:'zona-label'},
+  pb:{wrap:'mapaPbWrap', svg:'routeSvgPB', sel:'servicioSelectPB', zg:'zonasGroupPB', hg:null, hsel:null, mk:'map-mk-pb', cls:{salida:'salida-pb', 'escalera-pb':'salida-pb escalera-pb', escalera:'salida-pb estanco-pb', 'escalera-interna':'salida-pb escalera-interna', encuentro:'encuentro'}, onclick:'toggleSalidaPB(this)', route:'service-route-pb', arrow:'arrow-pb', zona:'zona-estanca-pb', zbg:'zona-label-bg-pb', zlab:'zona-label-pb'}
 };
 function escMapa(t){ return String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
 function dMapa(p, cerrar){ return p.map(function(q,i){ return (i?'L':'M') + q[0].toFixed(2) + ',' + q[1].toFixed(2); }).join(' ') + (cerrar?' Z':''); }
