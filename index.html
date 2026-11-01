@@ -745,7 +745,7 @@
         </ul>
       </div>
     </details>
-    <p style="font-size:12px; color:var(--ink-soft); margin-top:14px; text-align:center">Versión hmh-v13 · 01/11/2026 · Servicio de Higiene y Seguridad Laboral</p>
+    <p style="font-size:12px; color:var(--ink-soft); margin-top:14px; text-align:center">Versión hmh-v14 · 01/11/2026 · Servicio de Higiene y Seguridad Laboral</p>
   </section>
 
   <!-- ===================== EXTINTORES ===================== -->
@@ -1082,7 +1082,7 @@
       <select id="asistSelect" class="asist-select" onchange="cambiarAsistencia(this.value)" style="width:100%; padding:12px; border-radius:10px; border:1.5px solid var(--line); font-size:14px; background:#fff; color:var(--navy)">
         <option value="">Todas</option></select>
       <div class="leyenda-rutas" style="margin-top:12px">
-        <div><span class="l" style="background:#0E8F4F"></span><span><b>Verde:</b> salida de preferencia, al punto de encuentro más próximo. Se ve siempre.</span></div>
+        <button type="button" class="tg-nv" data-nv="preferente" aria-pressed="true" onclick="toggleNivel('preferente')"><span class="l" style="background:#0E8F4F"></span><span><b>Verde:</b> salida de preferencia, al punto de encuentro más próximo.</span><span class="tg-sw"></span></button>
         <button type="button" class="tg-nv" data-nv="alternativa" aria-pressed="false" onclick="toggleNivel('alternativa')"><span class="l" style="background:#1F5FBF"></span><span><b>Azul:</b> salida alternativa, si no se puede salir por la verde (más tiempo de evacuación).</span><span class="tg-sw"></span></button>
         <button type="button" class="tg-nv" data-nv="no-recomendada" aria-pressed="false" onclick="toggleNivel('no-recomendada')"><span class="l" style="background:#E6A700"></span><span><b>Amarillo:</b> no recomendada pero posible: ahí no está planificada la asistencia del paciente.</span><span class="tg-sw"></span></button>
       </div>
@@ -1161,7 +1161,7 @@
       <select id="asistSelectPB" class="asist-select" onchange="cambiarAsistencia(this.value)" style="width:100%; padding:12px; border-radius:10px; border:1.5px solid var(--line); font-size:14px; background:#fff; color:var(--navy)">
         <option value="">Todas</option></select>
       <div class="leyenda-rutas" style="margin-top:12px">
-        <div><span class="l" style="background:#0E8F4F"></span><span><b>Verde:</b> salida de preferencia, al punto de encuentro más próximo. Se ve siempre.</span></div>
+        <button type="button" class="tg-nv" data-nv="preferente" aria-pressed="true" onclick="toggleNivel('preferente')"><span class="l" style="background:#0E8F4F"></span><span><b>Verde:</b> salida de preferencia, al punto de encuentro más próximo.</span><span class="tg-sw"></span></button>
         <button type="button" class="tg-nv" data-nv="alternativa" aria-pressed="false" onclick="toggleNivel('alternativa')"><span class="l" style="background:#1F5FBF"></span><span><b>Azul:</b> salida alternativa, si no se puede salir por la verde (más tiempo de evacuación).</span><span class="tg-sw"></span></button>
         <button type="button" class="tg-nv" data-nv="no-recomendada" aria-pressed="false" onclick="toggleNivel('no-recomendada')"><span class="l" style="background:#E6A700"></span><span><b>Amarillo:</b> no recomendada pero posible: ahí no está planificada la asistencia del paciente.</span><span class="tg-sw"></span></button>
       </div>
@@ -1515,7 +1515,7 @@ window.addEventListener('load', cargarMapas);
 
 let servicioActual = '';
 let asistActual = '';
-const verNivel = {'alternativa': false, 'no-recomendada': false};   // la verde se ve siempre
+const verNivel = {'preferente': true, 'alternativa': false, 'no-recomendada': false};   // la verde arranca activada; cada color se activa o desactiva con su botón
 function toggleNivel(nv){
   verNivel[nv] = !verNivel[nv];
   document.querySelectorAll('.tg-nv[data-nv="'+nv+'"]').forEach(function(b){ b.setAttribute('aria-pressed', verNivel[nv] ? 'true' : 'false'); });
@@ -1541,7 +1541,7 @@ function mostrarRutasPlanta(k, servicioKey, bloqueadas){
     .forEach(function(r){
       r.classList.add('nv-' + r.dataset.nivel);
       if(!asistOk(r.dataset.asist)) return;
-      if(r.dataset.nivel !== 'preferente' && !verNivel[r.dataset.nivel]) return;
+      if(!verNivel[r.dataset.nivel]) return;
       r.classList.add('show');
       if(bloqueadas.includes(r.dataset.exit)){
         r.classList.add('exit-blocked');
