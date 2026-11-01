@@ -698,7 +698,7 @@
       <summary><span class="acc-ic txt">GH</span><span class="acc-t"><b>Dónde está y cómo publicar</b></span><span class="acc-chev">▾</span></summary>
       <div class="acc-body">
         <ul class="checklist">
-          <li><span class="dot"></span><div>Repositorio: <b>hyslhmh-sudo/hmh-contraincendios</b> (GitHub Pages). Archivos: index.html, sw.js, manifest.webmanifest, íconos, mapas.json y los planos mapa-pa.jpeg y mapa-pb.jpeg.</div></li>
+          <li><span class="dot"></span><div>Repositorio: <b>hyslhmh-sudo/hmh-contraincendios</b> (GitHub Pages). Archivos: index.html, sw.js, manifest.webmanifest, íconos, mapas.json y los planos (el nombre de cada uno figura en mapas.json; si se cambia un plano, subirlo con otro nombre).</div></li>
           <li><span class="dot"></span><div><b>Mapas:</b> se editan en el <a href="editor-mapas.html" target="_blank" rel="noopener">editor de mapas</a> (rutas, salidas, escaleras, refugios y evacuación horizontal). Se descarga mapas.json y se sube al repositorio; no hace falta cambiar la VERSION: la app busca siempre los mapas más nuevos cuando hay internet.</div></li>
           <li><span class="dot"></span><div>Para cambiar algo: partir siempre de la versión publicada en el repositorio, nunca de una copia vieja.</div></li>
           <li><span class="dot"></span><div>Subir el index.html nuevo y, en el mismo cambio, el sw.js con un número de VERSION más alto (por ejemplo, hmh-v3 → hmh-v4). Sin eso, los celulares que ya la tienen instalada no se actualizan.</div></li>
@@ -725,7 +725,7 @@
         </ul>
       </div>
     </details>
-    <p style="font-size:12px; color:var(--ink-soft); margin-top:14px; text-align:center">Versión hmh-v6 · 01/11/2026 · Servicio de Higiene y Seguridad Laboral</p>
+    <p style="font-size:12px; color:var(--ink-soft); margin-top:14px; text-align:center">Versión hmh-v7 · 01/11/2026 · Servicio de Higiene y Seguridad Laboral</p>
   </section>
 
   <!-- ===================== EXTINTORES ===================== -->
@@ -1060,7 +1060,7 @@
         <option value="">— Elegí tu servicio —</option></select>
     </div>
     <div id="mapaPaWrap" style="position:relative; width:100%; border-radius:var(--radius); overflow:visible; border:1px solid var(--line)">
-      <img src="mapa-pa.jpeg" style="width:100%; display:block" alt="Mapa interactivo Planta Alta">
+      <img style="width:100%; display:block" alt="Mapa interactivo Planta Alta">
 <svg id="routeSvg" viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;">
       <defs>
         <marker id="arrow-fast" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="2.2" markerHeight="2.2" orient="auto-start-reverse">
@@ -1131,7 +1131,7 @@
         <option value="">— Elegí tu servicio —</option></select>
     </div>
     <div id="mapaPbWrap" style="position:relative; width:100%; border-radius:var(--radius); overflow:visible; border:1px solid var(--line)">
-      <img src="mapa-pb.jpeg" style="width:100%; display:block" alt="Mapa interactivo Planta Baja">
+      <img style="width:100%; display:block" alt="Mapa interactivo Planta Baja">
 <svg id="routeSvgPB" viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;">
       <defs>
         <marker id="arrow-pb" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="2.2" markerHeight="2.2" orient="auto-start-reverse">
@@ -1414,6 +1414,7 @@ function renderMapas(){
     const sel = document.getElementById(C.sel);
     sel.innerHTML = '<option value="">— Elegí tu servicio —</option>' + P.servicios.slice().sort(function(a,b){ return a.nombre.localeCompare(b.nombre,'es'); }).map(function(s){ return '<option value="'+escMapa(s.id)+'">'+escMapa(s.nombre)+'</option>'; }).join('');
     const wrap = document.getElementById(C.wrap);
+    const img = wrap.querySelector('img'); if(P.imagen && img.getAttribute('src')!==P.imagen) img.src = P.imagen;
     wrap.querySelectorAll('.'+C.mk).forEach(function(e){ e.remove(); });
     const tipos = {};
     P.marcadores.forEach(function(m){

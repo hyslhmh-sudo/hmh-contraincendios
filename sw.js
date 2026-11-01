@@ -1,8 +1,8 @@
 /* HMH Contraincendios — funcionamiento sin conexión.
    Cada vez que publiques cambios en index.html, subí también este archivo
    cambiando el número de VERSION (v1 → v2 → v3...). */
-const VERSION = 'hmh-v6';
-const ARCHIVOS = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './mapas.json', './mapa-pa.jpeg', './mapa-pb.jpeg'];
+const VERSION = 'hmh-v7';
+const ARCHIVOS = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './mapas.json', './mapa-pa.jpeg', './mapa-pb-2.jpeg'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(VERSION)
