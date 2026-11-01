@@ -91,14 +91,14 @@
     {
      "num": "3",
      "tipo": "escalera",
-     "x": 68.0,
+     "x": 68,
      "y": 27.92,
      "nombre": ""
     },
     {
      "num": "4",
      "tipo": "salida",
-     "x": 85.0,
+     "x": 85,
      "y": 25.25,
      "nombre": ""
     },
@@ -136,9 +136,2424 @@
      "x": 68.08,
      "y": 73.07,
      "nombre": ""
+    },
+    {
+     "num": "11",
+     "tipo": "salida",
+     "x": 21.94,
+     "y": 60.77,
+     "nombre": ""
+    },
+    {
+     "num": "12",
+     "tipo": "salida",
+     "x": 35.67,
+     "y": 81.02,
+     "nombre": ""
     }
    ],
-   "rutas": [],
+   "rutas": [
+    {
+     "servicio": "administracion",
+     "salida": "8",
+     "nivel": "preferente",
+     "asistencia": "",
+     "puntos": [
+      [
+       25.57,
+       51.27
+      ],
+      [
+       25.57,
+       25.39
+      ],
+      [
+       16.79,
+       25.39
+      ],
+      [
+       16.79,
+       48.71
+      ],
+      [
+       14.92,
+       48.71
+      ]
+     ]
+    },
+    {
+     "servicio": "administracion",
+     "salida": "8",
+     "nivel": "preferente",
+     "asistencia": "",
+     "puntos": [
+      [
+       25.47,
+       50.65
+      ],
+      [
+       25.47,
+       74.97
+      ],
+      [
+       16.99,
+       74.97
+      ],
+      [
+       16.99,
+       48.71
+      ],
+      [
+       14.92,
+       48.71
+      ]
+     ]
+    },
+    {
+     "servicio": "administracion",
+     "salida": "1",
+     "nivel": "alternativa",
+     "asistencia": "",
+     "puntos": [
+      [
+       25.57,
+       50.23
+      ],
+      [
+       25.57,
+       24.76
+      ],
+      [
+       20.02,
+       24.76
+      ],
+      [
+       20.02,
+       26.33
+      ]
+     ]
+    },
+    {
+     "servicio": "administracion",
+     "salida": "5",
+     "nivel": "alternativa",
+     "asistencia": "",
+     "puntos": [
+      [
+       25.27,
+       51.17
+      ],
+      [
+       25.27,
+       74.76
+      ],
+      [
+       20.12,
+       74.76
+      ],
+      [
+       20.12,
+       71.78
+      ]
+     ]
+    },
+    {
+     "servicio": "administracion",
+     "salida": "9",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       25.67,
+       50.33
+      ],
+      [
+       25.67,
+       74.65
+      ],
+      [
+       33.95,
+       74.65
+      ],
+      [
+       33.95,
+       75.52
+      ]
+     ]
+    },
+    {
+     "servicio": "administracion",
+     "salida": "7",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       25.47,
+       49.92
+      ],
+      [
+       25.47,
+       74.34
+      ],
+      [
+       82.88,
+       74.34
+      ]
+     ]
+    },
+    {
+     "servicio": "administracion",
+     "salida": "4",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       25.57,
+       49.81
+      ],
+      [
+       25.57,
+       25.08
+      ],
+      [
+       84.55,
+       25.08
+      ]
+     ]
+    },
+    {
+     "servicio": "administracion",
+     "salida": "2",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       25.77,
+       49.6
+      ],
+      [
+       25.77,
+       24.87
+      ],
+      [
+       43.35,
+       24.87
+      ],
+      [
+       43.35,
+       25.8
+      ]
+     ]
+    },
+    {
+     "servicio": "administracion",
+     "salida": "3",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       25.37,
+       49.92
+      ],
+      [
+       25.37,
+       25.7
+      ],
+      [
+       67.88,
+       25.7
+      ],
+      [
+       67.88,
+       25.42
+      ]
+     ]
+    },
+    {
+     "servicio": "administracion",
+     "salida": "10",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       25.57,
+       49.92
+      ],
+      [
+       25.57,
+       74.44
+      ],
+      [
+       68.19,
+       74.44
+      ],
+      [
+       68.19,
+       73.07
+      ]
+     ]
+    },
+    {
+     "servicio": "confiteria",
+     "salida": "8",
+     "nivel": "preferente",
+     "asistencia": "",
+     "puntos": [
+      [
+       21.13,
+       83.84
+      ],
+      [
+       16.68,
+       83.84
+      ],
+      [
+       16.68,
+       48.56
+      ],
+      [
+       14.92,
+       48.56
+      ]
+     ]
+    },
+    {
+     "servicio": "confiteria",
+     "salida": "5",
+     "nivel": "alternativa",
+     "asistencia": "",
+     "puntos": [
+      [
+       21.13,
+       83.73
+      ],
+      [
+       16.68,
+       83.73
+      ],
+      [
+       16.68,
+       74.55
+      ],
+      [
+       19.92,
+       74.55
+      ],
+      [
+       19.92,
+       71.78
+      ]
+     ]
+    },
+    {
+     "servicio": "confiteria",
+     "salida": "5",
+     "nivel": "alternativa",
+     "asistencia": "",
+     "puntos": [
+      [
+       20.72,
+       83.73
+      ],
+      [
+       25.67,
+       83.73
+      ],
+      [
+       25.67,
+       74.76
+      ],
+      [
+       20.12,
+       74.76
+      ],
+      [
+       20.12,
+       71.78
+      ]
+     ]
+    },
+    {
+     "servicio": "confiteria",
+     "salida": "9",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       21.13,
+       83.52
+      ],
+      [
+       25.67,
+       83.52
+      ],
+      [
+       25.67,
+       74.76
+      ],
+      [
+       34.16,
+       74.76
+      ],
+      [
+       34.16,
+       75.52
+      ]
+     ]
+    },
+    {
+     "servicio": "confiteria",
+     "salida": "10",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       21.43,
+       83.73
+      ],
+      [
+       25.87,
+       83.73
+      ],
+      [
+       25.87,
+       74.34
+      ],
+      [
+       68.29,
+       74.34
+      ],
+      [
+       68.29,
+       73.07
+      ]
+     ]
+    },
+    {
+     "servicio": "confiteria",
+     "salida": "7",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       21.53,
+       83.94
+      ],
+      [
+       25.77,
+       83.94
+      ],
+      [
+       25.77,
+       74.13
+      ],
+      [
+       25.77,
+       75.21
+      ],
+      [
+       82.88,
+       75.21
+      ]
+     ]
+    },
+    {
+     "servicio": "esterilizacion",
+     "salida": "4",
+     "nivel": "preferente",
+     "asistencia": "",
+     "puntos": [
+      [
+       63.04,
+       18.29
+      ],
+      [
+       60.71,
+       18.29
+      ],
+      [
+       60.71,
+       25.39
+      ],
+      [
+       82.5,
+       25.39
+      ]
+     ]
+    },
+    {
+     "servicio": "esterilizacion",
+     "salida": "4",
+     "nivel": "preferente",
+     "asistencia": "",
+     "puntos": [
+      [
+       73.24,
+       18.5
+      ],
+      [
+       73.24,
+       23.41
+      ],
+      [
+       75.76,
+       23.41
+      ],
+      [
+       75.76,
+       25.18
+      ],
+      [
+       82.5,
+       25.18
+      ]
+     ]
+    },
+    {
+     "servicio": "esterilizacion",
+     "salida": "8",
+     "nivel": "alternativa",
+     "asistencia": "",
+     "puntos": [
+      [
+       62.94,
+       18.08
+      ],
+      [
+       60.31,
+       18.08
+      ],
+      [
+       60.31,
+       25.18
+      ],
+      [
+       16.68,
+       25.18
+      ],
+      [
+       16.68,
+       48.25
+      ],
+      [
+       14.92,
+       48.25
+      ]
+     ]
+    },
+    {
+     "servicio": "esterilizacion",
+     "salida": "8",
+     "nivel": "alternativa",
+     "asistencia": "",
+     "puntos": [
+      [
+       73.14,
+       18.08
+      ],
+      [
+       73.14,
+       23.09
+      ],
+      [
+       75.76,
+       23.09
+      ],
+      [
+       75.76,
+       24.97
+      ],
+      [
+       16.68,
+       24.97
+      ],
+      [
+       16.68,
+       47.93
+      ],
+      [
+       14.92,
+       47.93
+      ]
+     ]
+    },
+    {
+     "servicio": "esterilizacion",
+     "salida": "7",
+     "nivel": "alternativa",
+     "asistencia": "",
+     "puntos": [
+      [
+       62.63,
+       18.19
+      ],
+      [
+       60.51,
+       18.19
+      ],
+      [
+       60.51,
+       24.66
+      ],
+      [
+       72.93,
+       24.66
+      ],
+      [
+       72.93,
+       74.76
+      ],
+      [
+       82.88,
+       74.76
+      ]
+     ]
+    },
+    {
+     "servicio": "esterilizacion",
+     "salida": "7",
+     "nivel": "alternativa",
+     "asistencia": "",
+     "puntos": [
+      [
+       73.14,
+       17.77
+      ],
+      [
+       73.14,
+       22.88
+      ],
+      [
+       75.66,
+       22.88
+      ],
+      [
+       75.66,
+       24.76
+      ],
+      [
+       72.83,
+       24.76
+      ],
+      [
+       72.83,
+       74.24
+      ],
+      [
+       82.88,
+       74.24
+      ]
+     ]
+    },
+    {
+     "servicio": "esterilizacion",
+     "salida": "2",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       62.84,
+       17.88
+      ],
+      [
+       60.51,
+       17.88
+      ],
+      [
+       60.51,
+       24.87
+      ],
+      [
+       43.55,
+       24.87
+      ],
+      [
+       43.55,
+       25.8
+      ]
+     ]
+    },
+    {
+     "servicio": "esterilizacion",
+     "salida": "3",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       73.14,
+       17.98
+      ],
+      [
+       73.14,
+       22.99
+      ],
+      [
+       75.66,
+       22.99
+      ],
+      [
+       75.66,
+       24.87
+      ],
+      [
+       67.58,
+       24.87
+      ],
+      [
+       67.58,
+       25.42
+      ]
+     ]
+    },
+    {
+     "servicio": "esterilizacion",
+     "salida": "1",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       62.53,
+       17.88
+      ],
+      [
+       62.53,
+       25.08
+      ],
+      [
+       20.02,
+       25.08
+      ],
+      [
+       20.02,
+       26.33
+      ]
+     ]
+    },
+    {
+     "servicio": "esterilizacion",
+     "salida": "1",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       73.14,
+       18.29
+      ],
+      [
+       73.14,
+       22.99
+      ],
+      [
+       75.56,
+       22.99
+      ],
+      [
+       75.56,
+       24.97
+      ],
+      [
+       19.92,
+       24.97
+      ],
+      [
+       19.92,
+       26.33
+      ]
+     ]
+    },
+    {
+     "servicio": "guardia-obstetrica",
+     "salida": "7",
+     "nivel": "preferente",
+     "asistencia": "",
+     "puntos": [
+      [
+       77.78,
+       84.46
+      ],
+      [
+       77.78,
+       74.97
+      ],
+      [
+       82.88,
+       74.97
+      ]
+     ]
+    },
+    {
+     "servicio": "guardia-obstetrica",
+     "salida": "4",
+     "nivel": "alternativa",
+     "asistencia": "",
+     "puntos": [
+      [
+       77.68,
+       84.05
+      ],
+      [
+       77.68,
+       74.55
+      ],
+      [
+       72.63,
+       74.55
+      ],
+      [
+       72.63,
+       25.08
+      ],
+      [
+       82.5,
+       25.08
+      ]
+     ]
+    },
+    {
+     "servicio": "guardia-obstetrica",
+     "salida": "10",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       77.78,
+       84.36
+      ],
+      [
+       77.78,
+       74.44
+      ],
+      [
+       67.88,
+       74.44
+      ],
+      [
+       67.88,
+       73.07
+      ]
+     ]
+    },
+    {
+     "servicio": "guardia-obstetrica",
+     "salida": "9",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       77.88,
+       83.84
+      ],
+      [
+       77.88,
+       74.76
+      ],
+      [
+       33.95,
+       74.76
+      ],
+      [
+       33.95,
+       75.52
+      ]
+     ]
+    },
+    {
+     "servicio": "guardia-obstetrica",
+     "salida": "5",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       77.88,
+       84.15
+      ],
+      [
+       77.88,
+       74.34
+      ],
+      [
+       20.02,
+       74.34
+      ],
+      [
+       20.02,
+       71.78
+      ]
+     ]
+    },
+    {
+     "servicio": "guardia-obstetrica",
+     "salida": "8",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       78.08,
+       84.25
+      ],
+      [
+       78.08,
+       74.86
+      ],
+      [
+       17.09,
+       74.86
+      ],
+      [
+       17.09,
+       48.77
+      ],
+      [
+       14.92,
+       48.77
+      ]
+     ]
+    },
+    {
+     "servicio": "laboratorio-central",
+     "salida": "12",
+     "nivel": "preferente",
+     "asistencia": "",
+     "puntos": [
+      [
+       51.83,
+       82.48
+      ],
+      [
+       36.88,
+       82.48
+      ],
+      [
+       36.88,
+       81.02
+      ],
+      [
+       35.67,
+       81.02
+      ]
+     ]
+    },
+    {
+     "servicio": "laboratorio-central",
+     "salida": "9",
+     "nivel": "preferente",
+     "asistencia": "",
+     "puntos": [
+      [
+       43.45,
+       82.48
+      ],
+      [
+       51.22,
+       82.48
+      ],
+      [
+       51.22,
+       74.76
+      ],
+      [
+       34.05,
+       74.76
+      ],
+      [
+       34.05,
+       75.52
+      ]
+     ]
+    },
+    {
+     "servicio": "laboratorio-central",
+     "salida": "7",
+     "nivel": "alternativa",
+     "asistencia": "",
+     "puntos": [
+      [
+       37.59,
+       82.38
+      ],
+      [
+       51.53,
+       82.38
+      ],
+      [
+       51.53,
+       74.55
+      ],
+      [
+       82.88,
+       74.55
+      ]
+     ]
+    },
+    {
+     "servicio": "laboratorio-central",
+     "salida": "10",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       37.08,
+       82.48
+      ],
+      [
+       51.83,
+       82.48
+      ],
+      [
+       51.83,
+       74.34
+      ],
+      [
+       68.19,
+       74.34
+      ],
+      [
+       68.19,
+       73.07
+      ]
+     ]
+    },
+    {
+     "servicio": "laboratorio-central",
+     "salida": "5",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       37.08,
+       82.38
+      ],
+      [
+       51.73,
+       82.38
+      ],
+      [
+       51.73,
+       74.34
+      ],
+      [
+       19.92,
+       74.34
+      ],
+      [
+       19.92,
+       71.78
+      ]
+     ]
+    },
+    {
+     "servicio": "laboratorio-central",
+     "salida": "8",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       37.69,
+       82.79
+      ],
+      [
+       51.63,
+       82.79
+      ],
+      [
+       51.63,
+       74.34
+      ],
+      [
+       16.68,
+       74.34
+      ],
+      [
+       16.68,
+       48.46
+      ],
+      [
+       14.92,
+       48.46
+      ]
+     ]
+    },
+    {
+     "servicio": "neonatologia",
+     "salida": "4",
+     "nivel": "preferente",
+     "asistencia": "",
+     "puntos": [
+      [
+       77.98,
+       37.71
+      ],
+      [
+       72.83,
+       37.71
+      ],
+      [
+       72.83,
+       25.39
+      ],
+      [
+       82.5,
+       25.39
+      ]
+     ]
+    },
+    {
+     "servicio": "neonatologia",
+     "salida": "4",
+     "nivel": "alternativa",
+     "asistencia": "",
+     "puntos": [
+      [
+       77.88,
+       37.5
+      ],
+      [
+       77.88,
+       34.16
+      ],
+      [
+       81.32,
+       34.16
+      ],
+      [
+       81.32,
+       25.29
+      ],
+      [
+       82.5,
+       25.29
+      ]
+     ]
+    },
+    {
+     "servicio": "neonatologia",
+     "salida": "7",
+     "nivel": "alternativa",
+     "asistencia": "",
+     "puntos": [
+      [
+       78.19,
+       37.29
+      ],
+      [
+       72.73,
+       37.29
+      ],
+      [
+       72.73,
+       74.76
+      ],
+      [
+       82.88,
+       74.76
+      ]
+     ]
+    },
+    {
+     "servicio": "neonatologia",
+     "salida": "7",
+     "nivel": "alternativa",
+     "asistencia": "",
+     "puntos": [
+      [
+       78.08,
+       37.6
+      ],
+      [
+       78.08,
+       74.34
+      ],
+      [
+       82.88,
+       74.34
+      ]
+     ]
+    },
+    {
+     "servicio": "neonatologia",
+     "salida": "3",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       78.19,
+       37.5
+      ],
+      [
+       72.93,
+       37.5
+      ],
+      [
+       72.93,
+       24.87
+      ],
+      [
+       67.48,
+       24.87
+      ],
+      [
+       67.48,
+       25.42
+      ]
+     ]
+    },
+    {
+     "servicio": "neonatologia",
+     "salida": "2",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       77.78,
+       37.39
+      ],
+      [
+       72.43,
+       37.39
+      ],
+      [
+       72.43,
+       24.66
+      ],
+      [
+       43.14,
+       24.66
+      ],
+      [
+       43.14,
+       25.8
+      ]
+     ]
+    },
+    {
+     "servicio": "neonatologia",
+     "salida": "1",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       77.48,
+       37.18
+      ],
+      [
+       72.43,
+       37.18
+      ],
+      [
+       72.43,
+       24.97
+      ],
+      [
+       19.92,
+       24.97
+      ],
+      [
+       19.92,
+       26.33
+      ]
+     ]
+    },
+    {
+     "servicio": "neonatologia",
+     "salida": "8",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       78.08,
+       37.39
+      ],
+      [
+       72.63,
+       37.39
+      ],
+      [
+       72.63,
+       25.08
+      ],
+      [
+       16.38,
+       25.08
+      ],
+      [
+       16.38,
+       47.93
+      ],
+      [
+       14.92,
+       47.93
+      ]
+     ]
+    },
+    {
+     "servicio": "neonatologia",
+     "salida": "10",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       77.38,
+       37.39
+      ],
+      [
+       72.43,
+       37.39
+      ],
+      [
+       72.43,
+       73.82
+      ],
+      [
+       67.88,
+       73.82
+      ],
+      [
+       67.88,
+       73.07
+      ]
+     ]
+    },
+    {
+     "servicio": "neonatologia",
+     "salida": "10",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       77.78,
+       37.39
+      ],
+      [
+       77.78,
+       74.44
+      ],
+      [
+       68.09,
+       74.44
+      ],
+      [
+       68.09,
+       73.07
+      ]
+     ]
+    },
+    {
+     "servicio": "oncologia",
+     "salida": "7",
+     "nivel": "preferente",
+     "asistencia": "",
+     "puntos": [
+      [
+       58.19,
+       85.92
+      ],
+      [
+       55.46,
+       85.92
+      ],
+      [
+       55.46,
+       74.86
+      ],
+      [
+       82.88,
+       74.86
+      ]
+     ]
+    },
+    {
+     "servicio": "oncologia",
+     "salida": "10",
+     "nivel": "alternativa",
+     "asistencia": "",
+     "puntos": [
+      [
+       57.89,
+       85.61
+      ],
+      [
+       55.36,
+       85.61
+      ],
+      [
+       55.36,
+       74.34
+      ],
+      [
+       68.49,
+       74.34
+      ],
+      [
+       68.49,
+       73.07
+      ]
+     ]
+    },
+    {
+     "servicio": "oncologia",
+     "salida": "5",
+     "nivel": "alternativa",
+     "asistencia": "",
+     "puntos": [
+      [
+       57.89,
+       85.61
+      ],
+      [
+       55.36,
+       85.61
+      ],
+      [
+       55.36,
+       74.44
+      ],
+      [
+       20.02,
+       74.44
+      ],
+      [
+       20.02,
+       71.78
+      ]
+     ]
+    },
+    {
+     "servicio": "oncologia",
+     "salida": "9",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       58.09,
+       85.61
+      ],
+      [
+       55.36,
+       85.61
+      ],
+      [
+       55.36,
+       74.24
+      ],
+      [
+       33.95,
+       74.24
+      ],
+      [
+       33.95,
+       75.52
+      ]
+     ]
+    },
+    {
+     "servicio": "oncologia",
+     "salida": "8",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       57.89,
+       85.82
+      ],
+      [
+       55.46,
+       85.82
+      ],
+      [
+       55.46,
+       74.44
+      ],
+      [
+       16.99,
+       74.44
+      ],
+      [
+       16.99,
+       48.14
+      ],
+      [
+       14.92,
+       48.14
+      ]
+     ]
+    },
+    {
+     "servicio": "oncologia",
+     "salida": "4",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       57.58,
+       85.92
+      ],
+      [
+       55.67,
+       85.92
+      ],
+      [
+       55.67,
+       74.76
+      ],
+      [
+       73.04,
+       74.76
+      ],
+      [
+       73.04,
+       24.87
+      ],
+      [
+       82.5,
+       24.87
+      ]
+     ]
+    },
+    {
+     "servicio": "pediatria",
+     "salida": "4",
+     "nivel": "preferente",
+     "asistencia": "",
+     "puntos": [
+      [
+       55.56,
+       49.92
+      ],
+      [
+       55.56,
+       25.29
+      ],
+      [
+       82.5,
+       25.29
+      ]
+     ]
+    },
+    {
+     "servicio": "pediatria",
+     "salida": "7",
+     "nivel": "preferente",
+     "asistencia": "",
+     "puntos": [
+      [
+       55.46,
+       49.81
+      ],
+      [
+       55.46,
+       74.65
+      ],
+      [
+       82.88,
+       74.65
+      ]
+     ]
+    },
+    {
+     "servicio": "pediatria",
+     "salida": "7",
+     "nivel": "alternativa",
+     "asistencia": "",
+     "puntos": [
+      [
+       55.56,
+       28.31
+      ],
+      [
+       55.56,
+       74.34
+      ],
+      [
+       82.88,
+       74.34
+      ]
+     ]
+    },
+    {
+     "servicio": "pediatria",
+     "salida": "4",
+     "nivel": "alternativa",
+     "asistencia": "",
+     "puntos": [
+      [
+       55.36,
+       73.19
+      ],
+      [
+       55.36,
+       25.08
+      ],
+      [
+       82.5,
+       25.08
+      ]
+     ]
+    },
+    {
+     "servicio": "pediatria",
+     "salida": "3",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       55.36,
+       49.71
+      ],
+      [
+       55.36,
+       24.87
+      ],
+      [
+       67.58,
+       24.87
+      ],
+      [
+       67.58,
+       25.42
+      ]
+     ]
+    },
+    {
+     "servicio": "pediatria",
+     "salida": "10",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       55.26,
+       49.92
+      ],
+      [
+       55.26,
+       74.34
+      ],
+      [
+       68.39,
+       74.34
+      ],
+      [
+       68.39,
+       73.07
+      ]
+     ]
+    },
+    {
+     "servicio": "pediatria",
+     "salida": "8",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       55.36,
+       74.44
+      ],
+      [
+       16.79,
+       74.44
+      ],
+      [
+       16.79,
+       48.14
+      ],
+      [
+       14.92,
+       48.14
+      ]
+     ]
+    },
+    {
+     "servicio": "pediatria",
+     "salida": "2",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       55.36,
+       49.81
+      ],
+      [
+       55.36,
+       24.87
+      ],
+      [
+       43.85,
+       24.87
+      ],
+      [
+       43.85,
+       25.8
+      ]
+     ]
+    },
+    {
+     "servicio": "pediatria",
+     "salida": "1",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       55.56,
+       50.13
+      ],
+      [
+       55.56,
+       25.18
+      ],
+      [
+       19.92,
+       25.18
+      ],
+      [
+       19.92,
+       26.33
+      ]
+     ]
+    },
+    {
+     "servicio": "pediatria",
+     "salida": "8",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       55.46,
+       50.44
+      ],
+      [
+       55.46,
+       24.97
+      ],
+      [
+       16.48,
+       24.97
+      ],
+      [
+       16.48,
+       48.25
+      ],
+      [
+       14.92,
+       48.25
+      ]
+     ]
+    },
+    {
+     "servicio": "quirofano",
+     "salida": "4",
+     "nivel": "preferente",
+     "asistencia": "",
+     "puntos": [
+      [
+       42.84,
+       18.71
+      ],
+      [
+       42.84,
+       24.97
+      ],
+      [
+       82.5,
+       24.97
+      ]
+     ]
+    },
+    {
+     "servicio": "quirofano",
+     "salida": "4",
+     "nivel": "alternativa",
+     "asistencia": "",
+     "puntos": [
+      [
+       42.94,
+       18.71
+      ],
+      [
+       60.71,
+       18.71
+      ],
+      [
+       60.71,
+       24.66
+      ],
+      [
+       82.5,
+       24.66
+      ]
+     ]
+    },
+    {
+     "servicio": "quirofano",
+     "salida": "7",
+     "nivel": "alternativa",
+     "asistencia": "",
+     "puntos": [
+      [
+       42.94,
+       18.29
+      ],
+      [
+       42.94,
+       24.66
+      ],
+      [
+       72.53,
+       24.66
+      ],
+      [
+       72.53,
+       24.45
+      ],
+      [
+       72.53,
+       74.24
+      ],
+      [
+       82.88,
+       74.24
+      ]
+     ]
+    },
+    {
+     "servicio": "quirofano",
+     "salida": "2",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       42.64,
+       18.71
+      ],
+      [
+       42.64,
+       28.3
+      ],
+      [
+       43.77,
+       28.3
+      ]
+     ]
+    },
+    {
+     "servicio": "quirofano",
+     "salida": "2",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       60.82,
+       18.92
+      ],
+      [
+       60.82,
+       24.55
+      ],
+      [
+       43.35,
+       24.55
+      ],
+      [
+       43.35,
+       25.8
+      ]
+     ]
+    },
+    {
+     "servicio": "quirofano",
+     "salida": "3",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       42.54,
+       19.02
+      ],
+      [
+       42.54,
+       24.87
+      ],
+      [
+       67.99,
+       24.87
+      ],
+      [
+       67.99,
+       25.42
+      ]
+     ]
+    },
+    {
+     "servicio": "quirofano",
+     "salida": "3",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       43.55,
+       18.61
+      ],
+      [
+       60.92,
+       18.61
+      ],
+      [
+       60.92,
+       24.87
+      ],
+      [
+       67.48,
+       24.87
+      ],
+      [
+       67.48,
+       25.42
+      ]
+     ]
+    },
+    {
+     "servicio": "quirofano",
+     "salida": "7",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       42.94,
+       18.29
+      ],
+      [
+       42.94,
+       24.97
+      ],
+      [
+       55.16,
+       24.97
+      ],
+      [
+       55.16,
+       74.76
+      ],
+      [
+       82.88,
+       74.76
+      ]
+     ]
+    },
+    {
+     "servicio": "quirofano",
+     "salida": "8",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       43.04,
+       18.4
+      ],
+      [
+       43.04,
+       25.49
+      ],
+      [
+       17.09,
+       25.49
+      ],
+      [
+       17.09,
+       48.46
+      ],
+      [
+       14.92,
+       48.46
+      ]
+     ]
+    },
+    {
+     "servicio": "quirofano",
+     "salida": "8",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       44.05,
+       18.61
+      ],
+      [
+       61.02,
+       18.61
+      ],
+      [
+       61.02,
+       24.97
+      ],
+      [
+       16.79,
+       24.97
+      ],
+      [
+       16.79,
+       48.25
+      ],
+      [
+       14.92,
+       48.25
+      ]
+     ]
+    },
+    {
+     "servicio": "residencia-medica",
+     "salida": "4",
+     "nivel": "preferente",
+     "asistencia": "",
+     "puntos": [
+      [
+       77.98,
+       15.58
+      ],
+      [
+       77.98,
+       25.08
+      ],
+      [
+       82.5,
+       25.08
+      ]
+     ]
+    },
+    {
+     "servicio": "residencia-medica",
+     "salida": "3",
+     "nivel": "alternativa",
+     "asistencia": "",
+     "puntos": [
+      [
+       78.08,
+       15.58
+      ],
+      [
+       78.08,
+       25.08
+      ],
+      [
+       67.78,
+       25.08
+      ],
+      [
+       67.78,
+       27.92
+      ]
+     ]
+    },
+    {
+     "servicio": "residencia-medica",
+     "salida": "7",
+     "nivel": "alternativa",
+     "asistencia": "",
+     "puntos": [
+      [
+       77.88,
+       15.68
+      ],
+      [
+       77.88,
+       24.76
+      ],
+      [
+       72.83,
+       24.76
+      ],
+      [
+       72.83,
+       74.97
+      ],
+      [
+       82.88,
+       74.97
+      ]
+     ]
+    },
+    {
+     "servicio": "residencia-medica",
+     "salida": "2",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       78.19,
+       16.1
+      ],
+      [
+       78.19,
+       24.87
+      ],
+      [
+       42.94,
+       24.87
+      ],
+      [
+       42.94,
+       25.8
+      ]
+     ]
+    },
+    {
+     "servicio": "residencia-medica",
+     "salida": "1",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       77.88,
+       15.58
+      ],
+      [
+       77.88,
+       24.55
+      ],
+      [
+       19.92,
+       24.55
+      ],
+      [
+       19.92,
+       26.33
+      ]
+     ]
+    },
+    {
+     "servicio": "residencia-medica",
+     "salida": "8",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       77.48,
+       16
+      ],
+      [
+       77.48,
+       24.87
+      ],
+      [
+       16.68,
+       24.87
+      ],
+      [
+       16.68,
+       47.83
+      ],
+      [
+       14.92,
+       47.83
+      ]
+     ]
+    },
+    {
+     "servicio": "sala-de-espera-quirofano",
+     "salida": "8",
+     "nivel": "preferente",
+     "asistencia": "",
+     "puntos": [
+      [
+       20.52,
+       14.22
+      ],
+      [
+       16.99,
+       14.22
+      ],
+      [
+       16.99,
+       48.46
+      ],
+      [
+       14.92,
+       48.46
+      ]
+     ]
+    },
+    {
+     "servicio": "sala-de-espera-quirofano",
+     "salida": "1",
+     "nivel": "alternativa",
+     "asistencia": "",
+     "puntos": [
+      [
+       20.32,
+       13.7
+      ],
+      [
+       16.89,
+       13.7
+      ],
+      [
+       16.89,
+       24.76
+      ],
+      [
+       20.02,
+       24.76
+      ],
+      [
+       20.02,
+       26.33
+      ]
+     ]
+    },
+    {
+     "servicio": "ucip",
+     "salida": "4",
+     "nivel": "preferente",
+     "asistencia": "",
+     "puntos": [
+      [
+       61.42,
+       53.88
+      ],
+      [
+       61.42,
+       25.18
+      ],
+      [
+       82.5,
+       25.18
+      ]
+     ]
+    },
+    {
+     "servicio": "ucip",
+     "salida": "7",
+     "nivel": "alternativa",
+     "asistencia": "",
+     "puntos": [
+      [
+       61.52,
+       53.47
+      ],
+      [
+       61.52,
+       25.18
+      ],
+      [
+       72.43,
+       25.18
+      ],
+      [
+       72.43,
+       74.86
+      ],
+      [
+       82.88,
+       74.86
+      ]
+     ]
+    },
+    {
+     "servicio": "ucip",
+     "salida": "7",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       61.42,
+       53.67
+      ],
+      [
+       60.92,
+       53.67
+      ],
+      [
+       60.92,
+       74.86
+      ],
+      [
+       83.03,
+       74.86
+      ]
+     ]
+    },
+    {
+     "servicio": "ucip",
+     "salida": "3",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       61.22,
+       48.66
+      ],
+      [
+       61.22,
+       25.08
+      ],
+      [
+       68.39,
+       25.08
+      ],
+      [
+       68.39,
+       27.92
+      ]
+     ]
+    },
+    {
+     "servicio": "ucip",
+     "salida": "8",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       61.42,
+       48.25
+      ],
+      [
+       61.42,
+       25.29
+      ],
+      [
+       16.99,
+       25.29
+      ],
+      [
+       16.99,
+       48.14
+      ],
+      [
+       14.92,
+       48.14
+      ]
+     ]
+    },
+    {
+     "servicio": "utpr",
+     "salida": "7",
+     "nivel": "preferente",
+     "asistencia": "",
+     "puntos": [
+      [
+       77.88,
+       49.6
+      ],
+      [
+       77.88,
+       74.97
+      ],
+      [
+       82.88,
+       74.97
+      ]
+     ]
+    },
+    {
+     "servicio": "utpr",
+     "salida": "4",
+     "nivel": "alternativa",
+     "asistencia": "",
+     "puntos": [
+      [
+       78.08,
+       50.02
+      ],
+      [
+       78.08,
+       36.87
+      ],
+      [
+       72.63,
+       36.87
+      ],
+      [
+       72.63,
+       24.76
+      ],
+      [
+       82.5,
+       24.76
+      ]
+     ]
+    },
+    {
+     "servicio": "utpr",
+     "salida": "4",
+     "nivel": "alternativa",
+     "asistencia": "",
+     "puntos": [
+      [
+       77.78,
+       49.39
+      ],
+      [
+       77.78,
+       74.76
+      ],
+      [
+       72.93,
+       74.76
+      ],
+      [
+       72.93,
+       24.55
+      ],
+      [
+       82.5,
+       24.55
+      ]
+     ]
+    },
+    {
+     "servicio": "utpr",
+     "salida": "10",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       78.08,
+       49.39
+      ],
+      [
+       78.08,
+       74.34
+      ],
+      [
+       67.99,
+       74.34
+      ],
+      [
+       67.99,
+       73.07
+      ]
+     ]
+    },
+    {
+     "servicio": "utpr",
+     "salida": "3",
+     "nivel": "no-recomendada",
+     "asistencia": "",
+     "puntos": [
+      [
+       78.19,
+       49.6
+      ],
+      [
+       78.19,
+       37.18
+      ],
+      [
+       73.04,
+       37.18
+      ],
+      [
+       73.04,
+       24.87
+      ],
+      [
+       68.09,
+       24.87
+      ],
+      [
+       68.09,
+       25.42
+      ]
+     ]
+    }
+   ],
    "zonas": [
     {
      "id": "zona-1",
